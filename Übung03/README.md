@@ -1,1 +1,1 @@
-
+![aufg](aufg3.JPG)
