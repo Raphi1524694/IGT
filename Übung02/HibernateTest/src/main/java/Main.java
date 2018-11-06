@@ -7,8 +7,12 @@ import org.hibernate.cfg.Configuration;
 public class Main {
     public static void main(String[] args) {
         Customer cust = new Customer("Raphi");
+        Phone p = new Phone("12345");
+        cust.addPhone(p);
 
-        Configuration conf = new Configuration().configure().addAnnotatedClass(Customer.class);
+        Configuration conf = new Configuration().configure()
+                .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Phone.class);
 
         SessionFactory sf = conf.buildSessionFactory();
 
@@ -17,6 +21,7 @@ public class Main {
         Transaction tx = session.beginTransaction();
 
         session.save(cust);
+
 
         tx.commit();
 

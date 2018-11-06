@@ -1,14 +1,23 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "Customers")
 public class Customer {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
+
+    @OneToMany(mappedBy="belongsToCustomer", cascade = CascadeType.ALL)
+    private List<Phone> phoneList;
 
     public Customer(String name) {
         setName(name);
+        phoneList = new ArrayList<Phone>();
     }
 
     public String getName() {
@@ -19,4 +28,37 @@ public class Customer {
         this.name = name;
     }
 
+    public void addPhone(Phone p){
+        if (!phoneList.contains(p)) {
+            phoneList.add(p);
+            if (p.belongsToCustomer != null){
+                p.belongsToCustomer.phoneList.remove(p);
+            }
+            p.setBelongsToCustomer(this);
+
+        }
+    }
+
+}
+
+
+@Entity
+@Table(name = "Customer_Phones")
+class Phone {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String phoneNumber;
+
+    @ManyToOne
+    public Customer belongsToCustomer;
+
+    Phone(String number){
+        phoneNumber = number;
+    }
+
+    public void setBelongsToCustomer(Customer c){
+        belongsToCustomer = c;
+    }
 }
