@@ -1,3 +1,5 @@
+import com.sun.istack.internal.NotNull;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ public class Customer {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy="belongsToCustomer", cascade = CascadeType.ALL)
@@ -20,12 +23,18 @@ public class Customer {
         phoneList = new ArrayList<Phone>();
     }
 
+    public Customer() {   }
+
     public String getName() {
         return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Phone> getPhones(){
+        return phoneList;
     }
 
     public void addPhone(Phone p){
@@ -38,7 +47,6 @@ public class Customer {
 
         }
     }
-
 }
 
 
