@@ -15,6 +15,9 @@ public class Main {
     static {
         conf = new Configuration().configure()
                 .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Flight.class)
+                .addAnnotatedClass(FlightSegment.class)
+                .addAnnotatedClass(Airport.class)
                 .addAnnotatedClass(Phone.class);
         sf = conf.buildSessionFactory();
     }
@@ -22,6 +25,7 @@ public class Main {
     public static void main(String[] args) {
         insert();
         read();
+        flighHIGH();
     }
 
     public static void insert(){
@@ -43,6 +47,18 @@ public class Main {
         session.save(cust2);
         session.save(cust);
         session.save(fail);
+
+        tx.commit();
+    }
+
+    public static void flighHIGH(){
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+
+        Flight f = new Flight();
+        f.addFlightSegment(new FlightSegment(new Airport("test"), new Airport("test2")));
+
+        session.save(f);
 
         tx.commit();
     }

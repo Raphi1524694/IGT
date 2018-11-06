@@ -16,11 +16,10 @@ public class Customer {
     private String name;
 
     @OneToMany(mappedBy="belongsToCustomer", cascade = CascadeType.ALL)
-    private List<Phone> phoneList;
+    private List<Phone> phoneList = new ArrayList<Phone>();
 
     public Customer(String name) {
         setName(name);
-        phoneList = new ArrayList<Phone>();
     }
 
     public Customer() {   }
