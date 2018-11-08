@@ -1,3 +1,8 @@
+import Customer.Customer;
+import Customer.Phone;
+import Flight.Flight;
+import Flight.FlightSegment;
+import Flight.Airport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

@@ -1,3 +1,5 @@
+package Flight;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,50 +34,5 @@ public class Flight {
             }
             p.setBelongsToFlight(this);
         }
-    }
-}
-
-
-@Entity
-@Table(name = "FlightSegments")
-class FlightSegment{
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @ManyToOne
-    public Flight belongsToFlight;
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Airport start;
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Airport goal;
-
-    public FlightSegment(){}
-
-    public FlightSegment(Airport start, Airport goal){
-        this.start = start;
-        this.goal = goal;
-    }
-
-    public void setBelongsToFlight(Flight f){
-        belongsToFlight = f;
-    }
-}
-
-@Entity
-@Table(name = "Airports")
-class Airport{
-    @Id
-    public String name;
-
-    public Airport(){}
-
-    public Airport(String name){
-        this.name = name;
     }
 }

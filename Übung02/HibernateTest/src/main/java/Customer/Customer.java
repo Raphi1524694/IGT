@@ -1,3 +1,5 @@
+package Customer;
+
 import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
@@ -45,27 +47,5 @@ public class Customer {
             p.setBelongsToCustomer(this);
 
         }
-    }
-}
-
-
-@Entity
-@Table(name = "Customer_Phones")
-class Phone {
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    private String phoneNumber;
-
-    @ManyToOne
-    public Customer belongsToCustomer;
-
-    Phone(String number){
-        phoneNumber = number;
-    }
-
-    public void setBelongsToCustomer(Customer c){
-        belongsToCustomer = c;
     }
 }
