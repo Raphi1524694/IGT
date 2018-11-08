@@ -1,7 +1,5 @@
 package Customer;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ public class Customer {
     @GeneratedValue
     private Long id;
 
-    @NotNull
     private String name;
 
     @OneToMany(mappedBy="belongsToCustomer", cascade = CascadeType.ALL)
