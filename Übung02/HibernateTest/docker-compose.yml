@@ -1,0 +1,35 @@
+version: '2.0'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #restart: always
+    ports:
+    - "3000:3000"
+    networks:
+    - net
+    links:
+    - "mysql:mysql"
+    depends_on:
+    - mysql
+
+  mysql:
+    image: mysql:5.5
+    restart: always
+    networks:
+    - net
+    environment:
+    - MYSQL_ROOT_PASSWORD=bla
+    - MYSQL_ROOT_HOST=172.18.0.3
+    - MYSQL_DATABASE=test
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+    ports:
+    - "3306:3306"
+    volumes:
+    - ./mysql-data:/var/lib/mysql
+
+networks:
+  net:
