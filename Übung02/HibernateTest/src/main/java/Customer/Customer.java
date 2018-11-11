@@ -1,8 +1,14 @@
 package Customer;
 
+import Flight.Flight;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+
 
 @Entity
 @Table(name = "Customers")
@@ -10,12 +16,16 @@ public class Customer {
 
     @Id
     @GeneratedValue
+    @Column(name = "customer_id")
     private Long id;
 
     private String name;
 
     @OneToMany(mappedBy="belongsToCustomer", cascade = CascadeType.ALL)
     private List<Phone> phoneList = new ArrayList<Phone>();
+
+    @ManyToMany(mappedBy = "customers")
+    public Set<Flight> flights = new HashSet<Flight>();
 
     public Customer(String name) {
         setName(name);

@@ -1,9 +1,9 @@
 package Flight;
 
+import Customer.Customer;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Flights")
@@ -11,6 +11,7 @@ public class Flight {
 
     @Id
     @GeneratedValue
+    @Column(name = "flight_id")
     private Long id;
 
     public Date startTime;
@@ -20,6 +21,15 @@ public class Flight {
     public int seatsFistClass;
 
     public PlaneType plane;
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "FlightBookings",
+        joinColumns = { @JoinColumn(name = "flight_id") },
+        inverseJoinColumns = { @JoinColumn(name = "customer_id") }
+    )
+    public Set<Customer> customers = new HashSet<Customer>();
 
     public Flight(){}
 

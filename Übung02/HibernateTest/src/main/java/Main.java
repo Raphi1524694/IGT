@@ -31,6 +31,8 @@ public class Main {
         insert();
         read();
         flighHIGH();
+        bookFlights();
+        readBookings();
     }
 
     public static void insert(){
@@ -78,6 +80,33 @@ public class Main {
         for (Object c: list){
             System.out.println(((Customer)c).getName());
         }
+
+        tx.commit();
+    }
+
+    public static void readBookings() {
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+
+        Query query = session.createQuery("FROM FlightBookings");
+
+        System.out.println(query.toString());
+
+        tx.commit();
+    }
+
+    public static void bookFlights(){
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+
+        Customer cust2 = new Customer("Philip");
+        cust2.addPhone(new Phone("0012345"));
+
+        Flight f = new Flight();
+        f.addFlightSegment(new FlightSegment(new Airport("test"), new Airport("test2")));
+
+        Helper.bookFlight(cust2, f, session);
+
 
         tx.commit();
     }
