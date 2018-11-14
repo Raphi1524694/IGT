@@ -1,4 +1,4 @@
-package Customer;
+package IGT.Customer;
 
 import javax.persistence.*;
 

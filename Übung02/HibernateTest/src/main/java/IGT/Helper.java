@@ -1,5 +1,7 @@
-import Customer.Customer;
-import Flight.Flight;
+package IGT;
+
+import IGT.Customer.Customer;
+import IGT.Flight.Flight;
 import org.hibernate.Session;
 
 public class Helper{

@@ -1,4 +1,4 @@
-package Flight;
+package IGT.Flight;
 
 import javax.persistence.*;
 

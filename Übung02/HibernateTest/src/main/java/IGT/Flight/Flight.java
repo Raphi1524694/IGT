@@ -1,6 +1,6 @@
-package Flight;
+package IGT.Flight;
 
-import Customer.Customer;
+import IGT.Customer.Customer;
 
 import javax.persistence.*;
 import java.util.*;

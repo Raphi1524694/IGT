@@ -1,6 +1,6 @@
 package Tests;
 
-import Customer.Customer;
+import IGT.Customer.Customer;
 
 import org.junit.Test;
 
