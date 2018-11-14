@@ -5,7 +5,7 @@
 ## Api Doku
 
 ### Endpoints
-  localhost:\<port\>
+  localhost:\<port\>/api
     
 | Database 	| Port 	| Type            	|
 |----------	|------	|-----------------	|
@@ -15,7 +15,7 @@
 | Neo4j    	| 6003 	| Graph Database  	|
 | Redis    	| 6004 	| Key-value Store 	|
   
-**Example:** http://localhost:6001 for the MongoDB instance
+**Example:** http://localhost:6001/api for the MongoDB instance
 
 
 ### List all customers
