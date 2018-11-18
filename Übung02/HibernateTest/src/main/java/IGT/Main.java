@@ -8,7 +8,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static IGT.Hibernate.*;
+import static IGT.Hibernate.getInstance;
 
 public class Main {
     public static void main(String[] args) {

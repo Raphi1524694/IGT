@@ -10,6 +10,7 @@ public class Server{
     @GET
     public String getMsg()
     {
+        Hibernate.getInstance().insert();
         System.out.println("called");
         return "Hello World !! - Jersey 2";
     }

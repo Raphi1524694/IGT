@@ -4,5 +4,4 @@ COPY src /tmp/src/
 WORKDIR /tmp/
 EXPOSE 8080
 RUN mvn package
-# scheint zu gehen bis hier her aber cancer java mag meine Pfade nicht
-CMD java -jar target/IGT.jar
+CMD java -jar /tmp/target/IGT.jar
