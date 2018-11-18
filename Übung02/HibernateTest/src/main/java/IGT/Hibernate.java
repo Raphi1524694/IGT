@@ -10,6 +10,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hibernate {
 
     private static final Hibernate instance = new Hibernate();
@@ -32,26 +35,50 @@ public class Hibernate {
     }
 
     public void insert() {
-        Session session = sf.openSession();
-        Transaction tx = session.beginTransaction();
+        try {
+
+            Session session = sf.openSession();
+            Transaction tx = session.beginTransaction();
 
 
-        Customer cust = new Customer("Raphi");
-        cust.addPhone(new Phone("12345"));
-        cust.addPhone(new Phone("012345"));
+            Customer cust = new Customer("Raphi");
+            cust.addPhone(new Phone("12345"));
+            cust.addPhone(new Phone("012345"));
 
-        Customer cust2 = new Customer("Philip");
-        cust2.addPhone(new Phone("0012345"));
-        cust2.addPhone(new Phone("00012345"));
-        cust2.addPhone(cust.getPhones().get(0));
+            Customer cust2 = new Customer("Philip");
+            cust2.addPhone(new Phone("0012345"));
+            cust2.addPhone(new Phone("00012345"));
+            cust2.addPhone(cust.getPhones().get(0));
 
-        Customer fail = new Customer(null);
+            session.save(cust2);
+            session.save(cust);
 
-        session.save(cust2);
-        session.save(cust);
-        session.save(fail);
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("inserting failed");
+            e.printStackTrace();
+        }
 
-        tx.commit();
+    }
+
+    public List<Customer> getCustomers() {
+        List<Customer> cust = new ArrayList<>();
+        try {
+            Session session = sf.openSession();
+            Transaction tx = session.beginTransaction();
+
+            session.createQuery("FROM Customer")
+                    .list()
+                    .forEach(customer -> cust.add((Customer) customer));
+
+            cust.forEach(customer -> System.out.println(customer.getName()));
+
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("inserting failed");
+            e.printStackTrace();
+        }
+        return cust;
     }
 }
 

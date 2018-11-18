@@ -14,11 +14,17 @@ public class Phone {
     @ManyToOne
     public Customer belongsToCustomer;
 
-    public Phone(String number){
+    public Phone(String number) {
         phoneNumber = number;
     }
 
-    public void setBelongsToCustomer(Customer c){
+    public Phone(){}
+
+    public void setBelongsToCustomer(Customer c) {
         belongsToCustomer = c;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }
