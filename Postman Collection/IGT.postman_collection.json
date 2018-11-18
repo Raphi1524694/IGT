@@ -1,0 +1,32 @@
+{
+	"id": "e307e235-250a-4c70-b91b-205898c56795",
+	"name": "IGT",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"42359d05-b411-4b99-992f-015fcb2298b3"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "42359d05-b411-4b99-992f-015fcb2298b3",
+			"name": "get all customers",
+			"url": "{{server}}:{{MySQL}}/api/customers",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}
