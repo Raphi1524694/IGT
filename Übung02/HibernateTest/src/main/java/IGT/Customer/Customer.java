@@ -1,6 +1,7 @@
 package IGT.Customer;
 
 import IGT.Flight.Flight;
+import IGT.Hibernate;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -35,6 +36,10 @@ public class Customer {
     public Customer() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -47,6 +52,12 @@ public class Customer {
         return phoneList;
     }
 
+    public void removeAllPhones() {
+        phoneList.forEach(phone -> phone.setBelongsToCustomer(null));
+        phoneList.forEach(phone -> Hibernate.getInstance().update(phone));
+        phoneList = new ArrayList<>();
+    }
+
     public void addPhone(Phone p) {
         if (!phoneList.contains(p)) {
             phoneList.add(p);
@@ -54,7 +65,6 @@ public class Customer {
                 p.belongsToCustomer.phoneList.remove(p);
             }
             p.setBelongsToCustomer(this);
-
         }
     }
 
@@ -71,5 +81,15 @@ public class Customer {
             e.printStackTrace();
         }
         return customerJson;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() == this.getClass()) {
+            if (((Customer) obj).getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

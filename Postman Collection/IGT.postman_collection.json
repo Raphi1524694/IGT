@@ -6,15 +6,44 @@
 	"events": null,
 	"variables": [],
 	"order": [
-		"42359d05-b411-4b99-992f-015fcb2298b3"
+		"42359d05-b411-4b99-992f-015fcb2298b3",
+		"c083f50d-7114-4b96-bf31-963b54ee2a6e",
+		"d1c9c5b1-8f6b-48ea-894e-f8af531320e2",
+		"29f260a1-251d-4a7d-b752-54c2b499d4f0"
 	],
 	"folders_order": [],
 	"folders": [],
 	"requests": [
 		{
+			"id": "29f260a1-251d-4a7d-b752-54c2b499d4f0",
+			"name": "new customer",
+			"url": "{{server}}:{{MySQL}}/api/customer/new",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"name\": \"test\",\n\t\"phones\": [\"1234\", \"4321\"]\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
 			"id": "42359d05-b411-4b99-992f-015fcb2298b3",
 			"name": "get all customers",
-			"url": "{{server}}:{{MySQL}}/api/customers",
+			"url": "{{server}}:{{MySQL}}/api/customer/all",
 			"description": "",
 			"data": null,
 			"dataMode": null,
@@ -26,6 +55,49 @@
 			"events": [],
 			"folder": null,
 			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "c083f50d-7114-4b96-bf31-963b54ee2a6e",
+			"name": "get customer by id",
+			"url": "{{server}}:{{MySQL}}/api/customer/4",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "d1c9c5b1-8f6b-48ea-894e-f8af531320e2",
+			"name": "update customer",
+			"url": "{{server}}:{{MySQL}}/api/customer/1",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"name\": \"testUpdaaate\",\n\t\"phones\": [\"1234321\"]\n}",
+			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		}
 	]

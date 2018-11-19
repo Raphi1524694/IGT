@@ -34,31 +34,28 @@ public class Hibernate {
         return instance;
     }
 
-    public void insert() {
+    public void save(Object o) {
         try {
-
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
-
-
-            Customer cust = new Customer("Raphi");
-            cust.addPhone(new Phone("12345"));
-            cust.addPhone(new Phone("012345"));
-
-            Customer cust2 = new Customer("Philip");
-            cust2.addPhone(new Phone("0012345"));
-            cust2.addPhone(new Phone("00012345"));
-            cust2.addPhone(cust.getPhones().get(0));
-
-            session.save(cust2);
-            session.save(cust);
-
+            session.save(o);
             tx.commit();
         } catch (Exception e) {
             System.err.println("inserting failed");
             e.printStackTrace();
         }
+    }
 
+    public void update(Object o) {
+        try {
+            Session session = sf.openSession();
+            Transaction tx = session.beginTransaction();
+            session.update(o);
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("updating failed");
+            e.printStackTrace();
+        }
     }
 
     public List<Customer> getCustomers() {
@@ -67,9 +64,9 @@ public class Hibernate {
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
 
-            session.createQuery("FROM Customer")
-                    .list()
-                    .forEach(customer -> cust.add((Customer) customer));
+            for (Object c : session.createQuery("FROM Customer").list()) {
+                cust.add((Customer) c);
+            }
 
             cust.forEach(customer -> System.out.println(customer.getName()));
 

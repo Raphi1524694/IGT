@@ -22,6 +22,7 @@ public class Main {
         serHol.setInitOrder(1);
         serHol.setInitParameter("jersey.config.server.provider.packages", "IGT/Server");
 
+        Hibernate.getInstance().getCustomers();
         try {
             server.start();
             server.join();
