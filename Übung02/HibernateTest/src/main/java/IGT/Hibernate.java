@@ -19,7 +19,6 @@ public class Hibernate {
     static Configuration conf;
     static SessionFactory sf;
 
-    //private constructor to avoid client applications to use constructor
     private Hibernate() {
         conf = new Configuration().configure()
                 .addAnnotatedClass(Customer.class)
@@ -34,11 +33,24 @@ public class Hibernate {
         return instance;
     }
 
-    public void save(Object o) {
+    public <T extends IClassID> void save(T object) {
         try {
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
-            session.save(o);
+            if (object.getId() == null) {
+                // save
+                session.save(object);
+            } else {
+                // update
+                Object entry = session.find(getClass(object), ((T) object).getId());
+                System.out.println(entry.toString());
+                entry = object;
+
+                session.merge(entry);
+            }
+
+            // session.flush();
+            // session.close();
             tx.commit();
         } catch (Exception e) {
             System.err.println("inserting failed");
@@ -46,11 +58,14 @@ public class Hibernate {
         }
     }
 
-    public void update(Object o) {
+
+    public <T extends IClassID> void delete(T object) {
         try {
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
-            session.update(o);
+            session.remove(session.find(getClass(object), ((T) object).getId()));
+            // session.flush();
+            // session.close();
             tx.commit();
         } catch (Exception e) {
             System.err.println("updating failed");
@@ -58,24 +73,40 @@ public class Hibernate {
         }
     }
 
-    public List<Customer> getCustomers() {
-        List<Customer> cust = new ArrayList<>();
+    public <T> List<T> getTable(String table) {
+        System.out.println(table);
+        List<T> customers = new ArrayList<>();
         try {
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
 
-            for (Object c : session.createQuery("FROM Customer").list()) {
-                cust.add((Customer) c);
+            for (Object c : session.createQuery("FROM " + table).list()) {
+                customers.add((T) c);
             }
-
-            cust.forEach(customer -> System.out.println(customer.getName()));
-
+            // session.flush();
             tx.commit();
         } catch (Exception e) {
-            System.err.println("inserting failed");
+            System.err.println("reading " + table + " failed");
             e.printStackTrace();
         }
-        return cust;
+        return customers;
     }
+
+    private Class getClass(IClassID classID) {
+        switch (classID.getClassId()) {
+            case "Customer":
+                return Customer.class;
+            case "Phone":
+                return Customer.class;
+            case "Airport":
+                return Customer.class;
+            case "Flight":
+                return Customer.class;
+            case "FlightSegment":
+                return Customer.class;
+        }
+        return null;
+    }
+
 }
 

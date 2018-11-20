@@ -2,6 +2,7 @@ package IGT.Customer;
 
 import IGT.Flight.Flight;
 import IGT.Hibernate;
+import IGT.IClassID;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -14,7 +15,8 @@ import java.util.HashSet;
 
 @Entity
 @Table(name = "Customers")
-public class Customer {
+public class Customer implements IClassID {
+    private static String table = "Customer";
 
     @Id
     @GeneratedValue
@@ -23,7 +25,7 @@ public class Customer {
 
     private String name;
 
-    @OneToMany(mappedBy = "belongsToCustomer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phoneList = new ArrayList<Phone>();
 
     @ManyToMany(mappedBy = "customers")
@@ -54,8 +56,8 @@ public class Customer {
 
     public void removeAllPhones() {
         phoneList.forEach(phone -> phone.setBelongsToCustomer(null));
-        phoneList.forEach(phone -> Hibernate.getInstance().update(phone));
-        phoneList = new ArrayList<>();
+        //phoneList.forEach(phone -> Hibernate.getInstance().delete(phone));
+        phoneList.clear();
     }
 
     public void addPhone(Phone p) {
@@ -91,5 +93,10 @@ public class Customer {
             }
         }
         return false;
+    }
+
+    @Override
+    public String getClassId() {
+        return "Customer";
     }
 }

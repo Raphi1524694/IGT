@@ -1,13 +1,14 @@
 package IGT.Flight;
 
 import IGT.Customer.Customer;
+import IGT.IClassID;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "Flights")
-public class Flight {
+public class Flight implements IClassID {
 
     @Id
     @GeneratedValue
@@ -25,24 +26,36 @@ public class Flight {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-        name = "FlightBookings",
-        joinColumns = { @JoinColumn(name = "flight_id") },
-        inverseJoinColumns = { @JoinColumn(name = "customer_id") }
+            name = "FlightBookings",
+            joinColumns = {@JoinColumn(name = "flight_id")},
+            inverseJoinColumns = {@JoinColumn(name = "customer_id")}
     )
     public Set<Customer> customers = new HashSet<Customer>();
 
-    public Flight(){}
+    public Flight() {
+    }
 
-    @OneToMany(mappedBy="belongsToFlight", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL)
     private List<FlightSegment> flightSegmentList = new ArrayList<FlightSegment>();
 
-    public void addFlightSegment(FlightSegment p){
+    public void addFlightSegment(FlightSegment p) {
         if (!flightSegmentList.contains(p)) {
             flightSegmentList.add(p);
-            if (p.belongsToFlight != null){
+            if (p.belongsToFlight != null) {
                 p.belongsToFlight.flightSegmentList.remove(p);
             }
             p.setBelongsToFlight(this);
         }
+    }
+
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getClassId() {
+        return "Flight";
     }
 }

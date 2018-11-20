@@ -2,37 +2,28 @@ package IGT.Server;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 
 public class Responder {
-    static Response build(Response.Status stat, String entity, boolean allowed) {
-        return cors(Response.status(stat).entity(entity), allowed).build();
+    static Response build(Response.Status stat, String entity) {
+        return cors(Response.status(stat).entity(entity)).build();
     }
 
-    private static ResponseBuilder cors(ResponseBuilder resp, boolean allowed) {
-        if (allowed) {
-            return resp.header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods",
-                    "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        } else {
-            return resp;
-        }
+    private static ResponseBuilder cors(ResponseBuilder resp) {
+        return resp.header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
 
     static Response badRequest() {
-        return Responder.build(Response.Status.BAD_REQUEST, "Bad Request", true);
+        return Responder.build(Response.Status.BAD_REQUEST, "Bad Request");
     }
 
-    public static Response created(JSONArray responseForUser) {
-        return build(Response.Status.CREATED, responseForUser.toString(), true);
+    public static Response created(Object responseForUser) {
+        return build(Response.Status.CREATED, responseForUser.toString());
     }
 
-    public static Response created(JSONObject createdDetails) {
-        return build(Response.Status.CREATED, createdDetails.toString(), true);
-    }
 
-    static Response unauthorised() {
-        return Responder.build(Response.Status.UNAUTHORIZED, "böser bub", true);
+    public static Response ok(Object responseForUser) {
+        return build(Response.Status.OK, responseForUser.toString());
     }
 
     public static Response preFlight() {
@@ -46,6 +37,6 @@ public class Responder {
     public static Response exception(Exception e) {
         System.out.println(e.getMessage());
         e.printStackTrace();
-        return Responder.build(Response.Status.BAD_REQUEST, e.getMessage(), true);
+        return Responder.build(Response.Status.BAD_REQUEST, e.getMessage());
     }
 }

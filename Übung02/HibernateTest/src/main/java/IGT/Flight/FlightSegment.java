@@ -1,10 +1,12 @@
 package IGT.Flight;
 
+import IGT.IClassID;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "FlightSegments")
-public class FlightSegment{
+public class FlightSegment implements IClassID {
 
     @Id
     @GeneratedValue
@@ -30,5 +32,16 @@ public class FlightSegment{
 
     public void setBelongsToFlight(Flight f){
         belongsToFlight = f;
+    }
+
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getClassId() {
+        return "FlightSegment";
     }
 }

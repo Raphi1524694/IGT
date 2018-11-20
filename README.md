@@ -98,6 +98,18 @@ If a field is not specified than it wont get updated.
       }
 ```
 
+### Delete a customer
+*DELETE* \<endpoint\>/customer/\<id\>
+
+**response:**
+```json
+      {
+        "customerId": 5,
+        "name" : "Max Musterman",
+        "phones": ["00491234567", "0038839284"]
+      }
+```
+
 ### Create an airport
 *POST* \<endpoint\>/airport/new
 
@@ -198,6 +210,32 @@ List all airports in the correct sequence.
 ```json
       {
         "bookingId": 5
+      }
+```
+
+
+### Delete a Flight
+*DELETE* \<endpoint\>/customer/\<id\>
+
+**response:**
+```json
+      {
+        "customerId": 5,
+        "name" : "Max Musterman",
+        "phones": ["00491234567", "0038839284"]
+      }
+```
+
+
+### Delete an Airport
+*DELETE* \<endpoint\>/customer/\<id\>
+
+**response:**
+```json
+      {
+        "customerId": 5,
+        "name" : "Max Musterman",
+        "phones": ["00491234567", "0038839284"]
       }
 ```
 

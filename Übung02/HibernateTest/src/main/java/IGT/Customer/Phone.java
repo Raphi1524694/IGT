@@ -1,10 +1,12 @@
 package IGT.Customer;
 
+import IGT.IClassID;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Customer_Phones")
-public class Phone {
+public class Phone implements IClassID {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,5 +28,15 @@ public class Phone {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    @Override
+    public String getClassId() {
+        return "Phone";
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 }
