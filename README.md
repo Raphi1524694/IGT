@@ -247,4 +247,41 @@ dont do this
 
 
 
+Aufgabe 1:
+1. Ist das Flugbuchung Szenario via BPMN für Sie ausreichend? (Siehe Anhang)
+folgende Fragen hätte ich zum Modell: 
+- welche Reisedaten genau werden von wem angegeben?
+- welche Flüge werden von wem ausgewählt (automatisch von einem System vorgeschlagen, manuell vom Benutzer)?
+- wo sind die Flüge gespeichert? 
+- wann erfolgt die Unterscheidung ob Direktflug oder mit 1…n Zwischenlandungen?
+- wer gibt die persönlichen Infos an (OK, wahrscheinlich der Anwender) aber wo werden die Daten gespeichert?
+- wer erstellt die Bestätigung?
+- was für Daten sind in der Bestätigung enthalten?
+- was passiert, wenn ein gebuchter Flug ausfällt?
+- kann ein gebuchter Flug storniert werden, wie?
 
+Will sagen: bitte das Modell noch ein wenig genauer ausarbeiten :-)
+
+Aufgabe 2:
+
+2. Um den Impedance Mismatch zu überbrücken haben wir das Datenmodell in der 3. Normalform implementiert. Ist dies der richtige Ansatz?
+auf jeden Fall, genau so.
+
+3. Reichen die entsprechenden Fehlermeldungen um zu beweisen das geschachtelte Transaktionen in Hibernate nicht möglich sind?
+wunderbar gelöst, super.
+
+1. Benötigen wir mehrere Datenmodelle oder ist das sql Datenmodell auch für die NoSQL Datenbanken gültig?
+ich würde gerne sehen, in welcher Form die Daten bei den jeweiligen NoSQL-DBs gespeichert werden. Da gibt es noch
+keine Standardisierten Modelle, da dürft ihr Eurer Kreativität freien Lauf lassen, was die Darstellung angeht.
+
+2. Soll das Interface / Modell eine Flugbuchung simulieren oder lediglich die CRUD Methoden implementieren (sprich. Einen customer anlegen, auslesen, anpassen, löschen)
+das Modell soll eine komplette Flugbuchung simulieren (vom Anlegen der Kundendaten (CRUD) bis zum Versenden der Bestätigung).
+Wenn der Benutzer seinen Reisezeitraum eingegeben hat, soll das System alle möglichen Flüge vorschlagen, damit er den für sich passenden
+raussuchen kann. Dann gibt er seine pers. Infos ein, bezahlt und bekommt eine Bestätigung. Soweit konnte ich das aus Eurem Prozess entnehmen. Im Prinzip modelliert ihr einmal Euren Prozess, wie er standardmäßig ablaufen soll (also ohne Ausnahmen und Schleifen, etc.).
+
+ 3. Wie genau soll der Client implementiert werden? (Main Methode? Command line? Grafisch?)
+Main-Methode und CommandLine reicht mir völlig, ich lasse mich aber auch gerne überraschen, z.B. grafisch mit SpringBoot oder 
+mit Groovy on Grails, oder so was.
+
+4. Haben wir richtig verstanden, dass die Tabelle auf Seite 143 in Ihrem Skript um die 4 NoSQL Datenbanken erweitert werden soll?
+jep, genau so.
