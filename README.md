@@ -42,7 +42,6 @@
   }
 ```
 
-
 ### Get one customer
 *GET* \<endpoint\>/customer/\<id\>
 
@@ -152,11 +151,40 @@ If a field is not specified than it wont get updated.
         ]
     }
 ```
+### Get all Flights in a date range
+*POST* \<endpoint\>/flight/filter
+
+Filter all Flights that go from start to finish on the specified day (or in a range sooner or later).
+
+**request:**
+```json
+     {
+        "startDate": "Tue Nov 13 2018 23:32:48 GMT+0100",
+        "arrivalDate": "Wen Nov 14 2018 23:32:48 GMT+0500",
+        "range": "1",
+        "startAirport": 5,
+        "arrivalAirport": 6,
+     }
+```
+
+
+**response:** the created flight with its id
+```json
+     [
+       {
+         "flightId": 5,
+         "miles": 500,
+         "startTime": "Tue Nov 13 2018 23:32:48 GMT+0100",
+         "arrivalTime": "Wen Nov 14 2018 23:32:48 GMT+0500",
+         "airportsList": [5, 6, 8]
+       },
+       ...
+    ]
+```
+
 
 ### Create a Flight
 *POST* \<endpoint\>/flight/new
-
-List all airports in the correct sequence.
 
 **request:**
 ```json
