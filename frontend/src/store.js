@@ -41,19 +41,10 @@ export default new Vuex.Store({
       dispatch("allCustomers");
     },
     async setCustomer({ commit, getters }, userId) {
-      commit(
-        "setUser",
-        (await Axios.get(getters.getURL + "/customer/" + userId)).data
-      );
+      commit("setUser", (await Axios.get(getters.getURL + "/customer/" + userId)).data);
     },
     async updateCustomer({ commit, getters }, userConfig) {
-      commit(
-        "setUser",
-        (await Axios.post(
-          getters.getURL + "/customer/" + userConfig.customerId,
-          userConfig
-        )).data
-      );
+      commit("setUser", (await Axios.post(getters.getURL + "/customer/" + userConfig.customerId, userConfig)).data);
     },
     async allCustomers({ commit, getters }) {
       commit(

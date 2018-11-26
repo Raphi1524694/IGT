@@ -1,18 +1,18 @@
 
 \.idea/
 
-Übung02/HibernateTest/target/
+server/target/
 
-Übung02/HibernateTest/mysql-data/
+server/mysql-data/
 
-Übung02/HibernateTest/dependency-reduced-pom\.xml
+server/dependency-reduced-pom\.xml
 
-Übung02/HibernateTest/\.project
+server/\.project
 
-Übung02/HibernateTest/\.classpath
+server/\.classpath
 
-Übung02/HibernateTest/\.settings/org\.eclipse\.jdt\.core\.prefs
+server/\.settings/org\.eclipse\.jdt\.core\.prefs
 
-Übung02/HibernateTest/\.settings/org\.eclipse\.jdt\.apt\.core\.prefs
+server/\.settings/org\.eclipse\.jdt\.apt\.core\.prefs
 
-Übung02/HibernateTest/\.settings/org\.eclipse\.m2e\.core\.prefs
+server/\.settings/org\.eclipse\.m2e\.core\.prefs
