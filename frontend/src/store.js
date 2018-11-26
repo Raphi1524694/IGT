@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     allUsers: [],
-    URL: "https://3c629d3e-b56f-4767-a394-bd2eed26a93c.mock.pstmn.io/api", // "http://localhost:6000/api",
+    URL: "http://localhost",
     Port: 6000
   },
   mutations: {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
   getters: {
     getUser: state => state.user,
     getAllUsers: state => state.allUsers,
-    getURL: state => state.URL //+ ':' + state.Port,
+    getURL: state => state.URL + ':' + state.Port + '/api',
   },
   actions: {
     async createCustomer({ getters, commit }, userConfig) {
