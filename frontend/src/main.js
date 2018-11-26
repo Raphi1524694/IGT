@@ -4,6 +4,7 @@ import store from "./store";
 import router from "./router";
 
 import "vuetify/src/stylus/app.styl";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 import colors from "vuetify/es5/util/colors";
 
 import Vuetify from "vuetify/lib";
