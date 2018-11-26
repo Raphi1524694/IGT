@@ -1,47 +1,57 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <v-toolbar id="toolbar">
-        <v-toolbar-title>Flightmanagement</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-sm-and-down">
-          <v-overflow-btn :items="dropdown_icon" target="#toolbar" label="Datenbank"></v-overflow-btn>
-        </v-toolbar-items>
-      </v-toolbar>
-    </div>
+  <v-app>
+    <div id="app">
+      <div id="nav">
+        <v-toolbar id="toolbar">
+          <v-toolbar-title>Flightmanagement</v-toolbar-title>
+          <v-spacer></v-spacer>
 
-    <router-view />
-    <br>
-    
-    <v-footer height="auto" color="primary lighten-1" id="footer">
-      <v-layout justify-center row wrap>
-        <v-btn color="gray" flat round to="/flights"> Flüge </v-btn>
-        <v-btn color="gray" flat round to="/user"> User </v-btn>
-        <v-flex primary lighten-3 py-3 text-xs-center xs12>
-          &copy;2018 — <strong>Raphi + Philip</strong>
-        </v-flex>
-      </v-layout>
-    </v-footer>
-  </div>
+          <v-menu :nudge-width="100">
+            <v-toolbar-title slot="activator">
+              <span>{{ dbSelected }}</span>
+              <v-icon>arrow_drop_down</v-icon>
+            </v-toolbar-title>
+
+            <v-list>
+              <v-list-tile v-for="item in items" :key="item" @click="dbSelected = item">
+                <v-list-tile-title v-text="item"></v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-toolbar>
+      </div>
+
+      <router-view/>
+      <br>
+
+      <v-footer height="auto" id="footer">
+        <v-layout justify-center row wrap>
+          <v-btn color="gray" flat round to="/flights">Flüge</v-btn>
+          <v-btn color="gray" flat round to="/user">User</v-btn>
+          <v-flex py-3 text-xs-center xs12>
+            &copy;2018 —
+            <strong>Raphi + Philip</strong>
+          </v-flex>
+        </v-layout>
+      </v-footer>
+    </div>
+  </v-app>
 </template>
 
 <script>
 export default {
-  data: () => {
-    return {
-      dropdown_icon: [
-        { text: "MongoDB", callback: () => console.log("list") },
-        { text: "MySQL", callback: () => console.log("favorite") },
-        { text: "delete", callback: () => console.log("delete") }
-      ]
-    };
+  data: () => ({
+    dbSelected: "MySQL",
+    items: ["MySQL", "MongoDB"]
+  }),
+  mounted() {
+    this.$store.dispatch("allCustomers");
   },
-  // mounted() { },
   methods: {}
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -49,7 +59,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#footer > * {
+#footer {
   color: darkgray !important;
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  margin-top: 40px;
+  width: 100%;
 }
+
 </style>

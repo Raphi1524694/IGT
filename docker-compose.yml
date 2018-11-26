@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     #restart: always
     ports:
-    - "6000:6000"
+    - "6001:6000"
     networks:
     - net
     links:
@@ -40,7 +40,8 @@ services:
     - "5000:5000"
     depends_on:
     - backend
-    volumes: npm-cache:/root/.npm
+    volumes: 
+    - npm-cache:/root/.npm
 
 volumes:
   npm-cache:

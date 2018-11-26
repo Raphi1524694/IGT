@@ -25,7 +25,7 @@ public class CustomerApi {
     public Response getAllCustomers() {
         JSONArray response = new JSONArray();
         Hibernate.getInstance().<Customer>getTable("Customer").forEach(customer -> response.put(customer.toJSON()));
-        return Responder.created(response);
+        return Responder.ok(response);
     }
 
     /**
@@ -107,7 +107,7 @@ public class CustomerApi {
                         }
                     }
                     Hibernate.getInstance().save(c);
-                    return Responder.created(c.toJSON());
+                    return Responder.ok(c.toJSON());
                 }
             }
             return Responder.badRequest();
