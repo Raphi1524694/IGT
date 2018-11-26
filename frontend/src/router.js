@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Flights from "./views/Flights.vue";
-import Users from "./views/User.vue";
+import Users from "./views/Users.vue";
 
 Vue.use(Router);
 
