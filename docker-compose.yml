@@ -31,6 +31,20 @@ services:
     volumes:
     - ./mysql-data:/var/lib/mysql
 
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    - "5000:5000"
+    networks:
+    - net
+    links:
+    - "backend:backend"
+    depends_on:
+    - backend
+
 networks:
   net:
     driver: bridge
