@@ -140,5 +140,22 @@ public class CustomerApi {
         }
     }
 
+    @OPTIONS
+	@Path("/all")
+	public Response optionsAll() {
+		return Responder.preFlight();
+    }
+    
+    @OPTIONS
+	@Path("/new")
+	public Response optionsNew() {
+		return Responder.preFlight();
+    }
+    
+    @OPTIONS
+	@Path("/{id}")
+	public Response optionsId() {
+		return Responder.preFlight();
+	}
 }
 
