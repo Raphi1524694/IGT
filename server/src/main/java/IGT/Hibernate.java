@@ -27,15 +27,16 @@ public class Hibernate {
                 .addAnnotatedClass(Airport.class)
                 .addAnnotatedClass(Phone.class);
         sf = conf.buildSessionFactory();
+        sf.openSession();
     }
 
     public static Hibernate getInstance() {
         return instance;
     }
 
-    public <T extends IClassID> void save(T object) {
+    public synchronized <T extends IClassID> void save(T object) {
         try {
-            Session session = sf.openSession();
+            Session session = sf.getCurrentSession();
             Transaction tx = session.beginTransaction();
             if (object.getId() == null) {
                 // save
@@ -50,8 +51,6 @@ public class Hibernate {
             }
 
             tx.commit();
-            session.flush();
-            session.close();
         } catch (Exception e) {
             System.err.println("inserting failed");
             e.printStackTrace();
@@ -59,21 +58,19 @@ public class Hibernate {
     }
 
 
-    public <T extends IClassID> void delete(T object) {
+    public synchronized <T extends IClassID> void delete(T object) {
         try {
-            Session session = sf.openSession();
+            Session session = sf.getCurrentSession();
             Transaction tx = session.beginTransaction();
             session.remove(session.find(getClass(object), ((T) object).getId()));
             tx.commit();
-            session.flush();
-            session.close();
         } catch (Exception e) {
             System.err.println("updating failed");
             e.printStackTrace();
         }
     }
 
-    public <T> List<T> getTable(String table) {
+    public synchronized <T> List<T> getTable(String table) {
         System.out.println(table);
         List<T> customers = new ArrayList<>();
         try {
@@ -84,8 +81,6 @@ public class Hibernate {
                 customers.add((T) c);
             }
             tx.commit();
-            session.flush();
-            session.close();
         } catch (Exception e) {
             System.err.println("reading " + table + " failed");
             e.printStackTrace();
@@ -93,7 +88,7 @@ public class Hibernate {
         return customers;
     }
 
-    private Class getClass(IClassID classID) {
+    private synchronized Class getClass(IClassID classID) {
         switch (classID.getClassId()) {
             case "Customer":
                 return Customer.class;

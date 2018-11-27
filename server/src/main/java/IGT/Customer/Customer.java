@@ -1,7 +1,6 @@
 package IGT.Customer;
 
 import IGT.Flight.Flight;
-import IGT.Hibernate;
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
@@ -25,14 +24,22 @@ public class Customer implements IClassID {
 
     private String name;
 
+    private String address;
+
+    private int flownMiles;
+
+    private EStatus status;
+
     @OneToMany(mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phoneList = new ArrayList<Phone>();
 
     @ManyToMany(mappedBy = "customers")
     public Set<Flight> flights = new HashSet<Flight>();
 
-    public Customer(String name) {
+    public Customer(String name, String address) {
         setName(name);
+        setAddress(address);
+        addMiles((int) Math.random() * 500);
     }
 
     public Customer() {
@@ -49,6 +56,32 @@ public class Customer implements IClassID {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void addMiles(int miles) {
+        flownMiles += miles;
+        if (flownMiles > EStatus.GOLD.getMiles()) {
+            status = EStatus.GOLD;
+            return;
+        }
+        if (flownMiles > EStatus.SILVER.getMiles()) {
+            status = EStatus.SILVER;
+            return;
+        }
+        if (flownMiles > EStatus.BRONZE.getMiles()) {
+            status = EStatus.BRONZE;
+            return;
+        }
+        status = EStatus.NONE;
+    }
+
 
     public List<Phone> getPhones() {
         return phoneList;
@@ -75,6 +108,8 @@ public class Customer implements IClassID {
         try {
             customerJson.put("customerId", id);
             customerJson.put("name", getName());
+            customerJson.put("address", getAddress());
+            customerJson.put("flownMiles", flownMiles);
             JSONArray phones = new JSONArray();
             phoneList.forEach(phone -> phones.put(phone.getPhoneNumber()));
             customerJson.put("phones", phones);
