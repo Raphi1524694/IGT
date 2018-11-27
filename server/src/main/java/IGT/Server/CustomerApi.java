@@ -15,7 +15,7 @@ public class CustomerApi {
 
     /**
      * <b>get all customers</b>
-     *
+     * <p>
      * Path: /customers/all
      * Method: GET
      */
@@ -30,7 +30,7 @@ public class CustomerApi {
 
     /**
      * <b>Create new customer</b>
-     *
+     * <p>
      * Path: /customers/new
      * Method: POST
      */
@@ -41,9 +41,9 @@ public class CustomerApi {
     public Response postNewCustomer(String json) {
         try {
             JSONObject object = new JSONObject(json);
-            if (object.getString("name") != null && object.getJSONArray("phones") != null) {
-                Customer newCustomer = new Customer();
-                newCustomer.setName(object.getString("name"));
+            if (object.has("name") && object.getJSONArray("phones") != null && object.has("address")) {
+                int miles = object.has("flownMiles") ? object.getInt("flownMiles") : 0;
+                Customer newCustomer = new Customer(object.getString("name"), object.getString("address"), miles);
                 JSONArray phones = object.getJSONArray("phones");
                 for (int i = 0; i < phones.length(); i++) {
                     newCustomer.addPhone(new Phone((String) phones.get(i)));
@@ -59,7 +59,7 @@ public class CustomerApi {
 
     /**
      * <b>Get customer by id</b>
-     *
+     * <p>
      * Path: /customers/{id}
      * Method: GET
      */
@@ -81,7 +81,7 @@ public class CustomerApi {
 
     /**
      * <b>Update customer by id</b>
-     *
+     * <p>
      * Path: /customers/{id}
      * Method: POST
      */
@@ -106,6 +106,12 @@ public class CustomerApi {
                             Hibernate.getInstance().save(p);
                         }
                     }
+                    if (object.has("address")) {
+                        c.setAddress(object.getString("address"));
+                    }
+                    if (object.has("flownMiles")) {
+                        c.setFlownMiles(object.getInt("flownMiles"));
+                    }
                     Hibernate.getInstance().save(c);
                     return Responder.ok(c.toJSON());
                 }
@@ -118,7 +124,7 @@ public class CustomerApi {
 
     /**
      * <b>Delete customer by id</b>
-     *
+     * <p>
      * Path: /customers/{id}
      * Method: DELETE
      */
@@ -141,21 +147,21 @@ public class CustomerApi {
     }
 
     @OPTIONS
-	@Path("/all")
-	public Response optionsAll() {
-		return Responder.preFlight();
+    @Path("/all")
+    public Response optionsAll() {
+        return Responder.preFlight();
     }
-    
+
     @OPTIONS
-	@Path("/new")
-	public Response optionsNew() {
-		return Responder.preFlight();
+    @Path("/new")
+    public Response optionsNew() {
+        return Responder.preFlight();
     }
-    
+
     @OPTIONS
-	@Path("/{id}")
-	public Response optionsId() {
-		return Responder.preFlight();
-	}
+    @Path("/{id}")
+    public Response optionsId() {
+        return Responder.preFlight();
+    }
 }
 

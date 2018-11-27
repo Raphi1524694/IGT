@@ -1,7 +1,7 @@
 package IGT.Customer;
 
 public enum EStatus {
-    GOLD(500), SILVER(100), BRONZE(50), NONE(0);
+    GOLD(10000), SILVER(5000), BRONZE(2500), NONE(0);
 
     private int miles;
 

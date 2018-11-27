@@ -44,7 +44,6 @@ public class Hibernate {
             } else {
                 // update
                 Object entry = session.find(getClass(object), ((T) object).getId());
-                System.out.println(entry.toString());
                 entry = object;
 
                 session.merge(entry);

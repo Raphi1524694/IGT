@@ -9,11 +9,11 @@
     
 | Database 	| Port 	| Type            	|
 |----------	|------	|-----------------	|
-| MySQL    	| 6000 	| SQL Database    	|
-| MongoDB  	| 6001 	| Document Store  	|
-| Ehcache  	| 6002 	| Cache           	|
-| Neo4j    	| 6003 	| Graph Database  	|
-| Redis    	| 6004 	| Key-value Store 	|
+| MySQL    	| 6001 	| SQL Database    	|
+| MongoDB  	| 6002 	| Document Store  	|
+| Ehcache  	| 6003 	| Cache           	|
+| Neo4j    	| 6004 	| Graph Database  	|
+| Redis    	| 6005 	| Key-value Store 	|
   
 **Example:** http://localhost:6001/api for the MongoDB instance
 

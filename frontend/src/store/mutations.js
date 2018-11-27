@@ -6,5 +6,8 @@ export default {
     allUsers(state, users) {
         console.log(`got ${users.length} users`);
         state.allUsers = users;
+    },
+    setPort(state, port) {
+        state.Port = port;
     }
 }

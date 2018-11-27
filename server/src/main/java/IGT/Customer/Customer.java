@@ -26,7 +26,7 @@ public class Customer implements IClassID {
 
     private String address;
 
-    private int flownMiles;
+    private int flownMiles = 0;
 
     private EStatus status;
 
@@ -36,10 +36,10 @@ public class Customer implements IClassID {
     @ManyToMany(mappedBy = "customers")
     public Set<Flight> flights = new HashSet<Flight>();
 
-    public Customer(String name, String address) {
+    public Customer(String name, String address, int flownMiles) {
         setName(name);
         setAddress(address);
-        addMiles((int) Math.random() * 500);
+        setFlownMiles(flownMiles);
     }
 
     public Customer() {
@@ -65,22 +65,28 @@ public class Customer implements IClassID {
         this.address = address;
     }
 
-    public void addMiles(int miles) {
-        flownMiles += miles;
-        if (flownMiles > EStatus.GOLD.getMiles()) {
+    public void addFlownMiles(int miles) {
+        this.setFlownMiles(flownMiles + miles);
+    }
+
+    public void setFlownMiles(int miles) {
+        flownMiles = miles;
+        if (flownMiles >= EStatus.GOLD.getMiles()) {
             status = EStatus.GOLD;
             return;
         }
-        if (flownMiles > EStatus.SILVER.getMiles()) {
+        if (flownMiles >= EStatus.SILVER.getMiles()) {
             status = EStatus.SILVER;
             return;
         }
-        if (flownMiles > EStatus.BRONZE.getMiles()) {
+        if (flownMiles >= EStatus.BRONZE.getMiles()) {
             status = EStatus.BRONZE;
             return;
         }
         status = EStatus.NONE;
     }
+
+
 
 
     public List<Phone> getPhones() {
@@ -110,11 +116,12 @@ public class Customer implements IClassID {
             customerJson.put("name", getName());
             customerJson.put("address", getAddress());
             customerJson.put("flownMiles", flownMiles);
+            customerJson.put("status", status.name());
             JSONArray phones = new JSONArray();
             phoneList.forEach(phone -> phones.put(phone.getPhoneNumber()));
             customerJson.put("phones", phones);
         } catch (Exception e) {
-            System.out.println("cannot convert customer" + this.getName() + " to json");
+            System.out.println("cannot convert customer " + this.getName() + " to json");
             e.printStackTrace();
         }
         return customerJson;

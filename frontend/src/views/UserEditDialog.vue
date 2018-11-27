@@ -9,21 +9,34 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12 v-for="(field, index) in getFields()" :key="index">
-              <div v-if="isArray(field)" >
+              <div v-if="isArray(field)">
                 <span>{{field}}:</span>
                 <div class="Array">
-                  <v-text-field v-for="(fields, index) in user[field]" :key="index" required v-model="user[field][index]" clearable @change="add(field)"></v-text-field>
+                  <v-text-field
+                    v-for="(fields, index) in user[field]"
+                    :key="index"
+                    required
+                    v-model="user[field][index]"
+                    clearable
+                    @change="add(field)"
+                  ></v-text-field>
                   <v-btn @click="add(field)">+</v-btn>
                 </div>
               </div>
               <v-text-field :label="field" v-else required v-model="user[field]"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-select :items="['Gold', 'Silver', 'Bronze', 'none']" label="Class" required></v-select>
+              <v-select
+                :items="items"
+                v-model="status"
+                item-text="status"
+                item-value="miles"
+                label="Class"
+                required
+              ></v-select>
             </v-flex>
           </v-layout>
         </v-container>
-        <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -37,39 +50,62 @@
 <script>
 export default {
   props: {
-    userId: Number,
+    userId: Number
   },
   data: () => ({
-    dialog: false
+    dialog: false,
+    items: [
+      { status: "Gold", miles: 10000 },
+      { status: "Silver", miles: 5000 },
+      { status: "Bronze", miles: 2500 },
+      { status: "none", miles: 0 }
+    ]
   }),
   methods: {
     getFields() {
       const excluded = ["customerId", "status"];
-      const fields = Object.keys(this.user).filter(key => !excluded.includes(key));
+      const fields = Object.keys(this.user).filter(
+        key => !excluded.includes(key)
+      );
       return fields;
     },
-    save(){
+    save() {
       this.$store.dispatch("updateCustomer", this.user);
       this.dialog = false;
     },
-    cancel(){
+    cancel() {
       this.$store.dispatch("allCustomers");
       this.dialog = false;
     },
-    isArray(field){
+    isArray(field) {
       return Array.isArray(this.user[field]);
     },
-    add(field){
-      this.user[field] = this.user[field].filter(entry => entry && entry !== "");
+    add(field) {
+      this.user[field] = this.user[field].filter(
+        entry => entry && entry !== ""
+      );
       this.user[field].push("");
     }
   },
-  computed:{
-    user(){
-      return this.$store.getters.getAllUsers.find(c=>c.customerId == this.userId);
+  computed: {
+    user() {
+      return this.$store.getters.getAllUsers.find(
+        c => c.customerId === this.userId
+      );
+    },
+    status: {
+      get() {
+        return this.items.find(
+          item => item.miles >= Math.floor(this.user.flownMiles / 2500) * 2500
+        );
+      },
+      set(val) {
+        this.user.status = this.items.find(item => item.miles === val).status;
+        this.user.flownMiles = val;
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

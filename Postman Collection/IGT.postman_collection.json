@@ -8,6 +8,7 @@
 	"order": [
 		"42359d05-b411-4b99-992f-015fcb2298b3",
 		"c083f50d-7114-4b96-bf31-963b54ee2a6e",
+		"f026267c-e82d-4484-a025-ac59fd9cc1cb",
 		"d1c9c5b1-8f6b-48ea-894e-f8af531320e2",
 		"29f260a1-251d-4a7d-b752-54c2b499d4f0"
 	],
@@ -36,7 +37,40 @@
 			"auth": null,
 			"events": [],
 			"folder": null,
-			"rawModeData": "{\n\t\"name\": \"test\",\n\t\"phones\": [\"1234\", \"4321\"]\n}",
+			"responses": [
+				{
+					"id": "dd9fe945-5851-4ee4-9588-5d2ccc9bc92d",
+					"name": "new customer",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "    {\r\n      \"customerId\": 5,\r\n      \"name\" : \"Max Musterman\",\r\n      \"phones\": [\"00491234567\", \"0038839284\"]\r\n    }",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"requestObject": {
+						"url": "{{server}}:{{MySQL}}/api/customer/new",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"data": "{\n  \"name\": \"test\",\n  \"phones\": [\"1234\", \"4321\"]\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					},
+					"headers": [],
+					"cookies": [],
+					"request": "29f260a1-251d-4a7d-b752-54c2b499d4f0",
+					"collection": "e307e235-250a-4c70-b91b-205898c56795"
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"User\",\n\t\"address\": \"at home\",\n\t\"phones\": [\"1234\", \"4321\"]\n}",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -54,13 +88,40 @@
 			"auth": null,
 			"events": [],
 			"folder": null,
+			"responses": [
+				{
+					"id": "43f2373e-dcd2-4d72-8644-563edda1166b",
+					"name": "get all customers",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "{\r\n    \"customers\":\r\n    [\r\n      {\r\n        \"customerId\": 5,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 6,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 7,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 8,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      }\r\n    ]\r\n  }",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"requestObject": {
+						"url": "{{server}}:{{MySQL}}/api/customer/all",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"data": null,
+						"method": "GET",
+						"dataMode": null
+					},
+					"headers": [],
+					"cookies": [],
+					"request": "42359d05-b411-4b99-992f-015fcb2298b3",
+					"collection": "e307e235-250a-4c70-b91b-205898c56795"
+				}
+			],
 			"headers": "",
 			"pathVariables": {}
 		},
 		{
 			"id": "c083f50d-7114-4b96-bf31-963b54ee2a6e",
 			"name": "get customer by id",
-			"url": "{{server}}:{{MySQL}}/api/customer/4",
+			"url": "{{server}}:{{MySQL}}/api/customer/1",
 			"description": "",
 			"data": null,
 			"dataMode": null,
@@ -71,6 +132,33 @@
 			"auth": null,
 			"events": [],
 			"folder": null,
+			"responses": [
+				{
+					"id": "dee670cb-ab52-468a-9e2b-3345d6704500",
+					"name": "get customer by id",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "    {\r\n      \"customerId\": 5,\r\n      \"name\" : \"Max Musterman\",\r\n      \"phones\": [\"00491234567\", \"0038839284\"]\r\n    }",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"requestObject": {
+						"url": "{{server}}:{{MySQL}}/api/customer/4",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"data": null,
+						"method": "GET",
+						"dataMode": null
+					},
+					"headers": [],
+					"cookies": [],
+					"request": "c083f50d-7114-4b96-bf31-963b54ee2a6e",
+					"collection": "e307e235-250a-4c70-b91b-205898c56795"
+				}
+			],
 			"headers": "",
 			"pathVariables": {}
 		},
@@ -96,8 +184,85 @@
 			"auth": null,
 			"events": [],
 			"folder": null,
-			"rawModeData": "{\n\t\"name\": \"testUpdaaate\",\n\t\"phones\": [\"1234321\"]\n}",
+			"responses": [
+				{
+					"id": "f5ca0d2b-aa40-4ca0-8fbe-18c1bbc8c91e",
+					"name": "update customer",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "{\r\n    \"customers\":\r\n    [\r\n      {\r\n        \"customerId\": 5,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 6,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 7,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 8,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      }\r\n    ]\r\n  }",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"requestObject": {
+						"url": "{{server}}:{{MySQL}}/api/customer/1",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"data": "{\n  \"name\": \"testUpdaaate\",\n  \"phones\": [\"1234321\"]\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					},
+					"headers": [],
+					"cookies": [],
+					"request": "d1c9c5b1-8f6b-48ea-894e-f8af531320e2",
+					"collection": "e307e235-250a-4c70-b91b-205898c56795"
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"testUpdaaate\",\n\t\"phones\": [\"1234321\"],\n\t\"address\": \"not at home\",\n\t\"flownMiles\": 10000\n}",
 			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "f026267c-e82d-4484-a025-ac59fd9cc1cb",
+			"name": "delete customer",
+			"url": "{{server}}:{{MySQL}}/api/customer/4",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"responses": [
+				{
+					"id": "0668237e-fe7a-4f35-8525-076bd8a250d0",
+					"name": "delete customer",
+					"status": "",
+					"mime": "",
+					"language": "json",
+					"text": "{\n\t\"message\":\"okay\"\n}",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"requestObject": {
+						"url": "{{server}}:{{MySQL}}/api/customer/4",
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"data": [],
+						"method": "DELETE",
+						"dataMode": "params"
+					},
+					"headers": [],
+					"cookies": [],
+					"request": "f026267c-e82d-4484-a025-ac59fd9cc1cb",
+					"collection": "e307e235-250a-4c70-b91b-205898c56795"
+				}
+			],
+			"headers": "",
 			"pathVariables": {}
 		}
 	]

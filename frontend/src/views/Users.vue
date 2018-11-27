@@ -8,7 +8,9 @@
           </v-card-title>
           <table>
             <tr class="field" v-for="(field, index) in getFields(user)" :key="index">
-              <td><b>{{field}}:</b></td>
+              <td>
+                <b>{{field}}:</b>
+              </td>
               <td>{{user[field]}}</td>
             </tr>
           </table>
@@ -20,15 +22,18 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <create-user id="fab"/>
   </div>
 </template>
 
 <script>
 import UserEditDialog from "./UserEditDialog.vue";
+import CreateUser from "./CreateUser.vue";
 
 export default {
   components: {
-    UserEditDialog
+    UserEditDialog,
+    CreateUser
   },
   methods: {
     getFields(user) {
@@ -42,7 +47,7 @@ export default {
 .user {
   margin: 10px;
 }
-#list{
+#list {
   margin-bottom: 80px;
 }
 .field {
@@ -53,5 +58,12 @@ export default {
 }
 table {
   margin-left: 20px;
+  width: calc(100% - 40px);
+}
+#fab {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  z-index: 500;
 }
 </style>

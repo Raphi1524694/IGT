@@ -13,8 +13,8 @@
             </v-toolbar-title>
 
             <v-list>
-              <v-list-tile v-for="item in items" :key="item" @click="dbSelected = item">
-                <v-list-tile-title v-text="item"></v-list-tile-title>
+              <v-list-tile v-for="item in items" :key="item.port" @click="setPort(item)">
+                <v-list-tile-title v-text="item.name"></v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
@@ -42,12 +42,25 @@
 export default {
   data: () => ({
     dbSelected: "MySQL",
-    items: ["MySQL", "MongoDB"]
+    items: [
+      { name: "MySQL", port: 6001 },
+      { name: "MongoDB", port: 6002 },
+      { name: "Ehcache", port: 6003 },
+      { name: "Neo4j", port: 6004 },
+      { name: "Redis", port: 6005 }
+    ]
   }),
   mounted() {
     this.$store.dispatch("allCustomers");
   },
-  methods: {}
+  methods: {
+    setPort(item) {
+      this.dbSelected = item.name;
+      this.$store.commit("allUsers", []);
+      this.$store.commit("setPort", item.port);
+      this.$store.dispatch("allCustomers");
+    }
+  }
 };
 </script>
 
@@ -67,5 +80,4 @@ export default {
   margin-top: 40px;
   width: 100%;
 }
-
 </style>

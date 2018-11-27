@@ -1,7 +1,9 @@
 import Axios from "axios";
 
-export const createCustomer = async ({ getters, commit }, userConfig) => {
+export const createCustomer = async ({ dispatch, getters, commit }, userConfig) => {
+    console.log(userConfig)
     commit("setUser", (await Axios.post(getters.getURL + "/customer/new", userConfig)).data);
+    dispatch("allCustomers");
 }
 export const deleteCustomer = async ({ dispatch, getters }, customerId) => {
     const response = await Axios.delete(getters.getURL + "/customer/" + customerId);
