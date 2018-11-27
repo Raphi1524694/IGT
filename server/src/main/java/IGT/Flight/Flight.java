@@ -116,8 +116,7 @@ public class Flight implements IClassID {
         } catch(JSONException e) {
             e.printStackTrace();
         }
-
-
+        return flight;
     }
 
     @Override

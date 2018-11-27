@@ -49,9 +49,9 @@ public class Hibernate {
                 session.merge(entry);
             }
 
-            // session.flush();
-            // session.close();
             tx.commit();
+            session.flush();
+            session.close();
         } catch (Exception e) {
             System.err.println("inserting failed");
             e.printStackTrace();
@@ -64,9 +64,9 @@ public class Hibernate {
             Session session = sf.openSession();
             Transaction tx = session.beginTransaction();
             session.remove(session.find(getClass(object), ((T) object).getId()));
-            // session.flush();
-            // session.close();
             tx.commit();
+            session.flush();
+            session.close();
         } catch (Exception e) {
             System.err.println("updating failed");
             e.printStackTrace();
@@ -83,8 +83,9 @@ public class Hibernate {
             for (Object c : session.createQuery("FROM " + table).list()) {
                 customers.add((T) c);
             }
-            // session.flush();
             tx.commit();
+            session.flush();
+            session.close();
         } catch (Exception e) {
             System.err.println("reading " + table + " failed");
             e.printStackTrace();

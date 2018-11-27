@@ -12,6 +12,11 @@ export const setCustomer = async ({ commit, getters }, userId) => {
     commit("setUser", (await Axios.get(getters.getURL + "/customer/" + userId)).data);
 }
 export const updateCustomer = async ({ commit, getters }, userConfig) => {
+    Object.keys(userConfig)
+        .filter(key => Array.isArray(userConfig[key]))
+        .forEach(arrayKey => {
+            userConfig[arrayKey] = userConfig[arrayKey].filter(entry => entry && entry !== "");
+        })
     commit("setUser", (await Axios.post(getters.getURL + "/customer/" + userConfig.customerId, userConfig)).data);
 }
 export const allCustomers = async ({ commit, getters }) => {

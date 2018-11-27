@@ -1,42 +1,25 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-dialog v-model="dialog" max-width="600px">
     <v-btn slot="activator" flat>edit</v-btn>
     <v-card>
       <v-card-title>
-        <span class="headline">User Profile</span>
+        <span class="headline">Edit User</span>
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
           <v-layout wrap>
-            <v-flex xs12 sm6 md4>
-              <v-text-field label="Legal first name*" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 md4>
-              <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 md4>
-              <v-text-field
-                label="Legal last name*"
-                hint="example of persistent helper text"
-                persistent-hint
-                required
-              ></v-text-field>
+            <v-flex xs12 v-for="(field, index) in getFields()" :key="index">
+              <div v-if="isArray(field)" >
+                <span>{{field}}:</span>
+                <div class="Array">
+                  <v-text-field v-for="(fields, index) in user[field]" :key="index" required v-model="user[field][index]" clearable @change="add(field)"></v-text-field>
+                  <v-btn @click="add(field)">+</v-btn>
+                </div>
+              </div>
+              <v-text-field :label="field" v-else required v-model="user[field]"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-text-field label="Email*" required></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field label="Password*" type="password" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <v-autocomplete
-                :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                label="Interests"
-                multiple
-              ></v-autocomplete>
+              <v-select :items="['Gold', 'Silver', 'Bronze', 'none']" label="Class" required></v-select>
             </v-flex>
           </v-layout>
         </v-container>
@@ -44,8 +27,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+        <v-btn color="blue darken-1" flat @click="cancel()">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click="save()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -53,9 +36,49 @@
 
 <script>
 export default {
+  props: {
+    userId: Number,
+  },
   data: () => ({
     dialog: false
-  })
-
+  }),
+  methods: {
+    getFields() {
+      const excluded = ["customerId", "status"];
+      const fields = Object.keys(this.user).filter(key => !excluded.includes(key));
+      return fields;
+    },
+    save(){
+      this.$store.dispatch("updateCustomer", this.user);
+      this.dialog = false;
+    },
+    cancel(){
+      this.$store.dispatch("allCustomers");
+      this.dialog = false;
+    },
+    isArray(field){
+      return Array.isArray(this.user[field]);
+    },
+    add(field){
+      this.user[field] = this.user[field].filter(entry => entry && entry !== "");
+      this.user[field].push("");
+    }
+  },
+  computed:{
+    user(){
+      return this.$store.getters.getAllUsers.find(c=>c.customerId == this.userId);
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.Array {
+  margin: -5px 15px 0px 75px;
+}
+span {
+  font-weight: bold;
+  float: left;
+  margin-top: -5px;
+}
+</style>

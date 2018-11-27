@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex xs12 sm6 offset-sm3>
+      <v-flex xs12 sm6 offset-sm3 id="list">
         <v-card class="user" v-for="user in $store.getters.getAllUsers" :key="user.customerId">
           <v-card-title primary-title>
             <h3 class="headline mb-0">{{user.name}}</h3>
@@ -13,7 +13,7 @@
             </tr>
           </table>
           <v-card-actions>
-            <user-edit-dialog/>
+            <user-edit-dialog :userId="user.customerId"/>
             <v-btn flat @click="$store.dispatch('deleteCustomer', user.customerId)">delete</v-btn>
             <v-btn flat color="orange" @click="$store.dispatch('setCustomer', user.customerId)">use</v-btn>
           </v-card-actions>
@@ -32,9 +32,7 @@ export default {
   },
   methods: {
     getFields(user) {
-      const fields = Object.keys(user);
-      console.log(fields);
-      return fields;
+      return Object.keys(user);
     }
   }
 };
@@ -43,6 +41,9 @@ export default {
 <style lang="scss" scoped>
 .user {
   margin: 10px;
+}
+#list{
+  margin-bottom: 80px;
 }
 .field {
   text-align: left;
