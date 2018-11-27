@@ -25,7 +25,8 @@ public class FlightSegment implements IClassID {
 
     public FlightSegment(){}
 
-    public FlightSegment(Airport start, Airport goal){
+    public FlightSegment(Flight f, Airport start, Airport goal) {
+        this.setBelongsToFlight(f);
         this.start = start;
         this.goal = goal;
     }

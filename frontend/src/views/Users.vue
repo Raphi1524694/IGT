@@ -25,6 +25,7 @@
 
 <script>
 import UserEditDialog from "./UserEditDialog.vue";
+
 export default {
   components: {
     UserEditDialog

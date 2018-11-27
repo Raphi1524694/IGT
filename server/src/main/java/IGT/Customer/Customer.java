@@ -79,7 +79,7 @@ public class Customer implements IClassID {
             phoneList.forEach(phone -> phones.put(phone.getPhoneNumber()));
             customerJson.put("phones", phones);
         } catch (Exception e) {
-            System.out.println("cannot convert customer" + getName() + " to json");
+            System.out.println("cannot convert customer" + this.getName() + " to json");
             e.printStackTrace();
         }
         return customerJson;
