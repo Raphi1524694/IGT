@@ -5,7 +5,9 @@ services:
     build:
       context: Server
       dockerfile: Dockerfile
-    #restart: always
+      args:
+        - DB=MySQL
+    restart: always
     ports:
     - "6001:6000"
     networks:
