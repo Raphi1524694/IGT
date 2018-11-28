@@ -18,4 +18,5 @@ server/\.settings/org\.eclipse\.jdt\.apt\.core\.prefs
 server/\.settings/org\.eclipse\.m2e\.core\.prefs
 
 mysql-data/
+mongodb-data/
 npm-cache
