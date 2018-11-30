@@ -132,7 +132,7 @@ If a field is not specified than it wont get updated.
 ```
 
 ### Get all airports
-*GET* \<endpoint\>/airports
+*GET* \<endpoint\>/airport/all
 
 **response:** 
 ```json
@@ -231,20 +231,22 @@ List all airports in the correct sequence.
 ```
 
 ### Cancel a Booking
-*POST* \<endpoint\>/booking/cancel
+*DELETE* \<endpoint\>/booking/cancel/\<id\>
 
 List all airports in the correct sequence.
 
-**request:**
+**response:**
 ```json
       {
-        "bookingId": 5
+        "bookingId": 5,
+        "customerId": 5,
+        "flightId": 6
       }
 ```
 
 
 ### Delete a Flight
-*DELETE* \<endpoint\>/customer/\<id\>
+*DELETE* \<endpoint\>/flight/\<id\>
 
 **response:**
 ```json
@@ -257,7 +259,7 @@ List all airports in the correct sequence.
 
 
 ### Delete an Airport
-*DELETE* \<endpoint\>/customer/\<id\>
+*DELETE* \<endpoint\>/airport/\<id\>
 
 **response:**
 ```json
