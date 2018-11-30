@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-        Server server = new Server(6000);
+        int port = args.length > 0 ? Integer.parseInt(args[0]) : 6000;
+        Server server = new Server(port);
 
         ServletContextHandler ctx =
                 new ServletContextHandler(ServletContextHandler.NO_SESSIONS);

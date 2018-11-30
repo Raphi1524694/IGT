@@ -7,9 +7,10 @@ services:
       dockerfile: Dockerfile
       args:
         - DB=MySQL
+        - PORT=6001
     restart: always
     ports:
-    - "6001:6000"
+    - "6001:6001"
     networks:
     - mysql
     links:
@@ -23,9 +24,10 @@ services:
       dockerfile: Dockerfile
       args:
         - DB=MongoDB
+        - PORT=6002
     restart: always
     ports:
-    - "6002:6000"
+    - "6002:6002"
     networks:
     - mongo
     links:
