@@ -78,19 +78,14 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.13</version>
-        </dependency>
-        <dependency>
             <groupId>org.codehaus.jettison</groupId>
             <artifactId>jettison</artifactId>
             <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.ogm</groupId>
-            <artifactId>hibernate-ogm-mongodb</artifactId>
-            <version>4.2.0.Final</version>
+            <artifactId>hibernate-ogm-neo4j</artifactId>
+            <version>5.4.0.Final</version>
         </dependency>
     </dependencies>
 

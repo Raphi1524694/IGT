@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
       args:
         - DB=MySQL
-        - PORT=6001
+    environment:
+      - PORT=6001
     restart: always
     ports:
     - "6001:6001"
@@ -18,22 +19,41 @@ services:
     depends_on:
     - mysql
 
-  # servermongodb:
-  #   build:
-  #     context: Server
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - DB=MongoDB
-  #       - PORT=6002
-  #   #restart: always
-  #   ports:
-  #   - "6002:6002"
-  #   networks:
-  #   - mongo
-  #   links:
-  #   - "mongodb:mongodb"
-  #   depends_on:
-  #   - mongodb
+  servermongodb:
+    build:
+      context: Server
+      dockerfile: Dockerfile
+      args:
+        - DB=MongoDB
+    environment:
+      - PORT=6002
+    #restart: always
+    ports:
+    - "6002:6002"
+    networks:
+    - mongo
+    links:
+    - "mongodb:mongodb"
+    depends_on:
+    - mongodb
+
+  serverneo4j:
+    build:
+      context: Server
+      dockerfile: Dockerfile
+      args:
+        - DB=Neo4j
+    environment:
+      - PORT=6003
+    restart: always
+    ports:
+    - "6003:6003"
+    networks:
+    - neo
+    links:
+    - "neo:neo"
+    depends_on:
+    - neo
 
   mysql:
     image: mysql:5.5
@@ -51,18 +71,29 @@ services:
     volumes:
     - ./mysql-data:/var/lib/mysql
 
-  # mongodb:
-  #   image: mongo
-  #   environment:
-  #   - MONGO_INITDB_ROOT_USERNAME=bla
-  #   - MONGO_INITDB_ROOT_PASSWORD=password
-  #   #restart: always
-  #   networks:
-  #   - mongo
-  #   ports:
-  #     - "27017:27017"
-  #   volumes:
-  #     - ./mongodb-data:/data/db
+  mongodb:
+    image: mongo
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=bla
+    - MONGO_INITDB_ROOT_PASSWORD=password
+    #restart: always
+    networks:
+    - mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+  neo:
+    image: neo4j:3.0
+    environment:
+    - NEO4J_AUTH=bla:password 
+    networks:
+    - neo
+    ports:
+     - "7687:7687"
+    volumes:              
+     - ./neo4j-data:/data/dbms
 
   frontend:
     build:
@@ -73,16 +104,19 @@ services:
     - "5000:5000"
     depends_on:
     - servermysql
-    # - servermongodb
+    - servermongodb
     volumes: 
     - npm-cache:/root/.npm
 
 volumes:
   npm-cache:
     external: false
+  mongodata:
 
 networks:
   mysql:
     driver: bridge
-  # mongo:
-  #   driver: bridge
+  mongo:
+    driver: bridge
+  neo:
+    driver: bridge

@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) {
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 6001;
         System.out.println("Server running on Port: " + port);
+
         Server server = new Server(port);
 
         ServletContextHandler ctx =

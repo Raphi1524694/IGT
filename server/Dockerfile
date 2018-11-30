@@ -1,7 +1,7 @@
 FROM maven:3.5.2-jdk-8-alpine
 
 ARG DB
-ARG PORT=6000
+ENV PORT=6001
 
 COPY ${DB}pom.xml /tmp/
 COPY src /tmp/src/
@@ -10,4 +10,4 @@ WORKDIR /tmp/
 EXPOSE ${PORT}
 LABEL db=${DB}
 RUN java -cp . Main ${DB} && mvn package
-CMD java -jar /tmp/target/IGT.jar ${PORT}
+CMD java -jar /tmp/target/IGT.jar $PORT

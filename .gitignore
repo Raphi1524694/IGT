@@ -19,4 +19,5 @@ server/\.settings/org\.eclipse\.m2e\.core\.prefs
 
 mysql-data/
 mongodb-data/
+neo4j-data
 npm-cache
