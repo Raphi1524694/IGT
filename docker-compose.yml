@@ -18,22 +18,22 @@ services:
     depends_on:
     - mysql
 
-  servermongodb:
-    build:
-      context: Server
-      dockerfile: Dockerfile
-      args:
-        - DB=MongoDB
-        - PORT=6002
-    restart: always
-    ports:
-    - "6002:6002"
-    networks:
-    - mongo
-    links:
-    - "mongodb:mongodb"
-    depends_on:
-    - mongodb
+  # servermongodb:
+  #   build:
+  #     context: Server
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - DB=MongoDB
+  #       - PORT=6002
+  #   #restart: always
+  #   ports:
+  #   - "6002:6002"
+  #   networks:
+  #   - mongo
+  #   links:
+  #   - "mongodb:mongodb"
+  #   depends_on:
+  #   - mongodb
 
   mysql:
     image: mysql:5.5
@@ -51,15 +51,18 @@ services:
     volumes:
     - ./mysql-data:/var/lib/mysql
 
-  mongodb:
-    image: mongo
-    restart: always
-    networks:
-    - mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./mongodb-data:/data/db
+  # mongodb:
+  #   image: mongo
+  #   environment:
+  #   - MONGO_INITDB_ROOT_USERNAME=bla
+  #   - MONGO_INITDB_ROOT_PASSWORD=password
+  #   #restart: always
+  #   networks:
+  #   - mongo
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ./mongodb-data:/data/db
 
   frontend:
     build:
@@ -70,7 +73,7 @@ services:
     - "5000:5000"
     depends_on:
     - servermysql
-    - servermongodb
+    # - servermongodb
     volumes: 
     - npm-cache:/root/.npm
 
@@ -81,5 +84,5 @@ volumes:
 networks:
   mysql:
     driver: bridge
-  mongo:
-    driver: bridge
+  # mongo:
+  #   driver: bridge
