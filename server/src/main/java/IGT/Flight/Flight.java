@@ -2,6 +2,7 @@ package IGT.Flight;
 
 import IGT.Customer.Customer;
 import IGT.IClassID;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -19,8 +20,40 @@ public class Flight implements IClassID {
 
     private Date startTime;
 
+    private Date arrivalTime;
+
+    private int miles;
+
+    private int seatsEconomyClass;
+
+    private int seatsFistClass;
+
+    private PlaneType plane;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "FlightBookings",
+            joinColumns = {@JoinColumn(name = "flight_id")},
+            inverseJoinColumns = {@JoinColumn(name = "customer_id")}
+    )
+    public Set<Customer> customers = new HashSet<>();
+
+    @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FlightSegment> flightSegmentList = new ArrayList<>();
+
+    public Flight() {
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
     public Date getArrivalTime() {
         return arrivalTime;
+    }
+
+    public Date getStartTime() {
+        return startTime;
     }
 
     public void setArrivalTime(Date arrivalTime) {
@@ -59,6 +92,14 @@ public class Flight implements IClassID {
         this.customers = customers;
     }
 
+    public void setMiles(int miles) {
+        this.miles = miles;
+    }
+
+    public int getMiles() {
+        return miles;
+    }
+
     public List<FlightSegment> getFlightSegmentList() {
         return flightSegmentList;
     }
@@ -66,35 +107,6 @@ public class Flight implements IClassID {
     public void setFlightSegmentList(List<FlightSegment> flightSegmentList) {
         this.flightSegmentList = flightSegmentList;
     }
-
-    private Date arrivalTime;
-
-    private int seatsEconomyClass;
-    private int seatsFistClass;
-
-    private PlaneType plane;
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "FlightBookings",
-            joinColumns = {@JoinColumn(name = "flight_id")},
-            inverseJoinColumns = {@JoinColumn(name = "customer_id")}
-    )
-    public Set<Customer> customers = new HashSet<>();
-
-    public Flight() {
-    }
-
-    @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL)
-    private List<FlightSegment> flightSegmentList = new ArrayList<>();
 
     public void addFlightSegment(FlightSegment p) {
         if (!flightSegmentList.contains(p)) {
@@ -112,8 +124,10 @@ public class Flight implements IClassID {
             flight.put("flightId", this.getId());
             flight.put("startTime", this.getStartTime());
             flight.put("arrivalTime", this.getArrivalTime());
-            flight.put("airportsList", this.getFlightSegmentList());
-        } catch(JSONException e) {
+            flight.put("miles", this.getMiles());
+            flight.put("airportsList", new JSONArray(this.getFlightSegmentList()));
+            System.out.println(flight.getJSONArray("airportsList"));
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return flight;

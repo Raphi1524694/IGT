@@ -48,7 +48,7 @@ public class FlightSegment implements IClassID {
         try {
             json.put("id", getId());
         } catch (Exception e) {
-            System.out.println("cannot convert customer " + this.getId() + " to json");
+            System.out.println("cannot convert flight segment " + this.getId() + " to json");
             e.printStackTrace();
         }
         return json;

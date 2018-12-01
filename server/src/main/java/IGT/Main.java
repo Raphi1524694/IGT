@@ -1,6 +1,5 @@
 package IGT;
 
-import IGT.Customer.Customer;
 import IGT.Flight.PopularAirports;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -26,7 +25,6 @@ public class Main {
         ServletHolder serHol = ctx.addServlet(ServletContainer.class, "/api/*");
         serHol.setInitOrder(1);
         serHol.setInitParameter("jersey.config.server.provider.packages", "IGT/Server");
-        Hibernate.getInstance().<Customer>getTable("Customer");
         PopularAirports.generate();
         try {
             server.start();

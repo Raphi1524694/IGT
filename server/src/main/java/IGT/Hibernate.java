@@ -5,6 +5,7 @@ import IGT.Customer.Phone;
 import IGT.Flight.Airport;
 import IGT.Flight.Flight;
 import IGT.Flight.FlightSegment;
+import IGT.Server.Responder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -71,7 +72,6 @@ public class Hibernate {
     }
 
     public synchronized <T> List<T> getTable(String table) {
-        System.out.println(table);
         List<T> customers = new ArrayList<>();
         try {
             Session session = sf.openSession();
@@ -86,6 +86,17 @@ public class Hibernate {
             e.printStackTrace();
         }
         return customers;
+    }
+
+    public synchronized <T extends IClassID> T getElementById(Object id, String table) {
+        List<T> t = getTable(table);
+        for (T c : t) {
+            if (id == c.getId()) {
+                return c;
+            }
+        }
+        System.out.println("cant find element");
+        return null;
     }
 
     private synchronized Class getClass(IClassID classID) {

@@ -68,10 +68,9 @@ public class CustomerApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOneCustomer(@PathParam("id") String id) {
         try {
-            for (Customer c : Hibernate.getInstance().<Customer>getTable("Customer")) {
-                if (c.getId() == Long.parseLong(id)) {
-                    return Responder.ok(c.toJSON());
-                }
+            Customer c = Hibernate.getInstance().getElementById(Long.parseLong(id), "Customer");
+            if (c != null) {
+                return Responder.ok(c.toJSON());
             }
             return Responder.badRequest();
         } catch (Exception e) {
@@ -133,12 +132,11 @@ public class CustomerApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteCustomer(@PathParam("id") String id) {
         try {
-            for (Customer c : Hibernate.getInstance().<Customer>getTable("Customer")) {
-                if (c.getId() == Long.parseLong(id)) {
-                    c.removeAllPhones();
-                    Hibernate.getInstance().delete(c);
-                    return Responder.ok(new JSONObject("{\"message\":\"done\"}"));
-                }
+            Customer c = Hibernate.getInstance().getElementById(Long.parseLong(id), "Customer");
+            if (c != null) {
+                c.removeAllPhones();
+                Hibernate.getInstance().delete(c);
+                return Responder.ok(new JSONObject("{\"message\":\"done\"}"));
             }
             return Responder.badRequest();
         } catch (Exception e) {

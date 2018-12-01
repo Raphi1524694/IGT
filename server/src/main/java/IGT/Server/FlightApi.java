@@ -3,13 +3,11 @@ package IGT.Server;
 import IGT.Flight.Airport;
 import IGT.Flight.Flight;
 import IGT.Flight.FlightSegment;
+import IGT.Hibernate;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.DateFormat;
@@ -24,14 +22,14 @@ public class FlightApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createFlight(String json) {
-        DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy kk:mm:ss z");
+        // DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy kk:mm:ss 'GMT'Z");
         Date start, arrival;
         JSONArray airportsList;
         int miles;
         try {
             JSONObject object = new JSONObject(json);
-            start = df.parse(object.getString("startTime"));
-            arrival = df.parse(object.getString("arrivalTime"));
+            start = new Date(); //df.parse(object.getString("startTime"));
+            arrival = new Date(); //df.parse(object.getString("arrivalTime"));
             airportsList = object.getJSONArray("airportsList");
             miles = object.getInt("miles");
             if (miles < 1 || airportsList.length() < 2) {
@@ -39,15 +37,27 @@ public class FlightApi {
             }
             Flight newFlight = new Flight();
             for (int i = 0; i < airportsList.length() - 1; i++) {
-                newFlight.addFlightSegment(new FlightSegment(newFlight, new Airport("name", "ABC"), new Airport("name2", "ABCD")));
+                Long currentId = airportsList.getLong(i);
+                Long nextId = airportsList.getLong(i + 1);
+                Airport currentAirport = Hibernate.getInstance().getElementById(currentId, "Airport");
+                Airport nextAirport = Hibernate.getInstance().getElementById(nextId, "Airport");
+                FlightSegment nextSegment = new FlightSegment(newFlight, currentAirport, nextAirport);
+                newFlight.addFlightSegment(nextSegment);
             }
             newFlight.setStartTime(start);
             newFlight.setArrivalTime(arrival);
+            newFlight.setMiles(miles);
+            Hibernate.getInstance().save(newFlight);
             return Responder.created(newFlight.toJSON());
-        } catch(Exception e) {
-            return Responder.badRequest();
+        } catch (Exception e) {
+            return Responder.exception(e);
         }
+    }
 
+    @OPTIONS
+    @Path("/new")
+    public Response optionsNew() {
+        return Responder.preFlight();
     }
 
 }
