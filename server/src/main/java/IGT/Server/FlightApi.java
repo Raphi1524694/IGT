@@ -16,10 +16,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Path("/flights")
+@Path("/flight")
 public class FlightApi {
 
     @POST
+    @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createFlight(String json) {
@@ -38,7 +39,7 @@ public class FlightApi {
             }
             Flight newFlight = new Flight();
             for (int i = 0; i < airportsList.length() - 1; i++) {
-                newFlight.addFlightSegment(new FlightSegment(newFlight, new Airport((String) airportsList.get(i)), new Airport((String) airportsList.get(i + 1))));
+                newFlight.addFlightSegment(new FlightSegment(newFlight, new Airport("name", "ABC"), new Airport("name2", "ABCD")));
             }
             newFlight.setStartTime(start);
             newFlight.setArrivalTime(arrival);

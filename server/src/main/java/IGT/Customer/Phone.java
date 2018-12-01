@@ -1,6 +1,7 @@
 package IGT.Customer;
 
 import IGT.IClassID;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -20,7 +21,8 @@ public class Phone implements IClassID {
         phoneNumber = number;
     }
 
-    public Phone(){}
+    public Phone() {
+    }
 
     public void setBelongsToCustomer(Customer c) {
         belongsToCustomer = c;
@@ -38,5 +40,17 @@ public class Phone implements IClassID {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", getId());
+        } catch (Exception e) {
+            System.out.println("cannot convert customer " + this.getPhoneNumber() + " to json");
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -1,22 +1,29 @@
 package IGT.Flight;
 
 import IGT.IClassID;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
 @Table(name = "Airports")
 public class Airport implements IClassID {
     @Id
+    @GeneratedValue
+    private Long id;
+
     public String name;
 
-    public Airport(){}
+    public String shortName;
 
-    public Airport(String name){
+    public Airport() {
+    }
+
+    public Airport(String name, String shortName) {
         this.name = name;
+        this.shortName = shortName;
     }
 
     @Override
@@ -26,6 +33,18 @@ public class Airport implements IClassID {
 
     @Override
     public Object getId() {
-        return name;
+        return id;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject flight = new JSONObject();
+        try {
+            flight.put("airportId", this.getId());
+            flight.put("name", name);
+            flight.put("short", shortName);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+        return flight;
     }
 }

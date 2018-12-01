@@ -52,6 +52,7 @@ public class Hibernate {
             tx.commit();
         } catch (Exception e) {
             System.err.println("inserting failed");
+            System.err.println("Object: " + object.toJSON().toString());
             e.printStackTrace();
         }
     }

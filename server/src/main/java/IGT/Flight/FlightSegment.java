@@ -1,6 +1,7 @@
 package IGT.Flight;
 
 import IGT.IClassID;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -39,6 +40,18 @@ public class FlightSegment implements IClassID {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", getId());
+        } catch (Exception e) {
+            System.out.println("cannot convert customer " + this.getId() + " to json");
+            e.printStackTrace();
+        }
+        return json;
     }
 
     @Override
