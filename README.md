@@ -231,7 +231,7 @@ List all airports in the correct sequence.
 ```
 
 ### Cancel a Booking
-*DELETE* \<endpoint\>/booking/cancel/\<id\>
+*DELETE* \<endpoint\>/booking/\<id\>
 
 List all airports in the correct sequence.
 

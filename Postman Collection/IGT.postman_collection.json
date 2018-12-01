@@ -40,12 +40,12 @@
 			"folder": null,
 			"order": [
 				"ad060056-091b-43cd-8944-1be30247d674",
+				"cb86eb60-4f23-42c5-8da5-57b70fefc341",
 				"1c56374c-a5a7-4958-837a-958f86224476",
 				"0cded9d6-5934-4a7d-8a05-248deec128b1",
 				"71d402f3-4c0e-4a89-902b-df85872e8d6b",
 				"9d38bde5-2186-44f8-89d9-e9cee0102c82",
-				"fe4c7a2f-dd25-4836-aebd-1df827fba181",
-				"cb86eb60-4f23-42c5-8da5-57b70fefc341"
+				"fe4c7a2f-dd25-4836-aebd-1df827fba181"
 			],
 			"folders_order": []
 		}
@@ -264,19 +264,19 @@
 					"status": "",
 					"mime": "",
 					"language": "json",
-					"text": "{\r\n    \"customers\":\r\n    [\r\n      {\r\n        \"customerId\": 5,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 6,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 7,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      },\r\n      {\r\n        \"customerId\": 8,\r\n        \"name\" : \"Max Musterman\",\r\n        \"phones\": [\"00491234567\", \"0038839284\"]\r\n      }\r\n    ]\r\n  }",
+					"text": "[\n    {\n        \"customerId\": 5,\n        \"name\": \"Max Musterman\",\n        \"phones\": [\n            \"00491234567\",\n            \"0038839284\"\n        ]\n    },\n    {\n        \"customerId\": 6,\n        \"name\": \"Max Musterman\",\n        \"phones\": [\n            \"00491234567\",\n            \"0038839284\"\n        ]\n    },\n    {\n        \"customerId\": 7,\n        \"name\": \"Max Musterman\",\n        \"phones\": [\n            \"00491234567\",\n            \"0038839284\"\n        ]\n    },\n    {\n        \"customerId\": 8,\n        \"name\": \"Max Musterman\",\n        \"phones\": [\n            \"00491234567\",\n            \"0038839284\"\n        ]\n    }\n]",
 					"responseCode": {
 						"code": 200,
 						"name": "OK"
 					},
 					"requestObject": {
-						"url": "{{server}}:{{MySQL}}/api/customer/all",
+						"data": null,
+						"dataMode": null,
+						"headerData": [],
+						"method": "GET",
 						"pathVariableData": [],
 						"queryParams": [],
-						"headerData": [],
-						"data": null,
-						"method": "GET",
-						"dataMode": null
+						"url": "{{server}}:{{MySQL}}/api/customer/all"
 					},
 					"headers": [],
 					"cookies": [],
@@ -316,7 +316,7 @@
 					"status": null,
 					"mime": null,
 					"language": "json",
-					"text": "     [\r\n       {\r\n         \"flightId\": 5,\r\n         \"miles\": 500,\r\n         \"startTime\": \"Tue Nov 13 2018 23:32:48 GMT+0100\",\r\n         \"arrivalTime\": \"Wen Nov 14 2018 23:32:48 GMT+0500\",\r\n         \"airportsList\": [5, 6, 8]\r\n       },\r\n       {\r\n         \"flightId\": 6,\r\n         \"miles\": 500,\r\n         \"startTime\": \"Tue Nov 13 2018 23:32:48 GMT+0100\",\r\n         \"arrivalTime\": \"Wen Nov 14 2018 23:32:48 GMT+0500\",\r\n         \"airportsList\": [5, 6, 8]\r\n       }\r\n    ]",
+					"text": "[\n    {\n        \"flightId\": 5,\n        \"miles\": 500,\n        \"startTime\": \"Tue Nov 13 2018 23:32:48 GMT+0100\",\n        \"arrivalTime\": \"Wen Nov 14 2018 23:32:48 GMT+0500\",\n        \"airportsList\": [\n            5,\n            6,\n            8\n        ]\n    },\n    {\n        \"flightId\": 6,\n        \"miles\": 500,\n        \"startTime\": \"Tue Nov 13 2018 23:32:48 GMT+0100\",\n        \"arrivalTime\": \"Wen Nov 14 2018 23:32:48 GMT+0500\",\n        \"airportsList\": [\n            5,\n            6,\n            8\n        ]\n    }\n]",
 					"responseCode": null,
 					"requestObject": {
 						"data": "{\n    \"startDate\": \"Tue Nov 13 2018 23:32:48 GMT+0100\",\n    \"arrivalDate\": \"Wen Nov 14 2018 23:32:48 GMT+0500\",\n    \"range\": \"1\",\n    \"startAirport\": 5,\n    \"arrivalAirport\": 6\n}",
@@ -424,7 +424,7 @@
 					"status": null,
 					"mime": null,
 					"language": "json",
-					"text": "{\n    \"airports\": [\n        {\n            \"airportId\": 5,\n            \"name\": \"Some Airport\",\n            \"short\": \"SAP\"\n        },\n        {\n            \"airportId\": 6,\n            \"name\": \"Another Airport\",\n            \"short\": \"AAP\"\n        }\n    ]\n}",
+					"text": "[\n    {\n        \"airportId\": 5,\n        \"name\": \"Some Airport\",\n        \"short\": \"SAP\"\n    },\n    {\n        \"airportId\": 7,\n        \"name\": \"Some Airport\",\n        \"short\": \"SAP\"\n    },\n    {\n        \"airportId\": 8,\n        \"name\": \"Some Airport\",\n        \"short\": \"SAP\"\n    },\n    {\n        \"airportId\": 6,\n        \"name\": \"Another Airport\",\n        \"short\": \"AAP\"\n    }\n]",
 					"responseCode": null,
 					"requestObject": {
 						"data": null,
@@ -433,7 +433,7 @@
 						"method": "GET",
 						"pathVariableData": [],
 						"queryParams": [],
-						"url": "{{server}}:{{MySQL}}/api/airports"
+						"url": "{{server}}:{{MySQL}}/api/airport/all"
 					},
 					"headers": null,
 					"cookies": null,
@@ -611,7 +611,7 @@
 		{
 			"id": "fe4c7a2f-dd25-4836-aebd-1df827fba181",
 			"name": "cancel flight booking",
-			"url": "{{server}}:{{MySQL}}/api/booking/cancel",
+			"url": "{{server}}:{{MySQL}}/api/booking/5",
 			"description": "",
 			"data": [],
 			"dataMode": "raw",
@@ -624,13 +624,13 @@
 					"type": "text"
 				}
 			],
-			"method": "POST",
+			"method": "DELETE",
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
 			"events": [],
 			"folder": "c35eeac4-88cf-4f5d-b508-cdab37eb1722",
-			"rawModeData": "{\n    \"bookingId\": 5\n}",
+			"rawModeData": "",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		}

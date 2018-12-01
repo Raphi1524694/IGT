@@ -52,6 +52,7 @@ export default {
   }),
   mounted() {
     this.$store.dispatch("allCustomers");
+    this.$store.dispatch("allAirports");
   },
   methods: {
     setPort(item) {
