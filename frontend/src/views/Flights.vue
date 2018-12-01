@@ -44,16 +44,22 @@
         </v-flex>
       </v-layout>
     </v-card>
-    <div v-for="flight in $store.getters.flightsInRange" :key="flight.flightId">
-      {{flight}}
-    </div>
+    <v-layout justify-center row wrap id="list">
+      <v-flex xs12 sm8 md6 my-3 mx-1 v-for="flight in $store.getters.flightsInRange" :key="flight.flightId">
+        <flight v-bind="flight" />
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
 <script>
+import Flight from "./FlightCard.vue";
+
 export default {
   name: "Flights",
-  components: {},
+  components: {
+    Flight
+  },
   data: () => ({
     startAirport: "",
     goalAirport: "",
@@ -99,5 +105,9 @@ export default {
 .v-menu {
   display: block;
   margin: 5px 12% !important;
+}
+#list {
+  margin-bottom: 90px;
+  overflow: auto;
 }
 </style>

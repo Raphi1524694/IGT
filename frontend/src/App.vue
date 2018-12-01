@@ -2,14 +2,14 @@
   <v-app>
     <div id="app">
       <div id="nav">
-        <v-toolbar id="toolbar">
+        <v-toolbar id="toolbar" color="blue-grey darken-3">
           <v-toolbar-title>Flightmanagement</v-toolbar-title>
           <v-spacer></v-spacer>
 
           <v-menu :nudge-width="100">
             <v-toolbar-title slot="activator">
               <span>{{ dbSelected }}</span>
-              <v-icon>arrow_drop_down</v-icon>
+              <v-icon id="dropIcon">arrow_drop_down</v-icon>
             </v-toolbar-title>
 
             <v-list>
@@ -80,5 +80,8 @@ export default {
   height: 40px;
   margin-top: 40px;
   width: 100%;
+}
+#toolbar, #dropIcon {
+  color: white;
 }
 </style>
