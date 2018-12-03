@@ -51,13 +51,20 @@ export default {
     ]
   }),
   mounted() {
-    this.$store.dispatch("allCustomers");
+    const stored = window.localStorage.getItem("db");
+    if (stored) {
+      this.setPort(this.items.find(i => i.name === stored));
+    } else {
+      this.$store.dispatch("allCustomers");
+    }
     this.$store.dispatch("allAirports");
   },
   methods: {
     setPort(item) {
       this.dbSelected = item.name;
+      window.localStorage.setItem("db", this.dbSelected);
       this.$store.commit("allUsers", []);
+      this.$store.commit("flightsInRange", []);
       this.$store.commit("setPort", item.port);
       this.$store.dispatch("allCustomers");
     }
@@ -81,7 +88,8 @@ export default {
   margin-top: 40px;
   width: 100%;
 }
-#toolbar, #dropIcon {
+#toolbar,
+#dropIcon {
   color: white;
 }
 </style>

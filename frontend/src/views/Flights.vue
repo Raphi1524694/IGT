@@ -3,32 +3,24 @@
     <v-card>
       <v-layout row wrap>
         <v-flex xs12 sm6>
-          <v-menu>
-            <v-toolbar-title slot="activator">
-              <span v-if="startAirport">{{ startAirport.name }} ({{startAirport.short}})</span>
-              <span v-else>Select your origin</span>
-              <v-icon>arrow_drop_down</v-icon>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile v-for="item in $store.getters.airports" :key="item.airportId" @click="startAirport = item">
-                <v-list-tile-title>{{item.name}} ({{item.short}})</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <v-autocomplete
+            v-model="startAirport"
+            :items="$store.getters.airports"
+            item-text="name"
+            label="Select your origin"
+            no-data-text="Airport not found"
+            persistent-hint
+            prepend-icon="mdi-city" />
         </v-flex>
         <v-flex xs12 sm6>
-          <v-menu>
-            <v-toolbar-title slot="activator">
-              <span v-if="goalAirport">{{ goalAirport.name }} ({{goalAirport.short}})</span>
-              <span v-else>Select your goal</span>
-              <v-icon>arrow_drop_down</v-icon>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile v-for="item in $store.getters.airports" :key="item.airportId" @click="goalAirport = item">
-                <v-list-tile-title>{{item.name}} ({{item.short}})</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <v-autocomplete
+            v-model="goalAirport"
+            :items="$store.getters.airports"
+            item-text="name"
+            label="Select your goal"
+            no-data-text="Airport not found"
+            persistent-hint
+            prepend-icon="mdi-city" />
         </v-flex>
         <v-flex xs12 sm6>
           <v-menu :close-on-content-click="false" v-model="picker1" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">

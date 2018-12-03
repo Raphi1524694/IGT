@@ -10,6 +10,28 @@
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>Create a new Flight</v-card-title>
         <v-card-text>
+          <v-layout row wrap>
+            <v-flex xs12 sm6 pr-2>
+              <v-autocomplete
+                class="airport"
+                v-model="start"
+                :items="airports"
+                item-text="name"
+                label="Select start"
+                no-data-text="Airport not found"
+                persistent-hint />
+            </v-flex>
+            <v-flex xs12 sm6  pl-2>
+              <v-autocomplete
+                class="airport"
+                v-model="goal"
+                :items="airports"
+                item-text="name"
+                label="Select goal"
+                no-data-text="Airport not found"
+                persistent-hint/>
+            </v-flex>
+          </v-layout>
           <v-text-field v-model="miles" type="number" label="Miles"/>
           <v-container>
             <v-layout row wrap>
@@ -52,20 +74,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data: () => ({
     dialog: false,
     date: new Date().toISOString().substr(0, 10),
     menu: false,
-    miles: 100
+    miles: 100,
+    start: null,
+    goal: null
   }),
   computed: {
-      ...mapGetters(["airports"])
+    airports() {
+      const airports = this.$store.getters.airports;
+      return airports; //.map(airport => `${airport.name} (${airport.short})`)
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-
 </style>
