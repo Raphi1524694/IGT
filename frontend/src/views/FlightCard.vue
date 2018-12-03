@@ -35,8 +35,10 @@ export default {
   },
   computed: {
     airports() {
-      const all =  this.$store.getters.airports; 
-      return this.airportsList.map(id => all.find(airport => airport.airportId === id));
+      const all = this.$store.getters.airports;
+      return this.airportsList.map(id =>
+        all.find(airport => airport.airportId === id)
+      );
     }
   }
 };

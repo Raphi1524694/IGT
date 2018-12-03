@@ -45,7 +45,7 @@ export default {
         phones: this.phones,
         flownMiles: this.flownMiles
       });
-    this.clear();
+      this.clear();
     },
     clear() {
       this.name = "";
