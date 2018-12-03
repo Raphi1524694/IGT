@@ -35,27 +35,22 @@ public class Hibernate {
         return instance;
     }
 
-    public synchronized <T extends IClassID> void save(T object) {
-        try {
-            Session session = sf.getCurrentSession();
-            Transaction tx = session.beginTransaction();
-            if (object.getId() == null) {
-                // save
-                session.save(object);
-            } else {
-                // update
-                Object entry = session.find(getClass(object), ((T) object).getId());
-                entry = object;
+    public synchronized <T extends IClassID> void save(T object) throws org.hibernate.NonUniqueObjectException {
+        Session session = sf.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        if (object.getId() == null) {
+            // save
+            session.save(object);
+        } else {
+            // update
+            Object entry = session.find(getClass(object), ((T) object).getId());
+            entry = object;
 
-                session.merge(entry);
-            }
-
-            tx.commit();
-        } catch (Exception e) {
-            System.err.println("inserting failed");
-            System.err.println("Object: " + object.toJSON().toString());
-            e.printStackTrace();
+            session.merge(entry);
         }
+
+        tx.commit();
+
     }
 
 

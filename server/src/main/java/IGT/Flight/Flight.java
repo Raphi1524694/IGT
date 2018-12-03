@@ -109,15 +109,13 @@ public class Flight implements IClassID {
     }
 
     public void addFlightSegment(FlightSegment p) {
-        if (!flightSegmentList.contains(p)) {
-            flightSegmentList.add(p);
-            if (p.belongsToFlight != null) {
-                p.belongsToFlight.flightSegmentList.remove(p);
-            }
+        if (!this.flightSegmentList.contains(p)) {
+            this.flightSegmentList.add(p);
             p.setBelongsToFlight(this);
         }
     }
 
+    @Override
     public JSONObject toJSON() {
         JSONObject flight = new JSONObject();
         try {
@@ -125,7 +123,14 @@ public class Flight implements IClassID {
             flight.put("startTime", this.getStartTime());
             flight.put("arrivalTime", this.getArrivalTime());
             flight.put("miles", this.getMiles());
-            flight.put("airportsList", new JSONArray(this.getFlightSegmentList()));
+            List<Long> airportsList = new ArrayList<>();
+            for (int i = 0; i < this.getFlightSegmentList().size(); i++) {
+                airportsList.add(this.getFlightSegmentList().get(i).getStart().getId());
+                if (i == this.getFlightSegmentList().size() - 1) {
+                    airportsList.add(this.getFlightSegmentList().get(i).getGoal().getId());
+                }
+            }
+            flight.put("airportsList", new JSONArray(airportsList));
             System.out.println(flight.getJSONArray("airportsList"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -135,7 +140,7 @@ public class Flight implements IClassID {
 
     @Override
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     @Override

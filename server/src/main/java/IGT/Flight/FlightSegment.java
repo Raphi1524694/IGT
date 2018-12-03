@@ -17,14 +17,15 @@ public class FlightSegment implements IClassID {
     public Flight belongsToFlight;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Airport start;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Airport goal;
 
-    public FlightSegment(){}
+    public FlightSegment() {
+    }
 
     public FlightSegment(Flight f, Airport start, Airport goal) {
         this.setBelongsToFlight(f);
@@ -32,8 +33,16 @@ public class FlightSegment implements IClassID {
         this.goal = goal;
     }
 
-    public void setBelongsToFlight(Flight f){
-        belongsToFlight = f;
+    public Airport getStart() {
+        return this.start;
+    }
+
+    public Airport getGoal() {
+        return this.goal;
+    }
+
+    public void setBelongsToFlight(Flight f) {
+        this.belongsToFlight = f;
     }
 
 

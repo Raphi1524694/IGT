@@ -32,8 +32,12 @@ public class Airport implements IClassID {
     }
 
     @Override
-    public Object getId() {
+    public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public JSONObject toJSON() {
@@ -42,7 +46,7 @@ public class Airport implements IClassID {
             flight.put("airportId", this.getId());
             flight.put("name", name);
             flight.put("short", shortName);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return flight;
