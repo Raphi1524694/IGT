@@ -45,6 +45,9 @@ export default {
         phones: this.phones,
         flownMiles: this.flownMiles
       });
+    this.clear();
+    },
+    clear() {
       this.name = "";
       this.address = "";
       this.phones = [];

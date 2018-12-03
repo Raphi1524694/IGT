@@ -49,16 +49,19 @@
         <flight v-bind="flight" />
       </v-flex>
     </v-layout>
+    <create-flight id="createFlightDial"/>
   </div>
 </template>
 
 <script>
 import Flight from "./FlightCard.vue";
+import CreateFlight from "./CreateFlight.vue";
 
 export default {
   name: "Flights",
   components: {
-    Flight
+    Flight,
+    CreateFlight
   },
   data: () => ({
     startAirport: "",
@@ -109,5 +112,11 @@ export default {
 #list {
   margin-bottom: 90px;
   overflow: auto;
+}
+#createFlightDial {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  z-index: 500;
 }
 </style>
