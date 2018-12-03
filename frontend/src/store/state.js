@@ -6,5 +6,6 @@ export default {
   portmode: true,
   airports: [],
   bookings: [],
-  flightsInRange: []
+  returnFlight: [],
+  inboundFlight: []
 };

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-card elevation-6>
+    <v-card elevation-6 v-if="flight">
       <br>
-      <span style="color:gray;fload:right;">id: {{flightId}}</span><br>
+      <span style="color:gray;fload:right;">id: {{flight.flightId}}</span><br>
       <v-layout row wrap>
         <v-flex v-for="(airport, index) in airports" :key="airport.airportId">
           <v-icon v-if="index > 0 && index < airports.length" class="arrow">keyboard_arrow_right</v-icon>
@@ -13,12 +13,12 @@
       </v-layout>
       <br>
       <v-layout row id="info">
-        <v-flex xs12 sm6 md4><b>Start: </b>{{startTime}}</v-flex>
-        <v-flex xs12 sm6 md4><b>Miles: </b>{{miles}}</v-flex>
-        <v-flex xs12 sm6 md4><b>Arrival: </b>{{arrivalTime}}</v-flex>
+        <v-flex xs12 sm6 md4><b>Start: </b>{{flight.startTime}}</v-flex>
+        <v-flex xs12 sm6 md4><b>Miles: </b>{{flight.miles}}</v-flex>
+        <v-flex xs12 sm6 md4><b>Arrival: </b>{{flight.arrivalTime}}</v-flex>
       </v-layout>
       <br>
-      <v-btn flat color="orange">Book now</v-btn>
+      <v-btn flat color="orange" @click="$emit('selected', flight)">{{text || 'Select'}}</v-btn>
       <br>
     </v-card>
   </div>
@@ -27,19 +27,16 @@
 <script>
 export default {
   props: {
-    flightId: Number,
-    miles: Number,
-    startTime: String,
-    arrivalTime: String,
-    airportsList: Array
+    flight: Object,
+    text: String
   },
   computed: {
     airports() {
       const all = this.$store.getters.airports;
-      return this.airportsList.map(id =>
+      return this.flight.airportsList.map(id =>
         all.find(airport => airport.airportId === id)
       );
-    }
+    },
   }
 };
 </script>

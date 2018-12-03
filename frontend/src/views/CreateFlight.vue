@@ -21,7 +21,7 @@
                 no-data-text="Airport not found"
                 persistent-hint />
             </v-flex>
-            <v-flex xs12 sm6  pl-2>
+            <v-flex xs12 sm6 pl-2>
               <v-autocomplete
                 class="airport"
                 v-model="goal"

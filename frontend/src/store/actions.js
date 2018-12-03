@@ -49,12 +49,14 @@ export const newFlight = async ({ getters }) => {
 export const deleteFlight = async ({ getters }, id) => {
     await Axios.delete(getters.getURL + `/flight/` + (id || '5'));
 };
-export const getFlightsInRange = async ({ commit, getters }, filter) => {
-    console.log('get')
-    commit("flightsInRange", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
+export const getInboundFlight = async ({ commit, getters }, filter) => {
+    commit("inboundFlight", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
 };
-export const bookFlight = async ({ dispatch, getters }) => {
-    await Axios.get(getters.getURL + `/booking/new`);
+export const getReturnFlight = async ({ commit, getters }, filter) => {
+    commit("returnFlight", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
+};
+export const bookFlight = async ({ dispatch, getters }, data) => {
+    await Axios.post(getters.getURL + `/booking/new`, data);
     dispatch("getBookings", getters.userId);
 };
 export const getBookings = async ({ getters }, id) => {

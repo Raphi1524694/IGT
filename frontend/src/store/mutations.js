@@ -9,8 +9,11 @@ export default {
   setPort(state, port) {
     state.Port = port;
   },
-  flightsInRange(state, flights) {
-    state.flightsInRange = flights;
+  inboundFlight(state, flights) {
+    state.inboundFlight = flights;
+  },
+  returnFlight(state, flights) {
+    state.returnFlight = flights;
   },
   bookings(state, book) {
     state.bookings = book;

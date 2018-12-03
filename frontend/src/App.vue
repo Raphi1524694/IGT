@@ -64,7 +64,6 @@ export default {
       this.dbSelected = item.name;
       window.localStorage.setItem("db", this.dbSelected);
       this.$store.commit("allUsers", []);
-      this.$store.commit("flightsInRange", []);
       this.$store.commit("setPort", item.port);
       this.$store.dispatch("allCustomers");
     }
