@@ -16,6 +16,9 @@ services:
     - "mysql:mysql"
     depends_on:
     - mysql
+    volumes: 
+    - ./mvn-cache:/root/.m2
+
 
   # servermongodb:
   #   build:
@@ -106,10 +109,9 @@ services:
   #   volumes: 
   #   - npm-cache:/root/.npm
 
-# volumes:
-#   npm-cache:
-#     external: false
-#   mongodata:
+volumes: 
+  npm-cache:
+    external: false
 
 networks:
   mysql:
