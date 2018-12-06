@@ -1,24 +1,24 @@
-version: '2.0'
+version: '3.4'
 
 services:
-  servermysql:
-    build:
-      context: Server
-      dockerfile: Dockerfile
-    environment:
-      - PORT=6001
-    restart: always
-    ports:
-    - "6001:6001"
-    networks:
-    - mysql
-    links:
-    - "mysql:mysql"
-    depends_on:
-    - mysql
-    volumes: 
-    - ./mvn-cache:/root/.m2
-
+  # servermysql:
+  #   build:
+  #     context: Server
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PORT=6001
+  #     - DB=OGM_MYSQL    
+  #   # restart: always
+  #   ports:
+  #   - "6001:6001"
+  #   networks:
+  #   - mysql
+  #   links:
+  #   - "mysql:mysql"
+  #   depends_on:
+  #   - mysql
+  #   volumes:
+  #   - ./mvn-cache:/root/.m2
 
   # servermongodb:
   #   build:
@@ -57,7 +57,7 @@ services:
   #   - neo
 
   mysql:
-    image: mysql:5.5
+    image: mysql
     restart: always
     networks:
     - mysql
@@ -112,6 +112,8 @@ services:
 volumes: 
   npm-cache:
     external: false
+  mvn-cache:
+
 
 networks:
   mysql:

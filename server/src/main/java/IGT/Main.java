@@ -10,10 +10,19 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-        int port = args.length > 0 ? Integer.parseInt(args[0]) : 6001;
-        System.out.println("Server running on Port: " + port);
+        if (args.length > 0) {
+            for (Config.PERSISTENCE_UNIT unit : Config.PERSISTENCE_UNIT.values()) {
+                if (unit.name().equals(args[0])) {
+                    Config.DB = unit;
+                    break;
+                }
+            }
+        }else {
+            System.out.println("default config");
+        }
 
-        Server server = new Server(port);
+        Server server = new Server(Config.DB.getPort());
+        System.out.println("Server running on Port: " + Config.DB.getPort());
 
         ServletContextHandler ctx =
                 new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
@@ -23,7 +32,10 @@ public class Main {
 
         ServletHolder serHol = ctx.addServlet(ServletContainer.class, "/api/*");
         serHol.setInitParameter("jersey.config.server.provider.packages", "IGT/Server");
+
+        // init
         Hibernate.getInstance().initFlightManagement();
+
         try {
             server.start();
             server.join();

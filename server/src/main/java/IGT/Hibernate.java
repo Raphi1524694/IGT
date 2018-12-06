@@ -15,22 +15,22 @@ public class Hibernate {
 
     private static final Hibernate instance = new Hibernate();
     private static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.DB.name());
 
     public static Hibernate getInstance() {
         return instance;
     }
 
-    public synchronized void initFlightManagement(){
+    public synchronized void initFlightManagement() {
         try {
             PopularAirports.generate();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("initFlightManagement failed");
             e.printStackTrace();
         }
     }
 
-    public synchronized <T extends IClassID> void save(T object) throws ServerError {
+    public synchronized <T extends IClassID> Long save(T object) throws ServerError {
         try {
             tm.begin();
             EntityManager em = emf.createEntityManager();
@@ -39,10 +39,7 @@ public class Hibernate {
                 em.persist(object);
             } else {
                 // update
-                Object entry = em.find(getClass(object), ((T) object).getId());
-                entry = object;
-
-                em.merge(entry);
+                em.merge(object);
             }
 
             em.flush();
@@ -53,6 +50,7 @@ public class Hibernate {
         } finally {
             emf.close();
         }
+        return object.getId();
     }
 
 
