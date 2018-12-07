@@ -6,6 +6,7 @@ import IGT.Flight.FlightSegment;
 import IGT.Hibernate;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -62,6 +63,43 @@ public class FlightApi {
     @Path("/new")
     public Response optionsNew() {
         return Responder.preFlight();
+    }
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllFlights() {
+        try {
+            JSONArray response = new JSONArray();
+            Hibernate.getInstance().<Flight>getTable("Flight").forEach(flight -> response.put(flight.toJSON()));
+            return Responder.ok(response);
+        } catch(Exception e) {
+            return Responder.exception(e);
+        }
+    }
+
+
+    @POST
+    @Path("/filter")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFilterFlights(String reqString) {
+        try {
+            JSONObject request = new JSONObject(reqString);
+            JSONArray response = new JSONArray();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = request.getString("date");
+            Date date = df.parse(dateString);
+            List<Flight> flights = Hibernate.getInstance().<Flight>getTable("Flight");
+            for (int i = 0; i < flights.size(); i++) {
+                if (flights.get(i).getStartTime().equals(date) && flights.get(i).getArrivalTime().equals(date)) {
+                    response.put(flights.get(i).toJSON());
+                }
+            }
+            return Responder.ok(response);
+        } catch(Exception e) {
+            return Responder.exception(e);
+        }
     }
 
 }

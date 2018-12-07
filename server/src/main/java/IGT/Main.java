@@ -17,7 +17,7 @@ public class Main {
                     break;
                 }
             }
-        }else {
+        } else {
             System.out.println("default config");
         }
 
