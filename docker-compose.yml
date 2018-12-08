@@ -5,8 +5,6 @@ services:
     build:
       context: Server
       dockerfile: Dockerfile
-      args:
-        - DB=MySQL
     environment:
       - PORT=6001
     restart: always

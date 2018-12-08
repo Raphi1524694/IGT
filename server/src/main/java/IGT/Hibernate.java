@@ -43,14 +43,9 @@ public class Hibernate {
             session.save(object);
         } else {
             // update
-            Object entry = session.find(getClass(object), ((T) object).getId());
-            entry = object;
-
-            session.merge(entry);
+            session.merge(object);
         }
-
         tx.commit();
-
     }
 
 
