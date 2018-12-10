@@ -1,39 +1,40 @@
-version: '2.0'
+version: '3.4'
 
 services:
-  servermysql:
+  # servermysql:
+  #   build:
+  #     context: Server
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PORT=6001
+  #     - DB=OGM_MYSQL    
+  #   # restart: always
+  #   ports:
+  #   - "6001:6001"
+  #   networks:
+  #   - mysql
+  #   links:
+  #   - "mysql:mysql"
+  #   depends_on:
+  #   - mysql
+  #   volumes:
+  #   - ./mvn-cache:/root/.m2
+
+  servermongodb:
     build:
       context: Server
       dockerfile: Dockerfile
     environment:
-      - PORT=6001
+        - DB=OGM_MONGODB
     restart: always
     ports:
-    - "6001:6001"
+    - "6002:6002"
     networks:
-    - mysql
+    - mongo
     links:
-    - "mysql:mysql"
+    - "mongo:mongo"
     depends_on:
-    - mysql
-
-  # servermongodb:
-  #   build:
-  #     context: Server
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - DB=MongoDB
-  #   environment:
-  #     - PORT=6002
-  #   #restart: always
-  #   ports:
-  #   - "6002:6002"
-  #   networks:
-  #   - mongo
-  #   links:
-  #   - "mongodb:mongodb"
-  #   depends_on:
-  #   - mongodb
+    - mongo
 
   # serverneo4j:
   #   build:
@@ -53,34 +54,26 @@ services:
   #   depends_on:
   #   - neo
 
-  mysql:
-    image: mysql:5.5
-    restart: always
-    networks:
-    - mysql
-    environment:
-    - MYSQL_ROOT_PASSWORD=bla
-    - MYSQL_ROOT_HOST=172.18.0.3
-    - MYSQL_DATABASE=test
-    - MYSQL_USER=user
-    - MYSQL_PASSWORD=password
-    ports:
-    - "3306:3306"
-    volumes:
-    - ./mysql-data:/var/lib/mysql
-
-  # mongodb:
-  #   image: mongo
-  #   environment:
-  #   - MONGO_INITDB_ROOT_USERNAME=bla
-  #   - MONGO_INITDB_ROOT_PASSWORD=password
-  #   #restart: always
+  # mysql:
+  #   image: mysql
+  #   restart: always
   #   networks:
-  #   - mongo
+  #   - mysql
+  #   environment:
+  #   - MYSQL_ROOT_PASSWORD=bla
+  #   - MYSQL_ROOT_HOST=172.18.0.3
+  #   - MYSQL_DATABASE=test
+  #   - MYSQL_USER=user
+  #   - MYSQL_PASSWORD=password
   #   ports:
-  #     - "27017:27017"
+  #   - "3306:3306"
   #   volumes:
-  #     - mongodata:/data/db
+  #   - ./mysql-data:/var/lib/mysql
+
+  mongo:
+    image: mongo:3.6-stretch
+    networks: 
+    - mongo
 
   # neo:
   #   image: neo4j:3.0
@@ -106,15 +99,16 @@ services:
   #   volumes: 
   #   - npm-cache:/root/.npm
 
-# volumes:
-#   npm-cache:
-#     external: false
-#   mongodata:
+volumes: 
+  npm-cache:
+    external: false
+  mvn-cache:
+
 
 networks:
-  mysql:
-    driver: bridge
-  # mongo:
+  # mysql:
   #   driver: bridge
+  mongo:
+    driver: bridge
   # neo:
   #   driver: bridge

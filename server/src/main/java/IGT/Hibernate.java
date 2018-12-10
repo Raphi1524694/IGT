@@ -1,84 +1,82 @@
 package IGT;
 
 import IGT.Customer.Customer;
-import IGT.Customer.Phone;
-import IGT.Flight.Airport;
-import IGT.Flight.Flight;
-import IGT.Flight.FlightSegment;
-import IGT.Server.Responder;
+import IGT.Flight.PopularAirports;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hibernate {
 
     private static final Hibernate instance = new Hibernate();
-    static Configuration conf;
-    static SessionFactory sf;
-
-    private Hibernate() {
-        conf = new Configuration().configure()
-                .addAnnotatedClass(Customer.class)
-                .addAnnotatedClass(Flight.class)
-                .addAnnotatedClass(FlightSegment.class)
-                .addAnnotatedClass(Airport.class)
-                .addAnnotatedClass(Phone.class);
-        sf = conf.buildSessionFactory();
-        sf.openSession();
-    }
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.DB.name());
 
     public static Hibernate getInstance() {
         return instance;
     }
 
-    public synchronized <T extends IClassID> void save(T object) throws org.hibernate.NonUniqueObjectException {
-        Session session = sf.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        if (object.getId() == null) {
-            // save
-            session.save(object);
-        } else {
-            // update
-            session.merge(object);
-        }
-        tx.commit();
-    }
-
-
-    public synchronized <T extends IClassID> void delete(T object) {
+    public synchronized void initFlightManagement() {
         try {
-            Session session = sf.getCurrentSession();
-            Transaction tx = session.beginTransaction();
-            session.remove(session.find(getClass(object), ((T) object).getId()));
-            tx.commit();
+            PopularAirports.generate();
         } catch (Exception e) {
-            System.err.println("updating failed");
+            System.out.println("initFlightManagement failed");
             e.printStackTrace();
         }
     }
 
-    public synchronized <T> List<T> getTable(String table) {
+    public synchronized <T extends IClassID> Long save(T object) throws ServerError {
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
+        try {
+            if (object.getId() == null) {
+                // save
+                se.persist(object);
+            } else {
+                // update
+                se.merge(object);
+            }
+        } catch (Exception e) {
+            throw new ServerError("failed to store: " + object.toJSON().toString(), new Error());
+        } finally {
+            se.getTransaction().commit();
+            se.close();
+        }
+        return object.getId();
+    }
+
+
+    public synchronized <T extends IClassID> void delete(T object) throws ServerError {
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
+        try {
+            se.delete(se.get(getClass(object), object.getId()));
+        } catch (Exception e) {
+            throw new ServerError("failed to delete: " + object.toJSON().toString(), new Error());
+        } finally {
+            se.getTransaction().commit();
+            se.close();
+        }
+    }
+
+    public synchronized <T> List<T> getTable(String table) throws ServerError {
         List<T> customers = new ArrayList<>();
         try {
-            Session session = sf.openSession();
-            Transaction tx = session.beginTransaction();
-
-            for (Object c : session.createQuery("FROM " + table).list()) {
+            for (IClassID c : customQuery("FROM " + table)) {
                 customers.add((T) c);
             }
-            tx.commit();
         } catch (Exception e) {
-            System.err.println("reading " + table + " failed");
-            e.printStackTrace();
+            throw new ServerError("failed to get Table: " + table, new Error());
+        } finally {
+            emf.close();
         }
         return customers;
     }
 
-    public synchronized <T extends IClassID> T getElementById(Object id, String table) {
+    public synchronized <T extends IClassID> T getElementById(Object id, String table) throws ServerError {
         List<T> t = getTable(table);
         for (T c : t) {
             if (id == c.getId()) {
@@ -87,6 +85,23 @@ public class Hibernate {
         }
         System.out.println("cant find element");
         return null;
+    }
+
+    public synchronized <T extends IClassID> List<T> customQuery(String query) throws ServerError {
+        List<T> customers = new ArrayList<>();
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
+        try {
+            for (Object c : se.createQuery(query).list()) {
+                customers.add((T) c);
+            }
+        } catch (Exception e) {
+            throw new ServerError("failed to execute Query: " + query, new Error());
+        } finally {
+            se.getTransaction().commit();
+            se.close();
+        }
+        return customers;
     }
 
     private synchronized Class getClass(IClassID classID) {
@@ -104,6 +119,5 @@ public class Hibernate {
         }
         return null;
     }
-
 }
 

@@ -25,9 +25,15 @@ public class AirportApi {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCustomers() {
-        JSONArray response = new JSONArray();
-        Hibernate.getInstance().<Airport>getTable("Airport").forEach(airport -> response.put(airport.toJSON()));
-        return Responder.ok(response);
+        try {
+            JSONArray response = new JSONArray();
+            for (Airport airport : Hibernate.getInstance().<Airport>getTable("Airport")) {
+                response.put(airport.toJSON());
+            }
+            return Responder.ok(response);
+        } catch (Exception e){
+            return Responder.exception(e);
+        }
     }
 
     @OPTIONS

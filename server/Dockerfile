@@ -1,10 +1,10 @@
-FROM maven:3.5.2-jdk-8-alpine
+FROM maven:3-jdk-8
 
-ENV PORT=6001
+ENV DB=OGM_MONGODB
 
-COPY pom.xml /tmp/
-COPY src /tmp/src/
-WORKDIR /tmp/
-EXPOSE ${PORT}
-RUN mvn package
-CMD java -jar /tmp/target/IGT.jar $PORT
+COPY pom.xml /app/
+WORKDIR /app/
+COPY . /app/
+RUN mvn clean compile
+CMD mvn exec:java -Dexec.args="${DB}"
+# CMD ["mvn", "exec:java"]
