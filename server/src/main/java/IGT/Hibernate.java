@@ -2,11 +2,10 @@ package IGT;
 
 import IGT.Customer.Customer;
 import IGT.Flight.PopularAirports;
+import org.hibernate.Session;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.transaction.TransactionManager;
 import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
 public class Hibernate {
 
     private static final Hibernate instance = new Hibernate();
-    private static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.DB.name());
 
     public static Hibernate getInstance() {
@@ -31,56 +29,45 @@ public class Hibernate {
     }
 
     public synchronized <T extends IClassID> Long save(T object) throws ServerError {
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
         try {
-            tm.begin();
-            EntityManager em = emf.createEntityManager();
             if (object.getId() == null) {
                 // save
-                em.persist(object);
+                se.persist(object);
             } else {
                 // update
-                em.merge(object);
+                se.merge(object);
             }
-
-            em.flush();
-            em.close();
-            tm.commit();
         } catch (Exception e) {
             throw new ServerError("failed to store: " + object.toJSON().toString(), new Error());
         } finally {
-            emf.close();
+            se.getTransaction().commit();
+            se.close();
         }
         return object.getId();
     }
 
 
     public synchronized <T extends IClassID> void delete(T object) throws ServerError {
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
         try {
-            tm.begin();
-            EntityManager em = emf.createEntityManager();
-            em.remove(em.find(getClass(object), object.getId()));
-            em.flush();
-            em.close();
-            tm.commit();
+            se.delete(se.get(getClass(object), object.getId()));
         } catch (Exception e) {
             throw new ServerError("failed to delete: " + object.toJSON().toString(), new Error());
         } finally {
-            emf.close();
+            se.getTransaction().commit();
+            se.close();
         }
     }
 
     public synchronized <T> List<T> getTable(String table) throws ServerError {
         List<T> customers = new ArrayList<>();
         try {
-            tm.begin();
-            EntityManager em = emf.createEntityManager();
-
-            for (Object c : em.createQuery("FROM " + table).getResultList()) {
+            for (IClassID c : customQuery("FROM " + table)) {
                 customers.add((T) c);
             }
-            em.flush();
-            em.close();
-            tm.commit();
         } catch (Exception e) {
             throw new ServerError("failed to get Table: " + table, new Error());
         } finally {
@@ -98,6 +85,23 @@ public class Hibernate {
         }
         System.out.println("cant find element");
         return null;
+    }
+
+    public synchronized <T extends IClassID> List<T> customQuery(String query) throws ServerError {
+        List<T> customers = new ArrayList<>();
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        se.beginTransaction();
+        try {
+            for (Object c : se.createQuery(query).list()) {
+                customers.add((T) c);
+            }
+        } catch (Exception e) {
+            throw new ServerError("failed to execute Query: " + query, new Error());
+        } finally {
+            se.getTransaction().commit();
+            se.close();
+        }
+        return customers;
     }
 
     private synchronized Class getClass(IClassID classID) {

@@ -25,7 +25,9 @@ public class CustomerApi {
     public Response getAllCustomers() {
         try {
             JSONArray response = new JSONArray();
-            Hibernate.getInstance().<Customer>getTable("Customer").forEach(customer -> response.put(customer.toJSON()));
+            for (Customer customer : Hibernate.getInstance().<Customer>getTable("Customer")) {
+                response.put(customer.toJSON());
+            }
             return Responder.ok(response);
         } catch (Exception e) {
             return Responder.exception(e);
