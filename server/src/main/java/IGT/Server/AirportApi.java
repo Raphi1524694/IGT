@@ -27,7 +27,9 @@ public class AirportApi {
     public Response getAllCustomers() {
         try {
             JSONArray response = new JSONArray();
-            Hibernate.getInstance().<Airport>getTable("Airport").forEach(airport -> response.put(airport.toJSON()));
+            for (Airport airport : Hibernate.getInstance().<Airport>getTable("Airport")) {
+                response.put(airport.toJSON());
+            }
             return Responder.ok(response);
         } catch (Exception e){
             return Responder.exception(e);

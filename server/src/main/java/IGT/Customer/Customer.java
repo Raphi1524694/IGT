@@ -94,7 +94,9 @@ public class Customer implements IClassID {
     }
 
     public void removeAllPhones() {
-        phoneList.forEach(phone -> phone.setBelongsToCustomer(null));
+        for (Phone phone : phoneList) {
+            phone.setBelongsToCustomer(null);
+        }
         //phoneList.forEach(phone -> Hibernate.getInstance().delete(phone));
         phoneList.clear();
     }
@@ -118,7 +120,9 @@ public class Customer implements IClassID {
             customerJson.put("flownMiles", flownMiles);
             customerJson.put("status", status.name());
             JSONArray phones = new JSONArray();
-            phoneList.forEach(phone -> phones.put(phone.getPhoneNumber()));
+            for (Phone phone : phoneList) {
+                phones.put(phone.getPhoneNumber());
+            }
             customerJson.put("phones", phones);
         } catch (Exception e) {
             System.out.println("cannot convert customer " + this.getName() + " to json");

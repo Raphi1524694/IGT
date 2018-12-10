@@ -20,23 +20,21 @@ services:
   #   volumes:
   #   - ./mvn-cache:/root/.m2
 
-  # servermongodb:
-  #   build:
-  #     context: Server
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - DB=MongoDB
-  #   environment:
-  #     - PORT=6002
-  #   #restart: always
-  #   ports:
-  #   - "6002:6002"
-  #   networks:
-  #   - mongo
-  #   links:
-  #   - "mongodb:mongodb"
-  #   depends_on:
-  #   - mongodb
+  servermongodb:
+    build:
+      context: Server
+      dockerfile: Dockerfile
+    environment:
+        - DB=OGM_MONGODB
+    restart: always
+    ports:
+    - "6002:6002"
+    networks:
+    - mongo
+    links:
+    - "mongo:mongo"
+    depends_on:
+    - mongo
 
   # serverneo4j:
   #   build:

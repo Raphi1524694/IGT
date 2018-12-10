@@ -39,6 +39,8 @@ public class BookingApi {
         }
     }
 
+
+
     @OPTIONS
     @Path("/new")
     public Response optionsNew() {

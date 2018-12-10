@@ -6,6 +6,7 @@ import IGT.Flight.FlightSegment;
 import IGT.Hibernate;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -71,9 +72,11 @@ public class FlightApi {
     public Response getAllFlights() {
         try {
             JSONArray response = new JSONArray();
-            Hibernate.getInstance().<Flight>getTable("Flight").forEach(flight -> response.put(flight.toJSON()));
+            for (Flight f : Hibernate.getInstance().<Flight>getTable("Flight")) {
+                response.put(f.toJSON());
+            }
             return Responder.ok(response);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Responder.exception(e);
         }
     }
@@ -97,7 +100,7 @@ public class FlightApi {
                 }
             }
             return Responder.ok(response);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Responder.exception(e);
         }
     }
