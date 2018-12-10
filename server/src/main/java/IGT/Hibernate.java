@@ -70,8 +70,6 @@ public class Hibernate {
             }
         } catch (Exception e) {
             throw new ServerError("failed to get Table: " + table, new Error());
-        } finally {
-            emf.close();
         }
         return customers;
     }
