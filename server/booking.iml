@@ -10,20 +10,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.hibernate.ogm:hibernate-ogm-infinispan:5.1.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate.ogm:hibernate-ogm-core:5.1.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate.hql:hibernate-hql-lucene:1.4.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-engine:5.6.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:5.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:5.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:5.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:5.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:5.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-orm:5.6.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.infinispan:infinispan-core:8.2.5.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.infinispan:infinispan-commons:8.2.5.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jgroups:jgroups:3.6.7.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling-osgi:1.4.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.27" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.grizzly:grizzly-http-server:2.4.0" level="project" />
@@ -70,6 +56,15 @@
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.12" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.ogm:hibernate-ogm-redis:5.1.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.ogm:hibernate-ogm-core:5.1.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.hql:hibernate-hql-lucene:1.4.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-engine:5.6.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:5.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:5.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:5.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:5.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:5.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-orm:5.6.1.Final" level="project" />
     <orderEntry type="library" name="Maven: biz.paluch.redis:lettuce:4.2.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.reactivex:rxjava:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />

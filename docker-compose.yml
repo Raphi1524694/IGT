@@ -72,6 +72,8 @@ services:
 
   mongo:
     image: mongo:3.6-stretch
+    networks: 
+    - mongo
 
   # neo:
   #   image: neo4j:3.0
