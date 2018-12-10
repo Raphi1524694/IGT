@@ -2,7 +2,7 @@ package IGT;
 
 public class Config {
 
-    public static PERSISTENCE_UNIT DB = PERSISTENCE_UNIT.OGM_MYSQL;
+    public static PERSISTENCE_UNIT DB = PERSISTENCE_UNIT.OGM_MONGODB;
 
 
     public enum PERSISTENCE_UNIT {

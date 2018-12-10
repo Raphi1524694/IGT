@@ -15,7 +15,7 @@ public class Hibernate {
 
     private static final Hibernate instance = new Hibernate();
     private static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.DB.name());
+    private static EntityManagerFactory emf = Main.getEntityManagerFactory();
 
     public static Hibernate getInstance() {
         return instance;

@@ -3,21 +3,16 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
 
-    <persistence-unit name="OGM_MYSQL" transaction-type="JTA">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <persistence-unit name="OGM_MONGODB" transaction-type="JTA">
+        <!-- Use the Hibernate OGM provider: configuration will be transparent -->
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <properties>
-
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306?createDatabaseIfNotExist=TRUE&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="bla"/>
-
-            <!--Hibernate properties-->
+            <property name="hibernate.ogm.datastore.provider" value="mongodb"/>
+            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="false"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-
+            <property name="hibernate.ogm.datastore.create_database" value="true"/>
+            <property name="hibernate.ogm.datastore.host" value="mongo"/>
+            <property name="hibernate.ogm.datastore.port" value="27017"/>
         </properties>
     </persistence-unit>
 
