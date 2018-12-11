@@ -18,7 +18,9 @@ public class Flight implements IClassID {
     @Column(name = "flight_id")
     private Long id;
 
-    private Date startTime;
+    private String startTime;
+
+    private String startDate;
 
     private long duration;
 
@@ -38,18 +40,26 @@ public class Flight implements IClassID {
     )
     public Set<Customer> customers = new HashSet<>();
 
-    @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlightSegment> flightSegmentList = new ArrayList<>();
 
     public Flight() {
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
     }
 
     public void setDuration(long duration) {
@@ -58,13 +68,6 @@ public class Flight implements IClassID {
 
     public long getDuration() {
         return duration;
-    }
-
-    public Date getArrivalTime() {
-        Date arrival = (Date) startTime.clone();
-        arrival.setTime(startTime.getTime() + duration);
-        System.out.println(startTime.toString() + "+" + duration + "=" + arrival.toString());
-        return arrival;
     }
 
     public int getSeatsEconomyClass() {
@@ -126,15 +129,15 @@ public class Flight implements IClassID {
     public JSONObject toJSON() {
         JSONObject flight = new JSONObject();
         try {
-            flight.put("flightId", this.getId());
-            flight.put("startTime", this.getStartTime());
-            flight.put("arrivalTime", this.getArrivalTime());
-            flight.put("miles", this.getMiles());
+            flight.put("flightId", getId());
+            flight.put("time", getStartTime());
+            flight.put("date", getStartDate());
+            flight.put("miles", getMiles());
             List<Long> airportsList = new ArrayList<>();
-            for (int i = 0; i < this.getFlightSegmentList().size(); i++) {
-                airportsList.add(this.getFlightSegmentList().get(i).getStart().getId());
-                if (i == this.getFlightSegmentList().size() - 1) {
-                    airportsList.add(this.getFlightSegmentList().get(i).getGoal().getId());
+            for (int i = 0; i < getFlightSegmentList().size(); i++) {
+                airportsList.add(getFlightSegmentList().get(i).getStart().getId());
+                if (i == getFlightSegmentList().size() - 1) {
+                    airportsList.add(getFlightSegmentList().get(i).getGoal().getId());
                 }
             }
             flight.put("airportsList", new JSONArray(airportsList));

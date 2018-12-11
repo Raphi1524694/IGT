@@ -31,8 +31,7 @@ public class FlightApi {
         int miles;
         try {
             JSONObject object = new JSONObject(json);
-            String startString = object.getString("startTime");
-            start = df.parse(startString);
+            String startTime = object.getString("time");
             duration = object.getLong("duration");
             airportsList = object.getJSONArray("airportsList");
             miles = object.getInt("miles");
@@ -48,7 +47,7 @@ public class FlightApi {
                 FlightSegment nextSegment = new FlightSegment(newFlight, currentAirport, nextAirport);
                 newFlight.addFlightSegment(nextSegment);
             }
-            newFlight.setStartTime(start);
+            newFlight.setStartTime(startTime);
             newFlight.setDuration(duration);
             newFlight.setMiles(miles);
             Hibernate.getInstance().save(newFlight);
@@ -59,12 +58,6 @@ public class FlightApi {
         }
     }
 
-
-    @OPTIONS
-    @Path("/new")
-    public Response optionsNew() {
-        return Responder.preFlight();
-    }
 
     @GET
     @Path("/all")
@@ -95,7 +88,7 @@ public class FlightApi {
             Date date = df.parse(dateString);
             List<Flight> flights = Hibernate.getInstance().<Flight>getTable("Flight");
             for (int i = 0; i < flights.size(); i++) {
-                if (flights.get(i).getStartTime().equals(date) && flights.get(i).getArrivalTime().equals(date)) {
+                if (flights.get(i).getStartTime().equals(date)) {
                     response.put(flights.get(i).toJSON());
                 }
             }
@@ -103,6 +96,25 @@ public class FlightApi {
         } catch (Exception e) {
             return Responder.exception(e);
         }
+    }
+
+
+    @OPTIONS
+    @Path("/new")
+    public Response optionsNew() {
+        return Responder.preFlight();
+    }
+
+    @OPTIONS
+    @Path("/all")
+    public Response optionsAll() {
+        return Responder.preFlight();
+    }
+
+    @OPTIONS
+    @Path("/filter")
+    public Response optionsFilter() {
+        return Responder.preFlight();
     }
 
 }

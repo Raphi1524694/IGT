@@ -2,6 +2,7 @@ package IGT;
 
 import IGT.Customer.Customer;
 import IGT.Flight.PopularAirports;
+import IGT.Flight.RandomFlights;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManagerFactory;
@@ -22,6 +23,7 @@ public class Hibernate {
     public synchronized void initFlightManagement() {
         try {
             PopularAirports.generate();
+            RandomFlights.generate(100);
         } catch (Exception e) {
             System.out.println("initFlightManagement failed");
             e.printStackTrace();

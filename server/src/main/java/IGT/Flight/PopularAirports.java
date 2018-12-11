@@ -40,6 +40,7 @@ public class PopularAirports {
             "Taiwan Taoyuan International Airport TPE/RCTP"};
 
     public static void generate() throws Exception {
+        if (Hibernate.getInstance().getTable("Airport").size() > 0) return;
         for (String airport : airports) {
             String[] all = airport.split(" ");
             String shortName = all[all.length - 1];

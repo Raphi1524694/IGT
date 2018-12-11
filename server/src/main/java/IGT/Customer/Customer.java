@@ -30,7 +30,7 @@ public class Customer implements IClassID {
 
     private EStatus status;
 
-    @OneToMany(mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phoneList = new ArrayList<Phone>();
 
     @ManyToMany(mappedBy = "customers")
@@ -97,7 +97,6 @@ public class Customer implements IClassID {
         for (Phone phone : phoneList) {
             phone.setBelongsToCustomer(null);
         }
-        //phoneList.forEach(phone -> Hibernate.getInstance().delete(phone));
         phoneList.clear();
     }
 
