@@ -17,7 +17,7 @@
           <v-card-actions>
             <user-edit-dialog :userId="user.customerId"/>
             <v-btn flat @click="$store.dispatch('deleteCustomer', user.customerId)">delete</v-btn>
-            <v-btn flat color="orange" @click="$store.dispatch('setCustomer', user.customerId)">use</v-btn>
+            <v-btn flat color="orange" @click="login(user)">login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -38,6 +38,10 @@ export default {
   methods: {
     getFields(user) {
       return Object.keys(user);
+    },
+    login(user){
+      this.$store.commit('setUser', user);
+      this.$router.push({ path: 'flights' });
     }
   }
 };

@@ -2,12 +2,13 @@ import Vue from "vue";
 import Router from "vue-router";
 import Flights from "./views/Flights.vue";
 import Users from "./views/Users.vue";
+import Store from './store/index.js';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
-    { path: "*", redirect: "/flights" },
+    { path: "*", redirect: "/user" },
     {
       path: "/flights",
       name: "home",
@@ -20,3 +21,12 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, _, next)=>{
+  if (to.path === "/user") {
+    Store.commit("setUser", null);
+  }
+  next();
+})
+
+export default router;

@@ -1,6 +1,5 @@
 export default {
   setUser(state, user) {
-    console.log("set to user " + user.customerId);
     state.user = user;
   },
   allUsers(state, users) {
@@ -21,5 +20,7 @@ export default {
   allAirports(state, ports) {
     state.airports = ports;
   },
-
+  loading(state, val){
+    state.loading = val;
+  }
 };

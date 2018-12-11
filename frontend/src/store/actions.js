@@ -50,10 +50,14 @@ export const deleteFlight = async ({ getters }, id) => {
     await Axios.delete(getters.getURL + `/flight/` + (id || '5'));
 };
 export const getInboundFlight = async ({ commit, getters }, filter) => {
+    commit("loading", true);
     commit("inboundFlight", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
+    commit("loading", false);
 };
 export const getReturnFlight = async ({ commit, getters }, filter) => {
+    commit("loading", true);
     commit("returnFlight", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
+    commit("loading", false);
 };
 export const bookFlight = async ({ dispatch, getters }, data) => {
     await Axios.post(getters.getURL + `/booking/new`, data);

@@ -7,5 +7,6 @@ export default {
   airports: [],
   bookings: [],
   returnFlight: [],
-  inboundFlight: []
+  inboundFlight: [],
+  loading: false
 };

@@ -4,6 +4,9 @@
       <div id="nav">
         <v-toolbar id="toolbar" color="blue-grey darken-3">
           <v-toolbar-title>Flightmanagement</v-toolbar-title>
+
+          <v-spacer></v-spacer>
+          <span v-if="$store.getters.getUser">Hello {{$store.getters.getUser.name}}</span>
           <v-spacer></v-spacer>
 
           <v-menu :nudge-width="100">
@@ -26,8 +29,8 @@
 
       <v-footer height="auto" id="footer">
         <v-layout justify-center row wrap>
-          <v-btn color="gray" flat round to="/flights">Flüge</v-btn>
-          <v-btn color="gray" flat round to="/user">User</v-btn>
+          <v-btn color="gray" flat round to="/user">Logout</v-btn>
+          <v-btn color="gray" flat round to="/flights">Book Flight</v-btn>
           <v-flex py-3 text-xs-center xs12>
             &copy;2018 —
             <strong>Raphi + Philip</strong>

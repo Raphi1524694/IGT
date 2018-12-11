@@ -31,7 +31,10 @@
       </v-layout>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <h3>Select outbound flight</h3>
+          <span v-if="date && !$store.getters.loading">no flights found</span>
+          <h3 v-else-if="$store.getters.inboundFlight.length > 0">Select outbound flight</h3>
+          <span v-else-if="!$store.getters.loading">select date</span>
+          <v-progress-circular indeterminate color="primary" v-if="$store.getters.loading"></v-progress-circular>
           <v-layout justify-center row wrap id="list">
             <v-flex v-for="flight in $store.getters.inboundFlight" :key="flight.flightId" ma-2>
               <flight :flight="flight" @selected="choose(0, $event)"/>
@@ -39,12 +42,15 @@
           </v-layout>
         </v-stepper-content>
         <v-stepper-content step="2">
-          <h3>Select return flight</h3>
+          <span v-if="date && !$store.getters.loading">no flights found</span>
+          <h3 v-else-if="$store.getters.inboundFlight.length > 0">Select return flight</h3>
+          <span v-else-if="!$store.getters.loading">select date</span>
           <v-layout justify-center row wrap id="list">
             <v-flex v-for="flight in $store.getters.returnFlight" :key="flight.flightId" ma-2>
               <flight :flight="flight" @selected="choose(1, $event)"/>
             </v-flex>
           </v-layout>
+          <v-progress-circular indeterminate color="primary" v-if="$store.getters.loading"></v-progress-circular>
         </v-stepper-content>
         <v-stepper-content step="3">
           <v-card flat>
@@ -104,7 +110,8 @@ export default {
     bookFlight() {
       this.selected.forEach(flight => {
         this.$store.dispatch("bookFlight", {
-          customerId: (this.$store.getters.getUser || { customerId: 5 }).customerId,
+          customerId: (this.$store.getters.getUser || { customerId: 5 })
+            .customerId,
           flightId: flight.flightId
         });
       });
