@@ -23,7 +23,7 @@ public class Hibernate {
     public synchronized void initFlightManagement() {
         try {
             PopularAirports.generate();
-            RandomFlights.generate(100);
+            RandomFlights.generate(10000);
         } catch (Exception e) {
             System.out.println("initFlightManagement failed");
             e.printStackTrace();

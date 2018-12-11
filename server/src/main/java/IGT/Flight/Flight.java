@@ -125,6 +125,14 @@ public class Flight implements IClassID {
         }
     }
 
+    public Airport getStartAirport(){
+        return flightSegmentList.get(0).getStart();
+    }
+
+    public Airport getDestinationAirport(){
+        return flightSegmentList.get(flightSegmentList.size() - 1).getGoal();
+    }
+
     @Override
     public JSONObject toJSON() {
         JSONObject flight = new JSONObject();
@@ -133,6 +141,7 @@ public class Flight implements IClassID {
             flight.put("time", getStartTime());
             flight.put("date", getStartDate());
             flight.put("miles", getMiles());
+            flight.put("duration", getDuration());
             List<Long> airportsList = new ArrayList<>();
             for (int i = 0; i < getFlightSegmentList().size(); i++) {
                 airportsList.add(getFlightSegmentList().get(i).getStart().getId());
@@ -141,7 +150,6 @@ public class Flight implements IClassID {
                 }
             }
             flight.put("airportsList", new JSONArray(airportsList));
-            System.out.println(flight.getJSONArray("airportsList"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

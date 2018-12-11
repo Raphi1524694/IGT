@@ -39,6 +39,8 @@ services:
     image: mongo:3.6-stretch
     networks: 
     - db
+    ports:
+    - "27017:27017"
 
   # neo:
   #   image: neo4j:3.0

@@ -84,9 +84,14 @@ public class FlightApi {
             JSONObject request = new JSONObject(reqString);
             JSONArray response = new JSONArray();
             String date = request.getString("date");
+            int startAirport = request.getInt("startAirport");
+            int arrivalAirport = request.getInt("arrivalAirport");
             List<Flight> flights = Hibernate.getInstance().<Flight>getTable("Flight");
             for (int i = 0; i < flights.size(); i++) {
-                if (flights.get(i).getStartTime().equals(date)) {
+                Flight f = flights.get(i);
+                if (f.getStartDate().equals(date)
+                        && f.getStartAirport().getId() == startAirport
+                        && f.getDestinationAirport().getId() == arrivalAirport) {
                     response.put(flights.get(i).toJSON());
                 }
             }
