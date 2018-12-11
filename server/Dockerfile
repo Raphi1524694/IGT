@@ -1,6 +1,6 @@
 FROM maven:3-jdk-8
 
-ENV DB=OGM_MONGODB
+ENV DB=NEO4J
 
 COPY pom.xml /app/
 WORKDIR /app/

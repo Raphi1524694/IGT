@@ -6,7 +6,7 @@ services:
       context: Server
       dockerfile: Dockerfile
     environment:
-        - DB=OGM_MONGODB
+        - DB=MONGODB
     restart: always
     ports:
     - "6002:6002"
@@ -35,6 +35,7 @@ services:
   #   volumes:
   #   - ./mysql-data:/var/lib/mysql
 
+  #mongoDB
   db:
     image: mongo:3.6-stretch
     networks: 
@@ -42,16 +43,15 @@ services:
     ports:
     - "27017:27017"
 
-  # neo:
-  #   image: neo4j:3.0
+  # #neo4j
+  # db:
+  #   image: neo4j:3.5
   #   environment:
-  #   - NEO4J_AUTH=bla:password 
-  #   networks:
-  #   - db
+  #     NEO4J_AUTH: neo4j/igt
   #   ports:
-  #    - "7687:7687"
-  #   volumes:              
-  #    - ./neo4j-data:/data/dbms
+  #   - "7474:7474"
+  #   - "7687:7687"
+
 
   frontend:
     build:
