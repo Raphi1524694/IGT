@@ -12,33 +12,48 @@ import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Path("/flight")
 public class FlightApi {
 
+    /**
+     * Create a new flight object and save it.
+     *
+     * @param json flight json
+     * @return flight json
+     */
     @POST
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createFlight(String json) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date start;
-        Long duration;
-        JSONArray airportsList;
-        int miles;
         try {
             JSONObject object = new JSONObject(json);
-            String startTime = object.getString("time");
-            duration = object.getLong("duration");
-            airportsList = object.getJSONArray("airportsList");
-            miles = object.getInt("miles");
-            if (miles < 1 || airportsList.length() < 2) {
+
+            // parse json
+            int duration = object.getInt("duration");
+            int miles = object.getInt("miles");
+
+            JSONObject seats = object.getJSONObject("seats");
+            int seatsF = seats.getInt("first");
+            int seatsE = seats.getInt("economy");
+
+            JSONObject prices = object.getJSONObject("prices");
+            int pricesF = prices.getInt("first");
+            int pricesE = prices.getInt("economy");
+
+            String time = object.getString("time");
+            String date = object.getString("date");
+            JSONArray airportsList = object.getJSONArray("airportsList");
+
+            if (miles < 1 || airportsList.length() < 2 || duration < 1 || seatsF < 1 || seatsE < 1 || pricesE < 1 || pricesF < 1 || time == null || date == null) {
                 return Responder.badRequest();
             }
+
+            // create flight
             Flight newFlight = new Flight();
+
+            // parse flight segments
             for (int i = 0; i < airportsList.length() - 1; i++) {
                 Long currentId = airportsList.getLong(i);
                 Long nextId = airportsList.getLong(i + 1);
@@ -47,10 +62,20 @@ public class FlightApi {
                 FlightSegment nextSegment = new FlightSegment(newFlight, currentAirport, nextAirport);
                 newFlight.addFlightSegment(nextSegment);
             }
-            newFlight.setStartTime(startTime);
+
+            // set fields
+            newFlight.setStartTime(time);
+            newFlight.setStartDate(date);
             newFlight.setDuration(duration);
             newFlight.setMiles(miles);
+            newFlight.setSeatsFistClass(seatsF);
+            newFlight.setSeatsEconomyClass(seatsE);
+            newFlight.setPriceFistClass(pricesF);
+            newFlight.setPriceEconomyClass(pricesE);
+
+            // save flight in db
             Hibernate.getInstance().save(newFlight);
+
             return Responder.created(newFlight.toJSON());
         } catch (Exception e) {
             System.out.println(e.getMessage());

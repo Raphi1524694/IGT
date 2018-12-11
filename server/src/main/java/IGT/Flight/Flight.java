@@ -22,13 +22,17 @@ public class Flight implements IClassID {
 
     private String startDate;
 
-    private long duration;
+    private int duration;
 
     private int miles;
 
     private int seatsEconomyClass;
 
     private int seatsFistClass;
+
+    private double priceEconomyClass;
+
+    private double priceFistClass;
 
     private PlaneType plane;
 
@@ -62,7 +66,7 @@ public class Flight implements IClassID {
         return startDate;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -84,6 +88,22 @@ public class Flight implements IClassID {
 
     public void setSeatsFistClass(int seatsFistClass) {
         this.seatsFistClass = seatsFistClass;
+    }
+
+    public double getPriceEconomyClass() {
+        return priceEconomyClass;
+    }
+
+    public void setPriceEconomyClass(double priceEconomyClass) {
+        this.priceEconomyClass = priceEconomyClass;
+    }
+
+    public double getPriceFistClass() {
+        return priceFistClass;
+    }
+
+    public void setPriceFistClass(double priceFistClass) {
+        this.priceFistClass = priceFistClass;
     }
 
     public PlaneType getPlane() {
@@ -150,6 +170,16 @@ public class Flight implements IClassID {
                 }
             }
             flight.put("airportsList", new JSONArray(airportsList));
+
+            JSONObject seats = new JSONObject();
+            seats.put("first", getSeatsFistClass());
+            seats.put("economy", getSeatsEconomyClass());
+            flight.put("seats", seats);
+
+            JSONObject prices = new JSONObject();
+            prices.put("first", getPriceFistClass());
+            prices.put("economy", getPriceEconomyClass());
+            flight.put("prices", prices);
         } catch (JSONException e) {
             e.printStackTrace();
         }

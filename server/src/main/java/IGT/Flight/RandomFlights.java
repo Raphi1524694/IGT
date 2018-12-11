@@ -16,8 +16,8 @@ public class RandomFlights {
         for (int j = 0; j < i; j++) {
             Flight f = new Flight();
             int nrOfSegments = rand(2, 4);
-            Airport last =  airportList.get(rand(l));
-            for (int k = 0; k < nrOfSegments; k++){
+            Airport last = airportList.get(rand(l));
+            for (int k = 0; k < nrOfSegments; k++) {
                 Airport next = airportList.get(rand(l));
                 f.addFlightSegment(new FlightSegment(f, last, next));
                 last = next;
@@ -28,8 +28,10 @@ public class RandomFlights {
             f.setPlane(PlaneType.FuckingBig);
             f.setSeatsEconomyClass(rand(100, 500));
             f.setSeatsFistClass(rand(5, 50));
+            f.setPriceEconomyClass(rand(100, 1500));
+            f.setPriceFistClass(rand(900, 3000));
             f.setDuration(rand(600));
-            Long id = Hibernate.getInstance().save(f);
+            Hibernate.getInstance().save(f);
             System.out.println(f.toJSON().toString());
         }
     }

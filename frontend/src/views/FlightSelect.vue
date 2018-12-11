@@ -31,8 +31,8 @@
       </v-layout>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <span v-if="date && !$store.getters.loading">no flights found</span>
-          <h3 v-else-if="$store.getters.inboundFlight.length > 0">Select outbound flight</h3>
+          <h3 v-if="$store.getters.inboundFlight.length > 0">Select return flight</h3>
+          <span v-else-if="date && !$store.getters.loading">no flights found</span>
           <span v-else-if="!$store.getters.loading">select date</span>
           <v-progress-circular indeterminate color="primary" v-if="$store.getters.loading"></v-progress-circular>
           <v-layout justify-center row wrap id="list">
@@ -42,8 +42,8 @@
           </v-layout>
         </v-stepper-content>
         <v-stepper-content step="2">
-          <span v-if="date && !$store.getters.loading">no flights found</span>
-          <h3 v-else-if="$store.getters.inboundFlight.length > 0">Select return flight</h3>
+          <h3 v-if="$store.getters.inboundFlight.length > 0">Select return flight</h3>
+          <span v-else-if="date && !$store.getters.loading">no flights found</span>
           <span v-else-if="!$store.getters.loading">select date</span>
           <v-layout justify-center row wrap id="list">
             <v-flex v-for="flight in $store.getters.returnFlight" :key="flight.flightId" ma-2>

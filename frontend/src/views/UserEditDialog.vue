@@ -55,6 +55,9 @@ export default {
   data: () => ({
     dialog: false,
     items: [
+      { status: "White Gold", miles: 10000000 },
+      { status: "Special Platinum", miles: 1000000 },
+      { status: "Platinum", miles: 100000 },
       { status: "Gold", miles: 10000 },
       { status: "Silver", miles: 5000 },
       { status: "Bronze", miles: 2500 },

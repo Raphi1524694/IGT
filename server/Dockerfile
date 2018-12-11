@@ -5,6 +5,6 @@ ENV DB=NEO4J
 COPY pom.xml /app/
 WORKDIR /app/
 COPY . /app/
-RUN mvn clean compile
-CMD mvn exec:java -Dexec.args="${DB}"
+RUN mvn clean compile -q
+CMD mvn exec:java -Dexec.args="${DB}" -q
 # CMD ["mvn", "exec:java"]

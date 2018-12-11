@@ -14,15 +14,18 @@ public class Responder {
     }
 
     static Response badRequest() {
+        System.out.println("bad request");
         return Responder.build(Response.Status.BAD_REQUEST, "Bad Request");
     }
 
     public static Response created(Object responseForUser) {
+        System.out.println("created");
         return build(Response.Status.CREATED, responseForUser.toString());
     }
 
 
     public static Response ok(Object responseForUser) {
+        System.out.println("ok");
         return build(Response.Status.OK, responseForUser.toString());
     }
 

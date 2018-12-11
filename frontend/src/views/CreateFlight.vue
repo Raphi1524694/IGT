@@ -61,6 +61,34 @@
             <v-flex xs6 pl-2>
               <v-text-field v-model="duration" type="number" label="Duration (in minutes)"/>
             </v-flex>
+            <v-flex xs12 mt-3 mr-2>
+              <span>Seats</span>
+            </v-flex>
+            <v-flex xs6 pr-2>
+              <v-text-field v-model="seats.first" type="number" label="first Class"/>
+            </v-flex>
+            <v-flex xs6 pl-2>
+              <v-text-field v-model="seats.economy" type="number" label="Economy Class"/>
+            </v-flex>
+            <v-flex xs12 mt-3 mr-2>
+              <span>Prices</span>
+            </v-flex>
+            <v-flex xs6 pr-2>
+              <v-text-field
+                v-model="prices.first"
+                label="first Class"
+                type="number"
+                append-icon="attach_money"
+              />
+            </v-flex>
+            <v-flex xs6 pl-2>
+              <v-text-field
+                v-model="prices.economy"
+                label="Economy Class"
+                type="number"
+                append-icon="attach_money"
+              />
+            </v-flex>
           </v-layout>
         </v-card-text>
         <v-card-actions>
@@ -82,7 +110,15 @@ export default {
     menuTime: false,
     miles: 100,
     duration: 60,
-    airportsList: []
+    airportsList: [],
+    seats: {
+      first: 50,
+      economy: 350
+    },
+    prices: {
+      first: 1500,
+      economy: 500
+    }
   }),
   methods: {
     create() {
@@ -91,7 +127,11 @@ export default {
         date: this.date,
         time: this.time,
         duration: this.duration,
-        airportsList: this.airportsList.filter(airport => Number.isInteger(airport))
+        airportsList: this.airportsList.filter(airport =>
+          Number.isInteger(airport)
+        ),
+        seats: this.seats,
+        prices: this.prices
       });
       this.dialog = false;
     }
@@ -104,7 +144,9 @@ export default {
       }
       if (this.airportsList.length > 2) {
         // eslint-disable-next-line
-        this.airportsList = this.airportsList.filter(airport => Number.isInteger(airport));
+        this.airportsList = this.airportsList.filter(airport =>
+          Number.isInteger(airport)
+        );
       }
       // eslint-disable-next-line
       const start = this.airportsList.pop();

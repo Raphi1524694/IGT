@@ -71,6 +71,18 @@ public class Customer implements IClassID {
 
     public void setFlownMiles(int miles) {
         flownMiles = miles;
+        if (flownMiles >= EStatus.WHITE_GOLD.getMiles()) {
+            status = EStatus.WHITE_GOLD;
+            return;
+        }
+        if (flownMiles >= EStatus.SPECIAL_PLATINUM.getMiles()) {
+            status = EStatus.SPECIAL_PLATINUM;
+            return;
+        }
+        if (flownMiles >= EStatus.PLATINUM.getMiles()) {
+            status = EStatus.PLATINUM;
+            return;
+        }
         if (flownMiles >= EStatus.GOLD.getMiles()) {
             status = EStatus.GOLD;
             return;
