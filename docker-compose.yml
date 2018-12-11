@@ -1,26 +1,7 @@
 version: '3.4'
 
 services:
-  # servermysql:
-  #   build:
-  #     context: Server
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - PORT=6001
-  #     - DB=OGM_MYSQL    
-  #   # restart: always
-  #   ports:
-  #   - "6001:6001"
-  #   networks:
-  #   - mysql
-  #   links:
-  #   - "mysql:mysql"
-  #   depends_on:
-  #   - mysql
-  #   volumes:
-  #   - ./mvn-cache:/root/.m2
-
-  servermongodb:
+  server:
     build:
       context: Server
       dockerfile: Dockerfile
@@ -30,29 +11,13 @@ services:
     ports:
     - "6002:6002"
     networks:
-    - mongo
+    - db
     links:
-    - "mongo:mongo"
+    - "db:db"
     depends_on:
-    - mongo
-
-  # serverneo4j:
-  #   build:
-  #     context: Server
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - DB=Neo4j
-  #   environment:
-  #     - PORT=6003
-  #   restart: always
-  #   ports:
-  #   - "6003:6003"
-  #   networks:
-  #   - neo
-  #   links:
-  #   - "neo:neo"
-  #   depends_on:
-  #   - neo
+    - db
+    volumes:
+    - ./mvn-cache:/root/.m2
 
   # mysql:
   #   image: mysql
@@ -70,45 +35,38 @@ services:
   #   volumes:
   #   - ./mysql-data:/var/lib/mysql
 
-  mongo:
+  db:
     image: mongo:3.6-stretch
     networks: 
-    - mongo
+    - db
 
   # neo:
   #   image: neo4j:3.0
   #   environment:
   #   - NEO4J_AUTH=bla:password 
   #   networks:
-  #   - neo
+  #   - db
   #   ports:
   #    - "7687:7687"
   #   volumes:              
   #    - ./neo4j-data:/data/dbms
 
-  # frontend:
-  #   build:
-  #     context: frontend
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   ports:
-  #   - "5000:5000"
-  #   depends_on:
-  #   - servermysql
-  #   - servermongodb
-  #   volumes: 
-  #   - npm-cache:/root/.npm
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    - "5000:5000"
+    depends_on:
+    - server
+    volumes: 
+    - npm-cache:/root/.npm
 
 volumes: 
   npm-cache:
     external: false
-  mvn-cache:
-
 
 networks:
-  # mysql:
-  #   driver: bridge
-  mongo:
+  db:
     driver: bridge
-  # neo:
-  #   driver: bridge

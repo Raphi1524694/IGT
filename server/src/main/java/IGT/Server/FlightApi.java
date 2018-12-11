@@ -83,9 +83,7 @@ public class FlightApi {
         try {
             JSONObject request = new JSONObject(reqString);
             JSONArray response = new JSONArray();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String dateString = request.getString("date");
-            Date date = df.parse(dateString);
+            String date = request.getString("date");
             List<Flight> flights = Hibernate.getInstance().<Flight>getTable("Flight");
             for (int i = 0; i < flights.size(); i++) {
                 if (flights.get(i).getStartTime().equals(date)) {

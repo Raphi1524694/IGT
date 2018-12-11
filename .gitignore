@@ -22,3 +22,5 @@ mongodb-data/
 neo4j-data
 npm-cache
 server/logfile\.log
+
+mvn-cache/

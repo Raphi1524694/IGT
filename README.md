@@ -143,7 +143,7 @@ If a field is not specified than it wont get updated.
               "name": "Some Airport",
               "short": "SAP"
             },
-             {
+            {
               "airportId": 6,
               "name": "Another Airport",
               "short": "AAP"
@@ -155,14 +155,12 @@ If a field is not specified than it wont get updated.
 ### Get all Flights in a date range
 *POST* \<endpoint\>/flight/filter
 
-Filter all Flights that go from start to finish on the specified day (or in a range sooner or later).
+Filter all Flights that go from start to finish on the specified day.
 
 **request:**
 ```json
      {
         "date": "YYYY-MM-DD",
-        "duration": 500,
-        "range": "1",
         "startAirport": 5,
         "arrivalAirport": 6,
      }
@@ -171,16 +169,22 @@ Filter all Flights that go from start to finish on the specified day (or in a ra
 
 **response:** the created flight with its id
 ```json
-     [
-       {
-         "flightId": 5,
-         "miles": 500,
-         "date": "YYYY-MM-DD",
-         "duration": 500,
-         "airportsList": [5, 6, 8]
-       },
-       ...
-    ]
+    [
+      {
+        "flightId": 5,
+        "miles": 500,
+        "date": "YYYY-MM-DD",
+        "time": "hh:mm",
+        "seats": {
+          "first": 100,
+          "economy": 500
+        },
+      "planeType": 0,
+        "duration": 500,
+        "airportsList": [5, 6, 8]
+      },
+      ...
+  ]
 ```
 
 
@@ -189,24 +193,35 @@ Filter all Flights that go from start to finish on the specified day (or in a ra
 
 **request:**
 ```json
-     {
-        "miles": 500,
-        "date": "YYYY-MM-DD",
-        "duration": 500,
-        "airportsList": [5, 6, 8]
-      }
+    {
+      "miles": 500,
+      "date": "YYYY-MM-DD",
+      "time": "hh:mm",
+      "seats": {
+        "first": 100,
+        "economy": 500
+      },
+      "planeType": 0,
+      "duration": 500,
+      "airportsList": [5, 6, 8]
+    }
 ```
 
 
 **response:** the created flight with its id
 ```json
-     {
-        "flightId": 5,
-        "miles": 500,
-        "date": "YYYY-MM-DD",
-        "duration": 500,
-        "airportsList": [5, 6, 8]
-      }
+    {
+      "flightId": 5,
+      "miles": 500,
+      "date": "YYYY-MM-DD",
+      "time": "hh:mm",
+      "seats": {
+        "first": 100,
+        "economy": 500
+      },
+      "duration": 500,
+      "airportsList": [5, 6, 8]
+    }
 ```
 
 ### Book a Flight
