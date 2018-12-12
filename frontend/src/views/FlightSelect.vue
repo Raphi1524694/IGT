@@ -108,10 +108,12 @@ export default {
       this.selected[idx] = temp;
     },
     bookFlight() {
+      if(!this.$store.getters.getUser){
+        this.$store.commit("error", 'No user selected');
+      }
       this.selected.forEach(flight => {
         this.$store.dispatch("bookFlight", {
-          customerId: (this.$store.getters.getUser || { customerId: 5 })
-            .customerId,
+          customerId: this.$store.getters.getUser.customerId,
           flightId: flight.flightId
         });
       });

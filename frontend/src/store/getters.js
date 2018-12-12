@@ -7,3 +7,4 @@ export const bookings = state => state.bookings;
 export const inboundFlight = state => state.inboundFlight;
 export const returnFlight = state => state.returnFlight;
 export const loading = state => state.loading;
+export const error = state => state.error;

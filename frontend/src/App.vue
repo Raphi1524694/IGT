@@ -23,8 +23,11 @@
           </v-menu>
         </v-toolbar>
       </div>
-
-      <router-view/>
+      <router-view />
+      <v-snackbar v-model="$store.getters.error" bottom>
+        {{$store.getters.error}}
+        <v-btn color="primary" flat @click="$store.commit('error', null)">Close</v-btn>
+      </v-snackbar>
       <div id="spacer"></div>
 
       <v-footer height="auto" id="footer">
@@ -46,10 +49,10 @@ export default {
   data: () => ({
     dbSelected: "MySQL",
     items: [
-      { name: "MySQL", port: 6001 },
+      { name: "Postgres", port: 6001 },
       { name: "MongoDB", port: 6002 },
-      { name: "Ehcache", port: 6003 },
-      { name: "Neo4j", port: 6004 },
+      { name: "Neo4j", port: 6003 },
+      { name: "Cassandra", port: 6004 },
       { name: "Redis", port: 6005 }
     ]
   }),
