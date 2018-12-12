@@ -23,19 +23,8 @@ public class Main {
             System.out.println("default config");
         }
 
-        for (int i = 0; i < 3; i++) {
-            try {
-                // init
-                Hibernate.getInstance().initFlightManagement();
-                break;
-            } catch (Throwable e) {
-                System.out.printf("Failed to connect to db %d of 3\n", i + 1);
-                if (i == 2) {
-                    throw e;
-                }
-                TimeUnit.SECONDS.sleep(5);
-            }
-        }
+        // init db
+        Hibernate.getInstance().initFlightManagement();
 
         Server server = new Server(Config.DB.getPort());
         System.out.println("Server running on Port: " + Config.DB.getPort());
