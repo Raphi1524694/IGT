@@ -15,13 +15,13 @@ public class Hibernate {
     private static Hibernate instance;
     private static EntityManagerFactory emf;
 
-    private Hibernate(){
+    private Hibernate() {
         System.out.println("use db config: " + Config.DB.name());
         emf = Persistence.createEntityManagerFactory(Config.DB.name());
     }
 
     public static Hibernate getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new Hibernate();
         }
         return instance;
