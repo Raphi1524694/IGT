@@ -18,6 +18,12 @@ public class Responder {
         return Responder.build(Response.Status.BAD_REQUEST, "Bad Request");
     }
 
+    static Response badRequest(String message) {
+        System.out.println("bad request");
+        return Responder.build(Response.Status.BAD_REQUEST, message);
+    }
+
+
     public static Response created(Object responseForUser) {
         System.out.println("created");
         return build(Response.Status.CREATED, responseForUser.toString());
