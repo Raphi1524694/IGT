@@ -18,7 +18,7 @@ public class Customer implements IClassID {
     private static String table = "Customer";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Long id;
 
@@ -33,7 +33,12 @@ public class Customer implements IClassID {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phoneList = new ArrayList<Phone>();
 
-    @ManyToMany(mappedBy = "customers")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "FlightBookings",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "flight_id")}
+    )
     public Set<Flight> flights = new HashSet<Flight>();
 
     public Customer(String name, String address, int flownMiles) {
@@ -45,8 +50,9 @@ public class Customer implements IClassID {
     public Customer() {
     }
 
+    @Override
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
@@ -98,7 +104,9 @@ public class Customer implements IClassID {
         status = EStatus.NONE;
     }
 
-
+    public void addFlight(Flight flight) {
+        this.flights.add(flight);
+    }
 
 
     public List<Phone> getPhones() {

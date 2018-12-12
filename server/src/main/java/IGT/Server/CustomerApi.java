@@ -5,6 +5,8 @@ import IGT.Customer.Phone;
 import IGT.Hibernate;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +28,7 @@ public class CustomerApi {
         try {
             JSONArray response = new JSONArray();
             for (Customer customer : Hibernate.getInstance().<Customer>getTable("Customer")) {
+                System.out.println(customer.getId() + " " + customer.getName());
                 response.put(customer.toJSON());
             }
             return Responder.ok(response);

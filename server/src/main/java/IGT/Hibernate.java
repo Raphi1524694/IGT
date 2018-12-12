@@ -1,8 +1,8 @@
 package IGT;
 
 import IGT.Customer.Customer;
-import IGT.Flight.PopularAirports;
-import IGT.Flight.RandomFlights;
+import IGT.Customer.Phone;
+import IGT.Flight.*;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManagerFactory;
@@ -79,7 +79,7 @@ public class Hibernate {
     public synchronized <T extends IClassID> T getElementById(Object id, String table) throws ServerError {
         List<T> t = getTable(table);
         for (T c : t) {
-            if (id == c.getId()) {
+            if (id.equals(c.getId())) {
                 return c;
             }
         }
@@ -109,15 +109,19 @@ public class Hibernate {
             case "Customer":
                 return Customer.class;
             case "Phone":
-                return Customer.class;
+                return Phone.class;
             case "Airport":
-                return Customer.class;
+                return Airport.class;
             case "Flight":
-                return Customer.class;
+                return Flight.class;
             case "FlightSegment":
-                return Customer.class;
+                return FlightSegment.class;
         }
         return null;
+    }
+
+    public static EntityManagerFactory getFactory() {
+        return emf;
     }
 }
 

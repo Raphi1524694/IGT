@@ -11,9 +11,22 @@
             <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.ogm.datastore.create_database" value="true"/>
-            <property name="hibernate.ogm.datastore.host" value="db"/>
+            <property name="hibernate.ogm.datastore.host" value="127.0.0.1"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
-            <property name="hbm2ddl.auto" value="create-drop"></property>
+            <property name="hbm2ddl.auto" value="create-drop"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="POSTGRES" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://sql:5432/postgres"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="igt"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
 

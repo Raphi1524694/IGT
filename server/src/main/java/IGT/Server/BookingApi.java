@@ -21,18 +21,19 @@ public class BookingApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postNewBooking(String json) {
+    public Response bookFlight(@QueryParam("customer") long customerId, @QueryParam("flight") long flightId) {
         try {
-            JSONObject object = new JSONObject(json);
-            if (!object.has("customerId") || !object.has("flightId")) {
+            if (customerId <= 0 || flightId <= 0) {
                 return Responder.badRequest();
             }
-            Customer c = Hibernate.getInstance().getElementById(object.getInt("customerId"), "Customer");
-            Flight f = Hibernate.getInstance().getElementById(object.getInt("flightId"), "Flight");
-
-            //Long bookingId = Helper.bookFlight(c, f);
+            System.out.println(customerId + ", " + flightId);
+            Customer c = Hibernate.getInstance().getElementById(customerId, "Customer");
+            Flight f = Hibernate.getInstance().getElementById(flightId, "Flight");
             JSONObject response = new JSONObject();
-            response.put("bookingId", 5);
+            f.addCustomer(c);
+            c.addFlight(f);
+            response.put("customer", c.getId());
+            response.put("flight", f.getId());
             return Responder.created(response);
         } catch (Exception e) {
             return Responder.exception(e);
@@ -46,4 +47,5 @@ public class BookingApi {
     public Response optionsNew() {
         return Responder.preFlight();
     }
+
 }

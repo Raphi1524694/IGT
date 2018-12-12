@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "Customer_Phones")
 public class Phone implements IClassID {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String phoneNumber;

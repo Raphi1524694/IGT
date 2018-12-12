@@ -18,13 +18,13 @@ public class AirportApi {
     /**
      * <b>get all airports</b>
      * <p>
-     * Path: /customers/all
+     * Path: /airport/all
      * Method: GET
      */
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCustomers() {
+    public Response getAllAirports() {
         try {
             JSONArray response = new JSONArray();
             for (Airport airport : Hibernate.getInstance().<Airport>getTable("Airport")) {

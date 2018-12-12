@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "Airports")
 public class Airport implements IClassID {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public String name;

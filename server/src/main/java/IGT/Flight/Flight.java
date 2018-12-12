@@ -14,7 +14,7 @@ import java.util.*;
 public class Flight implements IClassID {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "flight_id")
     private Long id;
 
@@ -36,12 +36,7 @@ public class Flight implements IClassID {
 
     private PlaneType plane;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "FlightBookings",
-            joinColumns = {@JoinColumn(name = "flight_id")},
-            inverseJoinColumns = {@JoinColumn(name = "customer_id")}
-    )
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "flights")
     public Set<Customer> customers = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -118,8 +113,8 @@ public class Flight implements IClassID {
         return customers;
     }
 
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
+    public void addCustomer(Customer customer) {
+        this.customers.add(customer);
     }
 
     public void setMiles(int miles) {

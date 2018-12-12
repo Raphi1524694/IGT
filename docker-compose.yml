@@ -1,23 +1,23 @@
 version: '3.4'
 
 services:
-  server:
-    build:
-      context: Server
-      dockerfile: Dockerfile
-    environment:
-        - DB=MONGODB
-    restart: always
-    ports:
-    - "6002:6002"
-    networks:
-    - db
-    links:
-    - "db:db"
-    depends_on:
-    - db
-    volumes:
-    - ./mvn-cache:/root/.m2
+#  server:
+#    build:
+#      context: Server
+#      dockerfile: Dockerfile
+#    environment:
+#        - DB=MONGODB
+#    restart: always
+#    ports:
+#    - "6002:6002"
+#    networks:
+#    - db
+#    links:
+#    - "db:db"
+#    depends_on:
+#    - db
+   # volumes:
+   # - ./mvn-cache:/root/.m2
 
   # mysql:
   #   image: mysql
@@ -36,12 +36,21 @@ services:
   #   - ./mysql-data:/var/lib/mysql
 
   #mongoDB
+#  db:
+#    image: mongo:3.6-stretch
+#    networks:
+#    - db
+#    ports:
+#    - "27017:27017"
+
   db:
-    image: mongo:3.6-stretch
-    networks: 
-    - db
+    image: postgres:9.2-alpine
+    networks:
+      - db
+    environment:
+      POSTGRES_PASSWORD: igt
     ports:
-    - "27017:27017"
+      - "5432:5432"
 
   # #neo4j
   # db:
@@ -53,21 +62,21 @@ services:
   #   - "7687:7687"
 
 
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-    - "5000:5000"
-    depends_on:
-    - server
-    volumes: 
-    - npm-cache:/root/.npm
-
-volumes: 
-  npm-cache:
-    external: false
+#  frontend:
+#    build:
+#      context: frontend
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#    - "5000:5000"
+#    depends_on:
+#    - server
+#    volumes:
+#    - npm-cache:/root/.npm
+#
+#volumes:
+#  npm-cache:
+#    external: false
 
 networks:
   db:
