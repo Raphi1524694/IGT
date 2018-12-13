@@ -6,12 +6,12 @@ Für die Schreibwerte wurden 5000 Flüge mit unterschiedlichen zufälligen Werte
 Für die Lesewerte wurden diese Flüge wieder abgerufen. 
 Alle Daten in Sekunden.
 
+## Docker
+
 System:
 MacOS High Sierra
 2,2 GHz Intel i7
 16 GB RAM 1600 MHz
- 
-## Docker
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
@@ -23,6 +23,11 @@ MacOS High Sierra
 
 
 ## Virualisiert
+
+System:
+Obuntu 18
+2,2 GHz Intel i7
+12 GB RAM 1600 MHz
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
