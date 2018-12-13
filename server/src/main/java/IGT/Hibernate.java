@@ -7,6 +7,7 @@ import org.hibernate.Session;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.Serializable;
 import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,9 @@ public class Hibernate {
         }
     }
 
-    public synchronized <T extends IClassID> Long save(T object) throws ServerError {
+    public synchronized <T extends IClassID> Object save(T object) throws ServerError {
         Session se = emf.createEntityManager().unwrap(Session.class);
-        se.beginTransaction();
+        se.getTransaction().begin();
         try {
             if (object.getId() == null && se.contains(object)) {
                 // save
@@ -60,7 +61,7 @@ public class Hibernate {
 
     public synchronized <T extends IClassID> void delete(T object) throws ServerError {
         Session se = emf.createEntityManager().unwrap(Session.class);
-        se.beginTransaction();
+        se.getTransaction().begin();
         try {
             Object element = this.getElementById(getClass(object), object.getId());
             se.delete(se.contains(element) ? element : se.merge(element));
@@ -84,7 +85,7 @@ public class Hibernate {
         return customers;
     }
 
-    public synchronized Object getElementById(Class c, Long id) throws ServerError {
+    public synchronized Object getElementById(Class c, Serializable id) throws ServerError {
         Session se = emf.createEntityManager().unwrap(Session.class);
         try {
             return se.get(c, id);

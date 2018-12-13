@@ -31,6 +31,9 @@ public class BookingApi {
             Long customerId = request.getLong("customerId");
             Customer c = (Customer) Hibernate.getInstance().getElementById(Customer.class, customerId);
             Flight f = (Flight) Hibernate.getInstance().getElementById(Flight.class, flightId);
+            if (c == null || f == null) {
+                return Responder.badRequest();
+            }
             c.bookFlight(f);
             Hibernate.getInstance().save(c);
             return Responder.created(c.toJSON());

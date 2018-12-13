@@ -10,26 +10,28 @@ import javax.persistence.*;
 @Table(name = "Bookings")
 public class Booking implements IClassID {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "booking")
-    private Long id;
+    @EmbeddedId
+    private BookingId id;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("customerId")
     private Customer customer;
 
 
-    @OneToOne
-    @JoinColumn(name = "flight_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("flightId")
     private Flight flight;
 
-    public Booking() {
-    }
+    private Booking() { }
 
     public Booking(Customer customer, Flight flight) {
         this.customer = customer;
         this.flight = flight;
+        this.id = new BookingId(customer.getId(), flight.getId());
+    }
+
+    public Flight getFlight() {
+        return this.flight;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class Booking implements IClassID {
     }
 
     @Override
-    public Long getId() {
+    public BookingId getId() {
         return this.id;
     }
 

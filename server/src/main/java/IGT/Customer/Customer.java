@@ -1,11 +1,13 @@
 package IGT.Customer;
 
+import IGT.Flight.Booking;
 import IGT.Flight.Flight;
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.*;
@@ -14,14 +16,13 @@ import java.util.*;
 @Entity
 @Table(name = "Customers")
 public class Customer implements IClassID {
-    private static String table = "Customer";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "customer_id")
+    @GeneratedValue
     private Long id;
 
     @Column
+    @NaturalId
     private String name;
 
     @Column
@@ -36,14 +37,13 @@ public class Customer implements IClassID {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phoneList = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL )
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "Bookings",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "flight_id")}
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    public List<Flight> flights = new ArrayList<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Booking> bookings = new ArrayList<>();
 
     public Customer(String name, String address, int flownMiles) {
         setName(name);
@@ -51,7 +51,10 @@ public class Customer implements IClassID {
         setFlownMiles(flownMiles);
     }
 
-    public Customer() {
+    private Customer() { }
+
+    public List getBookings() {
+        return this.bookings;
     }
 
     @Override
@@ -108,15 +111,10 @@ public class Customer implements IClassID {
         status = EStatus.NONE;
     }
 
-    public void bookFlight(Flight flight) throws Exception {
-        for (Flight f : this.flights) {
-            if (f.getId().equals(flight.getId())) {
-                throw new Exception("Flight with id " + flight.getId() + " already exists for Customer " + this.getId());
-            }
-        }
-        this.flights.add(flight);
-        flight.addCustomer(this);
-
+    public void bookFlight(Flight flight) {
+        Booking booking = new Booking(this, flight);
+        this.bookings.add(booking);
+        flight.getBookings().add(booking);
     }
 
 
@@ -154,11 +152,11 @@ public class Customer implements IClassID {
                 phones.put(phone.getPhoneNumber());
             }
             JSONArray flights = new JSONArray();
-            for (Flight flight : this.flights) {
-                flights.put(flight.toJSON());
+            for (Booking booking : this.bookings) {
+                flights.put(booking.getFlight().toJSON());
             }
-            customerJson.put("phones", phones);
             customerJson.put("flights", flights);
+            customerJson.put("phones", phones);
         } catch (Exception e) {
             System.out.println("cannot convert customer " + this.getName() + " to json");
             e.printStackTrace();
@@ -167,17 +165,20 @@ public class Customer implements IClassID {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() == this.getClass()) {
-            if (((Customer) obj).getId() == id) {
-                return true;
-            }
-        }
-        return false;
+    public String getClassId() {
+        return "Customer";
     }
 
     @Override
-    public String getClassId() {
-        return "Customer";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(this.name, customer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name);
     }
 }

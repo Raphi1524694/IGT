@@ -3,9 +3,11 @@ package IGT;
 
 import org.codehaus.jettison.json.JSONObject;
 
+import java.io.Serializable;
+
 public interface IClassID {
     String getClassId();
 
-    Long getId();
+    Serializable getId();
     JSONObject toJSON();
 }

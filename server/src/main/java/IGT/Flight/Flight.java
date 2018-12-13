@@ -16,8 +16,7 @@ import java.util.*;
 public class Flight implements IClassID {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "flight_id")
+    @GeneratedValue
     private Long id;
 
     private String startTime;
@@ -38,14 +37,23 @@ public class Flight implements IClassID {
 
     private PlaneType plane;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "flights")
-    public Set<Customer> customers = new HashSet<>();
+    @OneToMany(
+            mappedBy = "flight",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Booking> bookings = new ArrayList<>();
 
     @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<FlightSegment> flightSegmentList = new ArrayList<>();
 
     public Flight() {
+    }
+
+    public List getBookings() {
+        return this.bookings;
     }
 
     public void setStartTime(String startTime) {
@@ -104,21 +112,13 @@ public class Flight implements IClassID {
         this.priceFistClass = priceFistClass;
     }
 
-    public PlaneType getPlane() {
-        return plane;
-    }
-
     public void setPlane(PlaneType plane) {
         this.plane = plane;
     }
 
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void addCustomer(Customer customer) {
-        this.customers.add(customer);
-    }
+//    public void addCustomer(Customer customer) {
+//        this.customers.add(customer);
+//    }
 
     public void setMiles(int miles) {
         this.miles = miles;

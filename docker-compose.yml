@@ -19,47 +19,31 @@ services:
    # volumes:
    # - ./mvn-cache:/root/.m2
 
-  # mysql:
-  #   image: mysql
-  #   restart: always
-  #   networks:
-  #   - mysql
-  #   environment:
-  #   - MYSQL_ROOT_PASSWORD=bla
-  #   - MYSQL_ROOT_HOST=172.18.0.3
-  #   - MYSQL_DATABASE=test
-  #   - MYSQL_USER=user
-  #   - MYSQL_PASSWORD=password
-  #   ports:
-  #   - "3306:3306"
-  #   volumes:
-  #   - ./mysql-data:/var/lib/mysql
+  #mongoDB
+  db:
+    image: mongo:3.6-stretch
+    networks:
+    - db
+    ports:
+    - "27017:27017"
 
-  # #mongoDB
-  # db:
-  #   image: mongo:3.6-stretch
-  #   networks:
-  #   - db
-  #   ports:
-  #   - "27017:27017"
-
-  # sql:
-  #   image: postgres:9.2-alpine
-  #   networks:
-  #     - db
-  #   environment:
-  #     POSTGRES_PASSWORD: igt
-  #   ports:
-  #     - "5432:5432"
+  sql:
+    image: postgres:9.2-alpine
+    networks:
+      - db
+    environment:
+      POSTGRES_PASSWORD: igt
+    ports:
+      - "5432:5432"
 
   # #neo4j
-  db:
-    image: neo4j:3.5
-    environment:
-      NEO4J_AUTH: neo4j/igt
-    ports:
-    - "7474:7474"
-    - "7687:7687"
+  # db:
+  #   image: neo4j:3.5
+  #   environment:
+  #     NEO4J_AUTH: neo4j/igt
+  #   ports:
+  #   - "7474:7474"
+  #   - "7687:7687"
   # cassandra
   # db:
   #   image: cassandra:2.1
