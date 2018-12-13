@@ -36,10 +36,13 @@ public class Hibernate {
             System.out.println("initFlightManagement failed");
             e.printStackTrace();
         }
+
+
     }
 
     public synchronized <T extends IClassID> Object save(T object) throws ServerError {
         Session se = emf.createEntityManager().unwrap(Session.class);
+        se.getTransaction().begin();
         se.getTransaction().begin();
         try {
             if (object.getId() == null && se.contains(object)) {
