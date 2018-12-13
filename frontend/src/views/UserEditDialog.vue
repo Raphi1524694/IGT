@@ -85,8 +85,8 @@ export default {
       return Array.isArray(this.user[field]);
     },
     isObject(field) {
-      const field = JSON.stringify(this.user[field]);
-      return field.contains("{") && field.contains("}");
+      const fieldstring = JSON.stringify(this.user[field]);
+      return fieldstring.includes("{") && fieldstring.includes("}");
     },
     add(field) {
       this.user[field] = this.user[field].filter(

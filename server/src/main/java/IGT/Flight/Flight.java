@@ -16,7 +16,7 @@ import java.util.*;
 public class Flight implements IClassID {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String startTime;

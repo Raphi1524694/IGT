@@ -11,7 +11,7 @@
             <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.ogm.datastore.create_database" value="true"/>
-            <property name="hibernate.ogm.datastore.host" value="127.0.0.1"/>
+            <property name="hibernate.ogm.datastore.host" value="mongo"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
             <property name="hbm2ddl.auto" value="create-drop"/>
         </properties>
@@ -22,10 +22,10 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://127.0.0.1:5432/bla"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://sql:5432/bla"/>
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="igt"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hbm2ddl.auto" value="create-drop"/>
         </properties>
     </persistence-unit>
 
@@ -34,36 +34,33 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="neo4j_bolt"/>
-            <property name="hibernate.ogm.datastore.host" value="127.0.0.1:7687"/>
+            <property name="hibernate.ogm.datastore.host" value="neo:7687"/>
             <property name="hibernate.ogm.datastore.username" value="neo4j"/>
             <property name="hibernate.ogm.datastore.password" value="igt"/>
         </properties>
     </persistence-unit>
 
-    <persistence-unit name="CASSANDRA"
-                      transaction-type="JTA">
+    <persistence-unit name="CASSANDRA" transaction-type="JTA">
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="cassandra_experimental"/>
-            <property name="hibernate.ogm.datastore.host" value="127.0.0.1:9042"/>
-            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.ogm.datastore.host" value="cassy:9042"/>
+            <property name="hibernate.ogm.datastore.database" value="hibernate"/>
+            <property name="hbm2ddl.auto" value="create-drop"/>
         </properties>
     </persistence-unit>
-
 
     <persistence-unit name="REDIS" transaction-type="JTA">
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="redis_experimental"/>
-            <property name="hibernate.ogm.datastore.host" value="127.0.0.1:6379"/>
+            <property name="hibernate.ogm.datastore.host" value="redis:6379"/>
             <!-- <property name="hibernate.ogm.redis.ttl" value="-1" /> -->
             <property name="hibernate.ogm.redis.ssl" value="false"/>
             <property name="hibernate.ogm.redis.cluster" value="false"/>
             <!-- <property name="hibernate.ogm.datastore.grid_dialect" value="org.hibernate.ogm.datastore.redis.RedisHashDialect" /> -->
-            <property name="hibernate.ogm.datastore.grid_dialect"
-                      value="org.hibernate.ogm.datastore.redis.RedisJsonDialect"/>
+            <property name="hibernate.ogm.datastore.grid_dialect" value="org.hibernate.ogm.datastore.redis.RedisJsonDialect"/>
         </properties>
     </persistence-unit>
 

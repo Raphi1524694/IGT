@@ -18,7 +18,7 @@ import java.util.*;
 public class Customer implements IClassID {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
