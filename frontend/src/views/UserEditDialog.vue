@@ -23,6 +23,7 @@
                   <v-btn @click="add(field)">+</v-btn>
                 </div>
               </div>
+              <span v-else-if="isObject(field)">{{JSON.stringify(user[field])}}</span>
               <v-text-field :label="field" v-else required v-model="user[field]"></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -83,6 +84,10 @@ export default {
     isArray(field) {
       return Array.isArray(this.user[field]);
     },
+    isObject(field) {
+      const field = JSON.stringify(this.user[field]);
+      return field.contains("{") && field.contains("}");
+    },
     add(field) {
       this.user[field] = this.user[field].filter(
         entry => entry && entry !== ""
@@ -96,6 +101,9 @@ export default {
         c => c.customerId === this.userId
       );
     },
+    parse(field) {
+
+    },
     status: {
       get() {
         return this.items.find(
@@ -107,7 +115,7 @@ export default {
         this.user.flownMiles = val;
       }
     }
-  }
+  },
 };
 </script>
 
