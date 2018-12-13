@@ -41,7 +41,7 @@ public class Hibernate {
         Session se = emf.createEntityManager().unwrap(Session.class);
         se.beginTransaction();
         try {
-            if (object.getId() == null) {
+            if (object.getId() == null && se.contains(object)) {
                 // save
                 se.persist(object);
             } else {
@@ -62,7 +62,8 @@ public class Hibernate {
         Session se = emf.createEntityManager().unwrap(Session.class);
         se.beginTransaction();
         try {
-            se.delete(this.getElementById(getClass(object), object.getId()));
+            Object element = this.getElementById(getClass(object), object.getId());
+            se.delete(se.contains(element) ? element : se.merge(element));
         } catch (Exception e) {
             throw new ServerError("failed to delete: " + object.toJSON().toString(), new Error());
         } finally {

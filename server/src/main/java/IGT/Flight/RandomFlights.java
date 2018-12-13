@@ -8,9 +8,19 @@ import java.util.List;
 public class RandomFlights {
 
     public static void generate(int i) throws Exception {
-        int existingFlights = Hibernate.getInstance().getTable("Flight").size();
-        if (existingFlights >= i) return;
-        i = i - existingFlights;
+        for(Flight f : Hibernate.getInstance().<Flight>getTable("Flight")){
+            Hibernate.getInstance().delete(f);
+        }
+        System.out.println("\n" +
+                "  ____                      _                              _    \n" +
+                " |  _ \\                    | |                            | |   \n" +
+                " | |_) |  ___  _ __    ___ | |__   _ __ ___    __ _  _ __ | | __\n" +
+                " |  _ <  / _ \\| '_ \\  / __|| '_ \\ | '_ ` _ \\  / _` || '__|| |/ /\n" +
+                " | |_) ||  __/| | | || (__ | | | || | | | | || (_| || |   |   < \n" +
+                " |____/  \\___||_| |_| \\___||_| |_||_| |_| |_| \\__,_||_|   |_|\\_\\\n" +
+                "                                                                \n" +
+                "                                                                \n");
+        long startTime = System.currentTimeMillis();
         List<Airport> airportList = Hibernate.getInstance().getTable("Airport");
         int l = airportList.size();
         for (int j = 0; j < i; j++) {
@@ -32,8 +42,21 @@ public class RandomFlights {
             f.setPriceFistClass(rand(900, 3000));
             f.setDuration(rand(600));
             Hibernate.getInstance().save(f);
-            System.out.println(f.toJSON().toString());
         }
+        long duration = System.currentTimeMillis() - startTime;
+        double seconds = duration / 1000.0;
+        double perEntry = duration / new Double(i);
+        System.out.printf("Total time for inputting %d Entrys: %fs %n", i, seconds);
+        System.out.printf("Time per entry: %f ms %n", perEntry);
+
+        long startTime2 = System.currentTimeMillis();
+
+        List flights = Hibernate.getInstance().getTable("Flight");
+        duration = System.currentTimeMillis() - startTime2;
+        seconds = duration / 1000.0;
+        perEntry = duration / new Double(flights.size());
+        System.out.printf("Total time for retreving %d Entrys: %fs %n", flights.size(), seconds);
+        System.out.printf("Time per entry: %f ms %n", perEntry);
     }
 
     private static int rand(int stop) {

@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Flights from "./views/Flights.vue";
 import Users from "./views/Users.vue";
 import Store from './store/index.js';
 
@@ -12,7 +11,7 @@ const router = new Router({
     {
       path: "/flights",
       name: "home",
-      component: Flights
+      component: () => import(/* webpackChunkName: "Flights" */ "./views/Flights.vue")
     },
     {
       path: "/user",
