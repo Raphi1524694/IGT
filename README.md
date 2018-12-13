@@ -1,7 +1,11 @@
 # IGT
 Übungsaufgaben für die Vorlesung Integrationstechnologien WS18/19 der Hochschule Mannheim
 
-https://docs.jboss.org/hibernate/ogm/4.0/reference/en-US/html_single/#ogm-neo4j
+Um das System zu starten, starten Sie den folgenden Befehl:
+```
+docker-compose up -d
+```
+
 
 ## Api Doku
 

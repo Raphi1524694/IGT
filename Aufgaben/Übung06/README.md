@@ -17,7 +17,7 @@ MacOS High Sierra
 |----------	|-------------- |------------  |
 | PostgeSQL	| 24,29        	| 8,2          |
 | MongoDB  	| 35,7         	| 3,6          |
-| Neo4j  	| 165           | 49           |
+| Neo4j  	| 165,2         | 49,1         |
 | Cassandra | -          	| -            |
 | Redis    	| -          	| -            |
 
@@ -26,9 +26,9 @@ MacOS High Sierra
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
-| PostgeSQL	|           	|              |
-| MongoDB  	|           	|              |
-| Neo4j  	|               |              |
+| PostgeSQL	| 35,26         | 11,82        |
+| MongoDB  	| 48,26       	| 5,2          |
+| Neo4j  	| 254,7         | 81           |
 | Cassandra | -          	| -            |
 | Redis    	| -          	| -            |
 
