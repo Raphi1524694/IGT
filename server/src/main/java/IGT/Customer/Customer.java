@@ -4,12 +4,11 @@ import IGT.Flight.Flight;
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 
 @Entity
@@ -22,24 +21,29 @@ public class Customer implements IClassID {
     @Column(name = "customer_id")
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String address;
 
+    @Column
     private int flownMiles = 0;
 
+    @Column
     private EStatus status;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Phone> phoneList = new ArrayList<Phone>();
+    private List<Phone> phoneList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = CascadeType.ALL )
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
-            name = "FlightBookings",
+            name = "Bookings",
             joinColumns = {@JoinColumn(name = "customer_id")},
             inverseJoinColumns = {@JoinColumn(name = "flight_id")}
     )
-    public Set<Flight> flights = new HashSet<Flight>();
+    public List<Flight> flights = new ArrayList<>();
 
     public Customer(String name, String address, int flownMiles) {
         setName(name);
@@ -104,8 +108,15 @@ public class Customer implements IClassID {
         status = EStatus.NONE;
     }
 
-    public void addFlight(Flight flight) {
+    public void bookFlight(Flight flight) throws Exception {
+        for (Flight f : this.flights) {
+            if (f.getId().equals(flight.getId())) {
+                throw new Exception("Flight with id " + flight.getId() + " already exists for Customer " + this.getId());
+            }
+        }
         this.flights.add(flight);
+        flight.addCustomer(this);
+
     }
 
 
@@ -142,7 +153,12 @@ public class Customer implements IClassID {
             for (Phone phone : phoneList) {
                 phones.put(phone.getPhoneNumber());
             }
+            JSONArray flights = new JSONArray();
+            for (Flight flight : this.flights) {
+                flights.put(flight.toJSON());
+            }
             customerJson.put("phones", phones);
+            customerJson.put("flights", flights);
         } catch (Exception e) {
             System.out.println("cannot convert customer " + this.getName() + " to json");
             e.printStackTrace();

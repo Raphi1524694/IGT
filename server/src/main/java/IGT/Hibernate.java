@@ -62,7 +62,7 @@ public class Hibernate {
         Session se = emf.createEntityManager().unwrap(Session.class);
         se.beginTransaction();
         try {
-            se.delete(se.get(getClass(object), object.getId()));
+            se.delete(this.getElementById(getClass(object), object.getId()));
         } catch (Exception e) {
             throw new ServerError("failed to delete: " + object.toJSON().toString(), new Error());
         } finally {
@@ -83,15 +83,15 @@ public class Hibernate {
         return customers;
     }
 
-    public synchronized <T extends IClassID> T getElementById(Object id, String table) throws ServerError {
-        List<T> t = getTable(table);
-        for (T c : t) {
-            if (id.equals(c.getId())) {
-                return c;
-            }
+    public synchronized Object getElementById(Class c, Long id) throws ServerError {
+        Session se = emf.createEntityManager().unwrap(Session.class);
+        try {
+            return se.get(c, id);
+        } catch (Exception e) {
+            throw new ServerError("failed to get : " + c.getName() + " with id: " + id, new Error());
+        } finally {
+            se.close();
         }
-        System.out.println("cant find element");
-        return null;
     }
 
     public synchronized <T extends IClassID> List<T> customQuery(String query) throws ServerError {
@@ -123,6 +123,8 @@ public class Hibernate {
                 return Flight.class;
             case "FlightSegment":
                 return FlightSegment.class;
+            case "Booking":
+                return Booking.class;
         }
         return null;
     }

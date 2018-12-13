@@ -77,7 +77,7 @@ public class CustomerApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOneCustomer(@PathParam("id") String id) {
         try {
-            Customer c = Hibernate.getInstance().getElementById(Long.parseLong(id), "Customer");
+            Customer c = (Customer) Hibernate.getInstance().getElementById(Customer.class, Long.parseLong(id));
             if (c != null) {
                 return Responder.ok(c.toJSON());
             }
@@ -141,7 +141,7 @@ public class CustomerApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteCustomer(@PathParam("id") String id) {
         try {
-            Customer c = Hibernate.getInstance().getElementById(Long.parseLong(id), "Customer");
+            Customer c = (Customer) Hibernate.getInstance().getElementById(Customer.class, Long.parseLong(id));
             if (c != null) {
                 c.removeAllPhones();
                 Hibernate.getInstance().delete(c);

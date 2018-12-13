@@ -21,20 +21,19 @@ public class BookingApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response bookFlight(@QueryParam("customer") long customerId, @QueryParam("flight") long flightId) {
+    public Response bookFlight(String json) {
         try {
-            if (customerId <= 0 || flightId <= 0) {
+            JSONObject request = new JSONObject(json);
+            if (!request.has("flightId") || !request.has("customerId")) {
                 return Responder.badRequest();
             }
-            System.out.println(customerId + ", " + flightId);
-            Customer c = Hibernate.getInstance().getElementById(customerId, "Customer");
-            Flight f = Hibernate.getInstance().getElementById(flightId, "Flight");
-            JSONObject response = new JSONObject();
-            f.addCustomer(c);
-            c.addFlight(f);
-            response.put("customer", c.getId());
-            response.put("flight", f.getId());
-            return Responder.created(response);
+            Long flightId = request.getLong("flightId");
+            Long customerId = request.getLong("customerId");
+            Customer c = (Customer) Hibernate.getInstance().getElementById(Customer.class, customerId);
+            Flight f = (Flight) Hibernate.getInstance().getElementById(Flight.class, flightId);
+            c.bookFlight(f);
+            Hibernate.getInstance().save(c);
+            return Responder.created(c.toJSON());
         } catch (Exception e) {
             return Responder.exception(e);
         }

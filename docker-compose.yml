@@ -35,31 +35,42 @@ services:
   #   volumes:
   #   - ./mysql-data:/var/lib/mysql
 
-  #mongoDB
-#  db:
-#    image: mongo:3.6-stretch
-#    networks:
-#    - db
-#    ports:
-#    - "27017:27017"
+  # #mongoDB
+  # db:
+  #   image: mongo:3.6-stretch
+  #   networks:
+  #   - db
+  #   ports:
+  #   - "27017:27017"
 
-  db:
-    image: postgres:9.2-alpine
-    networks:
-      - db
-    environment:
-      POSTGRES_PASSWORD: igt
-    ports:
-      - "5432:5432"
+  # sql:
+  #   image: postgres:9.2-alpine
+  #   networks:
+  #     - db
+  #   environment:
+  #     POSTGRES_PASSWORD: igt
+  #   ports:
+  #     - "5432:5432"
 
   # #neo4j
+  db:
+    image: neo4j:3.5
+    environment:
+      NEO4J_AUTH: neo4j/igt
+    ports:
+    - "7474:7474"
+    - "7687:7687"
+  # cassandra
   # db:
-  #   image: neo4j:3.5
-  #   environment:
-  #     NEO4J_AUTH: neo4j/igt
+  #   image: cassandra:2.1
   #   ports:
-  #   - "7474:7474"
-  #   - "7687:7687"
+  #    - "9042:9042"
+
+  # #redis
+  # db:
+  #   image: redis:5.0-alpine
+  #   ports:
+  #    - "6379:6379"
 
 
 #  frontend:

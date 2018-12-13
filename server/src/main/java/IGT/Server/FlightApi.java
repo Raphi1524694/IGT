@@ -57,8 +57,8 @@ public class FlightApi {
             for (int i = 0; i < airportsList.length() - 1; i++) {
                 Long currentId = airportsList.getLong(i);
                 Long nextId = airportsList.getLong(i + 1);
-                Airport currentAirport = Hibernate.getInstance().getElementById(currentId, "Airport");
-                Airport nextAirport = Hibernate.getInstance().getElementById(nextId, "Airport");
+                Airport currentAirport = (Airport) Hibernate.getInstance().getElementById(Airport.class, currentId);
+                Airport nextAirport = (Airport) Hibernate.getInstance().getElementById(Airport.class, nextId);
                 FlightSegment nextSegment = new FlightSegment(newFlight, currentAirport, nextAirport);
                 newFlight.addFlightSegment(nextSegment);
             }

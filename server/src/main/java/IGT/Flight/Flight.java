@@ -5,6 +5,8 @@ import IGT.IClassID;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.*;
@@ -39,7 +41,8 @@ public class Flight implements IClassID {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "flights")
     public Set<Customer> customers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "belongsToFlight", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<FlightSegment> flightSegmentList = new ArrayList<>();
 
     public Flight() {
