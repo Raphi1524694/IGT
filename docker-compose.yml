@@ -1,23 +1,23 @@
 version: '3.4'
 
 services:
-  mongo_server:
-   build:
-     context: Server
-     dockerfile: Dockerfile
-   environment:
-       - DB=MONGODB
-   restart: always
-   ports:
-   - "6002:6002"
-   networks:
-   - db
-   links:
-   - "mongo:mongo"
-   depends_on:
-   - mongo
-   volumes:
-   - ./mvn-cache:/root/.m2
+  # mongo_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=MONGODB
+  #  restart: always
+  #  ports:
+  #  - "6002:6002"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "mongo:mongo"
+  #  depends_on:
+  #  - mongo
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
   # mongoDB
   mongo:
@@ -27,23 +27,23 @@ services:
     ports:
     - "27017:27017"
 
-  postgres_server:
-   build:
-     context: Server
-     dockerfile: Dockerfile
-   environment:
-       - DB=POSTGRES
-   restart: always
-   ports:
-   - "6001:6001"
-   networks:
-   - db
-   links:
-   - "sql:sql"
-   depends_on:
-   - sql
-   volumes:
-   - ./mvn-cache:/root/.m2
+  # postgres_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=POSTGRES
+  #  restart: always
+  #  ports:
+  #  - "6001:6001"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "sql:sql"
+  #  depends_on:
+  #  - sql
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
   sql:
     image: postgres:9.2-alpine
@@ -54,23 +54,23 @@ services:
     ports:
       - "5432:5432"
 
-  neo_server:
-   build:
-     context: Server
-     dockerfile: Dockerfile
-   environment:
-       - DB=NEO4J
-   restart: always
-   ports:
-   - "6003:6003"
-   networks:
-   - db
-   links:
-   - "neo:neo"
-   depends_on:
-   - neo
-   volumes:
-   - ./mvn-cache:/root/.m2
+  # neo_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=NEO4J
+  #  restart: always
+  #  ports:
+  #  - "6003:6003"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "neo:neo"
+  #  depends_on:
+  #  - neo
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
   # #neo4j
   neo:
@@ -83,23 +83,23 @@ services:
     - "7474:7474"
     - "7687:7687"
 
-  cassy_server:
-   build:
-     context: Server
-     dockerfile: Dockerfile
-   environment:
-       - DB=CASSANDRA
-   restart: always
-   ports:
-   - "6004:6004"
-   networks:
-   - db
-   links:
-   - "cassy:cassy"
-   depends_on:
-   - cassy
-   volumes:
-   - ./mvn-cache:/root/.m2
+  # cassy_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=CASSANDRA
+  #  restart: always
+  #  ports:
+  #  - "6004:6004"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "cassy:cassy"
+  #  depends_on:
+  #  - cassy
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
   # cassandra
   cassy:
@@ -108,29 +108,28 @@ services:
      - "9042:9042"
 
 
-  redis_server:
-   build:
-     context: Server
-     dockerfile: Dockerfile
-   environment:
-       - DB=REDIS
-   ports:
-   - "6005:6005"
-   networks:
-   - db
-   links:
-   - "redis:redis"
-   depends_on:
-   - redis
-   volumes:
-   - ./mvn-cache:/root/.m2
+  # redis_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=REDIS
+  #  ports:
+  #  - "6005:6005"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "redis:redis"
+  #  depends_on:
+  #  - redis
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
   #redis
   redis:
-    image: jboss/infinispan-server
+    image: redis:5.0-alpine
     ports:
-     - "8123:8080"
-     - "11222:11222"
+     - "6379:6379"
 
 
 #  frontend:

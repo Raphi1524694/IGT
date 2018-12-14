@@ -2,10 +2,12 @@ package IGT.Flight;
 
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 
 @Entity
+@Indexed
 @Table(name = "FlightSegments")
 public class FlightSegment implements IClassID {
 

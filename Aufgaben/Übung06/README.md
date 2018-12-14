@@ -15,12 +15,13 @@ MacOS High Sierra
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
-| PostgeSQL	| 24,29        	| 8,2          |
+| PostgreSQL| 24,29        	| 8,2          |
 | MongoDB  	| 35,7         	| 3,6          |
 | Neo4j  	| 165,2         | 49,1         |
-| Cassandra | -          	| -            |
-| Redis    	| -          	| -            |
+| Cassandra | 324         	| 495          |
+| Redis    	| 281,4        	| 5,5          |
 
+Unsere Versuche haben ergeben, dass PostgreSQL für die Schreib- und MongoDB für die Lesezugriffe die besten Ergebnisse erzielt hat. Es ist jedoch deutlich, dass insgesamt zwischen NoSQL und SQL Datenbanken insgesamt eine große Diskrepanz besteht. Dass MongoDB den schnellsten Lesezugriff hat, hat verschiedene Gründe. Zum einen besitzt MongoDB keine Joins, welche Performance normalerweise einschränken. Zum anderen existieren in MongoDB weniger Persistierungschecks, welche in Relationalen Datenbanken häufig ausgeführt werden. Die extrem hohen Zeiten bei dem Column Store Cassandra können bei uns durch die immense Anzahl von Konsolenausgaben der Datenbank erklärt werden. Die hohen Zeiten bei Neo4j können dadurch erklärt werden, dass Graphen als Datenstrukturen aufwändiger zu erzeugen sind als einfache Relationen. Ein Key-Value store wie Redis hingegen bietet sich nicht für das Speichern komplexer Strukturen, wie unseren Objekten, an.
 
 ## Virualisiert
 
@@ -32,3 +33,4 @@ MacOS High Sierra
 | Cassandra | -          	| -            |
 | Redis    	| -          	| -            |
 
+Die höheren Zeiten der virtualisierten Datenbanken sind dadurch begründet, dass zwischen dem Hostsystem und der virtualisierten Datenbank noch eine zusätzliche Schicht, nämlich das virtuelle Betriebssystem, liegt.

@@ -3,11 +3,13 @@ package IGT.Flight;
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 
 
 @Entity
+@Indexed
 @Table(name = "Airports")
 public class Airport implements IClassID {
     @Id

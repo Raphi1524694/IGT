@@ -2,10 +2,12 @@ package IGT.Customer;
 
 import IGT.IClassID;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 
 @Entity
+@Indexed
 @Table(name = "Customer_Phones")
 public class Phone implements IClassID {
     @Id

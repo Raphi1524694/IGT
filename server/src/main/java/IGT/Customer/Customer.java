@@ -8,12 +8,14 @@ import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.util.*;
 
 
 @Entity
+@Indexed
 @Table(name = "Customers")
 public class Customer implements IClassID {
 
