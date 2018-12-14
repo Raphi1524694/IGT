@@ -35,7 +35,7 @@ Obuntu 18
 | PostgeSQL	| 35,26         | 11,82        |
 | MongoDB  	| 48,26       	| 5,2          |
 | Neo4j  	| 254,7         | 81           |
-| Cassandra | -          	| -            |
-| Redis    	| -          	| -            |
+| Cassandra | 350,3        	| 510          |
+| Redis    	| 301,5       	| 12           |
 
 Die höheren Zeiten der virtualisierten Datenbanken sind dadurch begründet, dass zwischen dem Hostsystem und der virtualisierten Datenbank noch eine zusätzliche Schicht, nämlich das virtuelle Betriebssystem, liegt.
