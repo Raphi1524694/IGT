@@ -6,12 +6,12 @@ Für die Schreibwerte wurden 5000 Flüge mit unterschiedlichen zufälligen Werte
 Für die Lesewerte wurden diese Flüge wieder abgerufen. 
 Alle Daten in Sekunden.
 
+## Docker
+
 System:
 MacOS High Sierra
 2,2 GHz Intel i7
 16 GB RAM 1600 MHz
- 
-## Docker
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
@@ -24,6 +24,11 @@ MacOS High Sierra
 Unsere Versuche haben ergeben, dass PostgreSQL für die Schreib- und MongoDB für die Lesezugriffe die besten Ergebnisse erzielt hat. Es ist jedoch deutlich, dass insgesamt zwischen NoSQL und SQL Datenbanken insgesamt eine große Diskrepanz besteht. Dass MongoDB den schnellsten Lesezugriff hat, hat verschiedene Gründe. Zum einen besitzt MongoDB keine Joins, welche Performance normalerweise einschränken. Zum anderen existieren in MongoDB weniger Persistierungschecks, welche in Relationalen Datenbanken häufig ausgeführt werden. Die extrem hohen Zeiten bei dem Column Store Cassandra können bei uns durch die immense Anzahl von Konsolenausgaben der Datenbank erklärt werden. Die hohen Zeiten bei Neo4j können dadurch erklärt werden, dass Graphen als Datenstrukturen aufwändiger zu erzeugen sind als einfache Relationen. Ein Key-Value store wie Redis hingegen bietet sich nicht für das Speichern komplexer Strukturen, wie unseren Objekten, an.
 
 ## Virualisiert
+
+System:
+Obuntu 18
+2,2 GHz Intel i7
+12 GB RAM 1600 MHz
 
 | Database 	| Write         | Read         |
 |----------	|-------------- |------------  |
