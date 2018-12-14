@@ -1,7 +1,11 @@
 # IGT
 Übungsaufgaben für die Vorlesung Integrationstechnologien WS18/19 der Hochschule Mannheim
 
-https://docs.jboss.org/hibernate/ogm/4.0/reference/en-US/html_single/#ogm-neo4j
+Um das System zu starten, starten Sie den folgenden Befehl:
+```
+docker-compose up -d
+```
+
 
 ## Api Doku
 
@@ -10,10 +14,10 @@ https://docs.jboss.org/hibernate/ogm/4.0/reference/en-US/html_single/#ogm-neo4j
     
 | Database 	| Port 	| Type            	|
 |----------	|------	|-----------------	|
-| MySQL    	| 6001 	| SQL Database    	|
+| POSTGRES 	| 6001 	| SQL Database    	|
 | MongoDB  	| 6002 	| Document Store  	|
-| Ehcache  	| 6003 	| Cache           	|
-| Neo4j    	| 6004 	| Graph Database  	|
+| NEO4J   	| 6003 	| Graph Database   	|
+| CASSANDRA	| 6004 	| Wide Column     	|
 | Redis    	| 6005 	| Key-value Store 	|
   
 **Example:** http://localhost:6001/api for the MongoDB instance

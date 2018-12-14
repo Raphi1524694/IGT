@@ -22,5 +22,8 @@ export default {
   },
   loading(state, val){
     state.loading = val;
+  },
+  error(state, err ){
+    state.error = err;
   }
 };

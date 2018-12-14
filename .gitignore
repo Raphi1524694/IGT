@@ -24,3 +24,7 @@ npm-cache
 server/logfile\.log
 
 mvn-cache/
+
+server/ObjectStore/ShadowNoFileLockStore/defaultStore/Recovery/TransactionStatusManager/
+
+server/

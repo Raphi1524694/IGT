@@ -59,15 +59,19 @@ export const getReturnFlight = async ({ commit, getters }, filter) => {
     commit("returnFlight", (await Axios.post(getters.getURL + `/flight/filter`, filter)).data);
     commit("loading", false);
 };
-export const bookFlight = async ({ dispatch, getters }, data) => {
-    await Axios.post(getters.getURL + `/booking/new`, data);
-    dispatch("getBookings", getters.userId);
+export const bookFlight = async ({commit, dispatch, getters }, data) => {
+    try {
+        await Axios.post(getters.getURL + `/booking/new`, data);
+        // dispatch("getBookings", getters.userId);
+    } catch (e) {
+        commit("error", e.message);
+    }
 };
 export const getBookings = async ({ commit, getters }, id) => {
-    commit("bookings", (await Axios.get(getters.getURL + `/booking/customer/` + (id || '5')).data));
+    commit("bookings", (await Axios.get(getters.getURL + `/booking/customer/` + id).data));
 };
 export const cancelBooking = async ({ dispatch, getters }, id) => {
-    await Axios.delete(getters.getURL + `/booking/` + (id || '5'));
+    await Axios.delete(getters.getURL + `/booking/` + id);
     dispatch("getBookings", getters.userId);
 };
 

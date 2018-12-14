@@ -1,10 +1,41 @@
 ![aufg](aufg6.JPG)
 
 # Performance
-| Database 	| Performance 	| Type            	|
-|----------	|--------------	|-----------------	|
-| MySQL    	| top        	| SQL Database    	|
-| MongoDB  	| top       	| Document Store  	|
-| Ehcache  	| doppelt top   | Cache           	|
-| Neo4j    	| top       	| Graph Database  	|
-| Redis    	| top       	| Key-value Store 	|
+
+Für die Schreibwerte wurden 5000 Flüge mit unterschiedlichen zufälligen Werten generiert und abgespeichert. 
+Für die Lesewerte wurden diese Flüge wieder abgerufen. 
+Alle Daten in Sekunden.
+
+## Docker
+
+System:
+MacOS High Sierra
+2,2 GHz Intel i7
+16 GB RAM 1600 MHz
+
+| Database 	| Write         | Read         |
+|----------	|-------------- |------------  |
+| PostgreSQL| 24,29        	| 8,2          |
+| MongoDB  	| 35,7         	| 3,6          |
+| Neo4j  	| 165,2         | 49,1         |
+| Cassandra | 324         	| 495          |
+| Redis    	| 281,4        	| 5,5          |
+
+Unsere Versuche haben ergeben, dass PostgreSQL für die Schreib- und MongoDB für die Lesezugriffe die besten Ergebnisse erzielt hat. Es ist jedoch deutlich, dass insgesamt zwischen NoSQL und SQL Datenbanken insgesamt eine große Diskrepanz besteht. Dass MongoDB den schnellsten Lesezugriff hat, hat verschiedene Gründe. Zum einen besitzt MongoDB keine Joins, welche Performance normalerweise einschränken. Zum anderen existieren in MongoDB weniger Persistierungschecks, welche in Relationalen Datenbanken häufig ausgeführt werden. Die extrem hohen Zeiten bei dem Column Store Cassandra können bei uns durch die immense Anzahl von Konsolenausgaben der Datenbank erklärt werden. Die hohen Zeiten bei Neo4j können dadurch erklärt werden, dass Graphen als Datenstrukturen aufwändiger zu erzeugen sind als einfache Relationen. Ein Key-Value store wie Redis hingegen bietet sich nicht für das Speichern komplexer Strukturen, wie unseren Objekten, an.
+
+## Virualisiert
+
+System:
+Obuntu 18
+2,2 GHz Intel i7
+12 GB RAM 1600 MHz
+
+| Database 	| Write         | Read         |
+|----------	|-------------- |------------  |
+| PostgeSQL	| 35,26         | 11,82        |
+| MongoDB  	| 48,26       	| 5,2          |
+| Neo4j  	| 254,7         | 81           |
+| Cassandra | 350,3        	| 510          |
+| Redis    	| 301,5       	| 12           |
+
+Die höheren Zeiten der virtualisierten Datenbanken sind dadurch begründet, dass zwischen dem Hostsystem und der virtualisierten Datenbank noch eine zusätzliche Schicht, nämlich das virtuelle Betriebssystem, liegt.

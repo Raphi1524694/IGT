@@ -1,73 +1,150 @@
 version: '3.4'
 
 services:
-  server:
-    build:
-      context: Server
-      dockerfile: Dockerfile
-    environment:
-        - DB=MONGODB
-    restart: always
-    ports:
-    - "6002:6002"
-    networks:
-    - db
-    links:
-    - "db:db"
-    depends_on:
-    - db
-    volumes:
-    - ./mvn-cache:/root/.m2
+  # mongo_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=MONGODB
+  #  restart: always
+  #  ports:
+  #  - "6002:6002"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "mongo:mongo"
+  #  depends_on:
+  #  - mongo
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
-  # mysql:
-  #   image: mysql
-  #   restart: always
-  #   networks:
-  #   - mysql
-  #   environment:
-  #   - MYSQL_ROOT_PASSWORD=bla
-  #   - MYSQL_ROOT_HOST=172.18.0.3
-  #   - MYSQL_DATABASE=test
-  #   - MYSQL_USER=user
-  #   - MYSQL_PASSWORD=password
-  #   ports:
-  #   - "3306:3306"
-  #   volumes:
-  #   - ./mysql-data:/var/lib/mysql
-
-  #mongoDB
-  db:
+  # mongoDB
+  mongo:
     image: mongo:3.6-stretch
-    networks: 
+    networks:
     - db
     ports:
     - "27017:27017"
 
-  # #neo4j
-  # db:
-  #   image: neo4j:3.5
-  #   environment:
-  #     NEO4J_AUTH: neo4j/igt
-  #   ports:
-  #   - "7474:7474"
-  #   - "7687:7687"
+  # postgres_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=POSTGRES
+  #  restart: always
+  #  ports:
+  #  - "6001:6001"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "sql:sql"
+  #  depends_on:
+  #  - sql
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
 
-
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    restart: always
+  sql:
+    image: postgres:9.2-alpine
+    networks:
+      - db
+    environment:
+      POSTGRES_PASSWORD: igt
     ports:
-    - "5000:5000"
-    depends_on:
-    - server
-    volumes: 
-    - npm-cache:/root/.npm
+      - "5432:5432"
 
-volumes: 
-  npm-cache:
-    external: false
+  # neo_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=NEO4J
+  #  restart: always
+  #  ports:
+  #  - "6003:6003"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "neo:neo"
+  #  depends_on:
+  #  - neo
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
+
+  # #neo4j
+  neo:
+    image: neo4j:3.5
+    networks: 
+     - db
+    environment:
+      NEO4J_AUTH: neo4j/igt
+    ports:
+    - "7474:7474"
+    - "7687:7687"
+
+  # cassy_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=CASSANDRA
+  #  restart: always
+  #  ports:
+  #  - "6004:6004"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "cassy:cassy"
+  #  depends_on:
+  #  - cassy
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
+
+  # cassandra
+  cassy:
+    image: cassandra:2.1
+    ports:
+     - "9042:9042"
+
+
+  # redis_server:
+  #  build:
+  #    context: Server
+  #    dockerfile: Dockerfile
+  #  environment:
+  #      - DB=REDIS
+  #  ports:
+  #  - "6005:6005"
+  #  networks:
+  #  - db
+  #  links:
+  #  - "redis:redis"
+  #  depends_on:
+  #  - redis
+  #  volumes:
+  #  - ./mvn-cache:/root/.m2
+
+  #redis
+  redis:
+    image: redis:5.0-alpine
+    ports:
+     - "6379:6379"
+
+
+  # frontend:
+  #  build:
+  #    context: frontend
+  #    dockerfile: Dockerfile
+  #  restart: always
+  #  ports:
+  #  - "5000:5000"
+  #  volumes:
+  #  - npm-cache:/root/.npm
+
+volumes:
+ npm-cache:
+   external: false
 
 networks:
   db:
