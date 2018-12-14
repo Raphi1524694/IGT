@@ -107,16 +107,20 @@ export default {
       this.selected = [];
       this.selected[idx] = temp;
     },
-    bookFlight() {
+    async bookFlight() {
       if(!this.$store.getters.getUser){
         this.$store.commit("error", 'No user selected');
       }
+      console.table(this.selected);
       this.selected.forEach(flight => {
+        console.log(flight.flightId);
         this.$store.dispatch("bookFlight", {
           customerId: this.$store.getters.getUser.customerId,
           flightId: flight.flightId
         });
       });
+      await this.$store.dispatch("allCustomers");
+      this.$router.push({ path: 'user' });
     }
   },
   computed: {

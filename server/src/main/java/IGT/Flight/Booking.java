@@ -34,6 +34,8 @@ public class Booking implements IClassID {
         return this.flight;
     }
 
+    public Customer getCustomer() { return this.customer; }
+
     @Override
     public String getClassId() {
         return "Booking";

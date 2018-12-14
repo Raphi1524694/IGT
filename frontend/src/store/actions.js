@@ -62,7 +62,7 @@ export const getReturnFlight = async ({ commit, getters }, filter) => {
 export const bookFlight = async ({commit, dispatch, getters }, data) => {
     try {
         await Axios.post(getters.getURL + `/booking/new`, data);
-        dispatch("getBookings", getters.userId);
+        // dispatch("getBookings", getters.userId);
     } catch (e) {
         commit("error", e.message);
     }
